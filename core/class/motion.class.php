@@ -505,10 +505,13 @@ class motion extends eqLogic {
 	public function SendLastSnap(){
 		if($this->getConfiguration('alertMessageCommand')!=''){
 			$directory=$this->getSnapshotDiretory(true);
-			$lastFiles = array_slice(array_diff(scandir($directory,1), array('..', '.')),0,1);
-			$_options['files']=null;
-			foreach($lastFiles as $file)
-				$_options['files'][]=$directory.$file;
+			foreach (array_diff(scandir($directory,1), array('..', '.')) as $file) {
+				$path_parts = pathinfo($file);
+				if($path_parts['extension'] == 'jpg'){
+					$_options['files'][]=$directory.$file;
+					break;
+				}
+			}
 			$_options['title'] = '[Jeedom][Motion] Détéction sur la camera '.$this->getHumanName();
 			$_options['message'] = 'La camera '.$this->getHumanName(). ' a détécté un mouvement. Voici le snapshot qui a ete pris';
 			log::add('motion','debug','Envoie d\'un message avec les derniere photo:'.json_encode($_options['files']));
