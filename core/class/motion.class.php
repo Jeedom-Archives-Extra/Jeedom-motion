@@ -641,7 +641,7 @@ class motion extends eqLogic {
 	}
 	public static function deamon_stop() {
 		exec('sudo pkill motion');
-		exec('sudo rm /etc/motion/motion.log');
+		//exec('sudo rm /etc/motion/motion.log');
 	}
 }
 
