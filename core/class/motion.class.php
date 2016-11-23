@@ -447,14 +447,9 @@ class motion extends eqLogic {
 				$data.=fread($ReadFlux,1024);
 			fclose($ReadFlux);
 			$data=substr($data,strpos($data,"\r\n\r\n")+4);
-			//$data=trim(substr($data,0,stripos($data,"--myboundary")-2));
-			$data=trim(substr($data,0,stripos($data,"--")-2));
-			$output_file = $this->getName();
-			//$output_file = htmlentities($output_file, ENT_NOQUOTES, 'utf-8');
-			//$output_file = preg_replace('#&([A-za-z])(?:acute|cedil|caron|circ|grave|orn|ring|slash|th|tilde|uml);#', '\1', $output_file);
-			//$output_file = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $output_file); // pour les ligatures e.g. '&oelig;'
-			//$output_file = preg_replace('#&[^;]+;#', '', $output_file); // supprime les autres caractères
-			//$output_file = strtolower($output_file);
+			$data=trim(substr($data,0,stripos($data,"--myboundary")-2));
+			//$data=trim(substr($data,0,stripos($data,"--")-2));
+			$output_file = $this->getId();
 			$output_file .= '.jpg';
 			if(file_exists($directory.$output_file))
 				exec('sudo rm '.$directory.$output_file);
