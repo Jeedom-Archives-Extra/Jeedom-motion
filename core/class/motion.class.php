@@ -505,7 +505,7 @@ class motion extends eqLogic {
 	public function SendLastSnap(){
 		if($this->getConfiguration('alertMessageCommand')!=''){
 			$directory=$this->getSnapshotDiretory(true);
-			$_options['files']=new Array();
+			$_options['files']=array();
 			foreach (array_diff(scandir($directory,1), array('..', '.')) as $file) {
 				$path_parts = pathinfo($file);
 				if($path_parts['extension'] == 'jpg'){
