@@ -447,6 +447,7 @@ class motion extends eqLogic {
 				$data.=fread($ReadFlux,1024);
 			fclose($ReadFlux);
 			$data=substr($data,strpos($data,"\r\n\r\n")+4);
+			$data=trim(substr($data,0,stripos($data,"--object-ipcamera")-2));
 			$data=trim(substr($data,0,stripos($data,"--myboundary")-2));
 			$data=trim(substr($data,0,stripos($data,"--BoundaryString")-2));
 			$output_file = $this->getId();
