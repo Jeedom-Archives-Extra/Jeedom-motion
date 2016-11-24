@@ -443,12 +443,13 @@ class motion extends eqLogic {
 		}else {
 			//**** URL OK
 			$data=null;
-			while (substr_count($data,"Content-Length") != 2) 
+			//while (substr_count($data,"Content-Length") != 2)
+			while (substr_count($data,"--") != 2) 
 				$data.=fread($ReadFlux,1024);
 			fclose($ReadFlux);
 			$data=substr($data,strpos($data,"\r\n\r\n")+4);
-			$data=trim(substr($data,0,stripos($data,"--myboundary")-2));
-			//$data=trim(substr($data,0,stripos($data,"--")-2));
+			//$data=trim(substr($data,0,stripos($data,"--myboundary")-2));
+			$data=trim(substr($data,0,stripos($data,"--")-2));
 			$output_file = $this->getId();
 			$output_file .= '.jpg';
 			if(file_exists($directory.$output_file))
