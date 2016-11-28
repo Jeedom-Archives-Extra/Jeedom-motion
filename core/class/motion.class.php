@@ -2,6 +2,7 @@
 /* * ***************************Includes********************************* */
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 include_file('core', 'MotionService', 'class', 'motion');
+include_file('core', 'pointLocation', 'class', 'motion');
 class motion extends eqLogic {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//                                                                                                                                               //
@@ -529,16 +530,23 @@ class motion extends eqLogic {
 		else
 			log::add('motion','debug','Impossible de trouver la commande');
 		$this->CleanFolder();
-		/*foreach($this->getCmd('info','maphilight',null,true) as $Commande){
-			if(is_object($Commande))
-			{
-				$IsInArea=maphilightDetect($Parametres['X'],$Parametres['Y'],$Commande->getConfiguration('maphilightArea'));
-				log::add('motion','debug','Derniere image '.$IsInArea);
+		foreach($this->getCmd('info','maphilight',null,true) as $Commande){
+			if(is_object($Commande)){
+				$pointLocation = new pointLocation();
+				$points = array("50 70","70 40","-20 30","100 10","-10 -10","40 -20","110 -20");
+				$polygon = array("-50 30","50 70","100 50","80 10","110 -10","110 -30","-20 -50","-30 -40","10 -10","-10 10","-30 -20","-50 30");
+				// Les coordonnées du dernier point doivent être les mêmes que celles du premier, pour "boucler la boucle"
+				$IsInArea=$pointLocation->pointInPolygon($Parametres['X']." ".$Parametres['Y'], $Commande->getConfiguration('maphilightArea'));
+				//$IsInArea=maphilightDetect($Parametres['X'],$Parametres['Y'],$Commande->getConfiguration('maphilightArea'));
+				log::add('motion','debug','Les coordonées de la détection '.$Parametres['X'].' '.$Parametres['Y'].' sont =>'.$IsInArea);
 				$Commande->setCollectDate('');
-				$Commande->event($IsInArea);
+				if ($IsInArea=='outside')
+					$Commande->event(false);
+				else
+					$Commande->event(true);
 				$Commande->save();
 			}
-		}*/
+		}
 	}
 	public function maphilightDetect($DetectX,$DetectY,$Area){
 		$TopY='';
