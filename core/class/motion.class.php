@@ -469,26 +469,6 @@ class motion extends eqLogic {
 		}
 		return 'plugins/motion/core/template/icones/no-image-blanc.png';
 	}	
-	public static function CleanFolder($CameraId) {
-		$Camera=eqLogic::byId($CameraId);
-		if(is_object($Camera)){
-			$directory=$Camera->getSnapshotDiretory(true);
-			if(!file_exists($directory)){
-				exec('sudo mkdir -p '.$directory);
-				exec('sudo chmod 777 -R '.$directory);
-			}
-			$size = 0;
-			foreach(scandir($directory, 1) as $file) {
-				if(is_file($directory.$file) && $file != '.' && $file != '..'  && $file != 'lastsnap.jpg') {	
-					if ($size>= config::byKey('SnapshotFolderSeize', 'motion')*1000000) //Valeur SnapshotFolderSeize en megaoctet
-						self::removeRecord($directory.$file);
-					else
-						$size += filesize($directory.$file);
-				}
-			}
-			log::add('motion','debug','Le dossier '.$directory.' est a '.$size);
-		}
-	}
 	public static function removeRecord($file) {
 		exec('sudo rm '. $file.' > /dev/null 2>/dev/null &');
 		log::add('motion','debug','Fichiers '.$file.' à été supprimée');
@@ -498,6 +478,20 @@ class motion extends eqLogic {
 	//                                                                 Gestion des détection                                                             // 
 	//                                                                                                                                               //
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public function CleanFolder() {
+		$directory=$this->getSnapshotDiretory(true);
+		$size = 0;
+		foreach(scandir($directory, 1) as $file) {
+			if(is_file($directory.$file) && $file != '.' && $file != '..'  && $file != 'lastsnap.jpg') {	
+				if ($size>= config::byKey('SnapshotFolderSeize', 'motion')*1000000) //Valeur SnapshotFolderSeize en megaoctet
+					self::removeRecord($directory.$file);
+				else
+					$size += filesize($directory.$file);
+			}
+		}
+		log::add('motion','debug','Le dossier '.$directory.' est a '.$size);
+	}
 	public function SendLastSnap(){
 		if($this->getConfiguration('alertMessageCommand')!=''){
 			$directory=$this->getSnapshotDiretory(true);
@@ -534,7 +528,7 @@ class motion extends eqLogic {
 		}
 		else
 			log::add('motion','debug','Impossible de trouver la commande');
-
+		$this->CleanFolder();
 		/*foreach($this->getCmd('info','maphilight',null,true) as $Commande){
 			if(is_object($Commande))
 			{
