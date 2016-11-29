@@ -1,29 +1,30 @@
 <?php
 	class pointLocation {
-		private $pointOnVertex = true; // Vérifier si le point est exactement sur un sommet ?
-		public function pointLocation() {
-		}
+		private $pointOnVertex = true; 
+		// Vérifier si le point est exactement sur un sommet ?
 		public function pointInPolygon($point, $polygon, $pointOnVertex = true) {
 			$this->pointOnVertex = $pointOnVertex;
 			// Transformer chaque couple de coordonnées en un tableau de 2 valeurs (x et y)
 			$point = $this->pointStringToCoordinates($point);
 			$vertices = array(); 
 			foreach ($polygon as $vertex) 
-			$vertices[] = $this->pointStringToCoordinates($vertex); 
+				$vertices[] = $this->pointStringToCoordinates($vertex); 
 			// Vérfier si le point est exactement sur un sommet
-			if ($this->pointOnVertex == true and $this->pointOnVertex($point, $vertices) == true) 
-			return "vertex";
+			if ($this->pointOnVertex == true && $this->pointOnVertex($point, $vertices) == true) 
+				return "vertex";
 			// Vérifier si le point est dans le polygone ou sur le bord
 			$intersections = 0; 
 			$vertices_count = count($vertices);
 			for ($i=1; $i < $vertices_count; $i++) {
 				$vertex1 = $vertices[$i-1]; 
 				$vertex2 = $vertices[$i];
-				if ($vertex1['y'] == $vertex2['y'] and $vertex1['y'] == $point['y'] and $point['x'] > min($vertex1['x'], $vertex2['x']) and $point['x'] < max($vertex1['x'], $vertex2['x']))  // Vérifier si le point est sur un bord horizontal
+				// Vérifier si le point est sur un bord horizontal
+				if ($vertex1['y'] == $vertex2['y'] && $vertex1['y'] == $point['y'] && $point['x'] > min($vertex1['x'], $vertex2['x']) && $point['x'] < max($vertex1['x'], $vertex2['x']))  
 					return "boundary";
-				if ($point['y'] > min($vertex1['y'], $vertex2['y']) and $point['y'] <= max($vertex1['y'], $vertex2['y']) and $point['x'] <= max($vertex1['x'], $vertex2['x']) and $vertex1['y'] != $vertex2['y']) { 
+				if ($point['y'] > min($vertex1['y'], $vertex2['y']) && $point['y'] <= max($vertex1['y'], $vertex2['y']) && $point['x'] <= max($vertex1['x'], $vertex2['x']) && $vertex1['y'] != $vertex2['y']) { 
 					$xinters = ($point['y'] - $vertex1['y']) * ($vertex2['x'] - $vertex1['x']) / ($vertex2['y'] - $vertex1['y']) + $vertex1['x']; 
-					if ($xinters == $point['x'])  // Vérifier si le point est sur un bord (autre qu'horizontal)
+					// Vérifier si le point est sur un bord (autre qu'horizontal)
+					if ($xinters == $point['x'])  
 						return "boundary";
 					if ($vertex1['x'] == $vertex2['x'] || $point['x'] <= $xinters) 
 						$intersections++; 
