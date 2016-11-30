@@ -119,7 +119,7 @@ $('body').on('click','.editMaphilightArea', function() {
 		title: "{{Editer la zone de detection}}",
 		height: 600,
 		width: 550});
-	$('#md_modal').load('index.php?v=d&plugin=motion&modal=maphilight.motion')
+	$('#md_modal').load('index.php?v=d&plugin=motion&modal=maphilight.motion&id=' + $('.eqLogicAttr[data-l1key=id]').val());
 	$('#md_modal').dialog('open');
 	$("#md_modal").dialog('option', 'buttons', {
 		"Annuler": function() {
