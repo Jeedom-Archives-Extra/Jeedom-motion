@@ -41,11 +41,10 @@ include_file('desktop', 'jquery.maphilight.min', 'js', 'motion');
 </div>
 <script>
 var coords=[];
-for(var loop=0; loop<areas.length; loop=loop+2)
-{
-	var coord=[areas[loop],areas[loop+1]]
-	coords.push(coord);
-};
+if(areas.length>2){
+	var coords=JSON.parse(areas);
+  	updateCoords();
+}	
 $('.CameraSnap').on('click', function (e) {
 	setCoordinates(e);
 }); 
@@ -72,18 +71,18 @@ function setCoordinates(e) {
 	y -= parseInt(offset.top);
 	if(x < 0) { x = 0; }
 	if(y < 0) { y = 0; }
-	var coord=[x,y];
-	//alert(coord.join());
-	coords.push(coord);
-	updateCoords();
-	areas=coords.join();
+    if(x!=null && y!=null){
+        coords.push([x,y]);
+        updateCoords();
+    }
 }
 function updateCoords() {
+  	areas=JSON.stringify(coords);
 	var shape = (coords.length <= 2) ? 'rect' : 'poly';
 	$('#map').html($('<area>')
 		.addClass("area") 
 		.attr('shape',shape)
-		.attr('coords',coords.join()));
+		.attr('coords',coords.toString()));
 	hightlight();
 	editPolygon();
 }
@@ -145,15 +144,15 @@ function editPolygon() {
 					// Get middle position of resizer
 					var x = Math.round(ui.position.left) + (cornerWidth / 2) + 1;
 					var y = Math.round(ui.position.top) + (cornerHeight / 2) + 1;
-					coords[$(this).attr('id').explode('_')[1]][0]=x;
-					coords[$(this).attr('id').explode('_')[1]][1]=y;
+					coords[$(this).attr('id').split('_')[1]][0]=x;
+					coords[$(this).attr('id').split('_')[1]][1]=y;
 					updateCoords();
 				},
 			});
 
 			// Catch right click on corner resizer and remove point
 			cornerDiv.contextmenu(function(e) {
-				coords.splice(parseInt($(this).attr('id').explode('_')[1]),1);					
+				coords.splice(parseInt($(this).attr('id').split('_')[1]),1);					
 				updateCoords();
 			});
 			
@@ -168,7 +167,7 @@ function editPolygon() {
 					var x = Math.round(ui.position.left) + (cornerWidth / 2) + 1;
 					var y = Math.round(ui.position.top) + (cornerHeight / 2) + 1;
 					var coord=[x,y];
-					coords.splice(parseInt($(this).attr('id').explode('_')[1])+1,0,coord);					
+					coords.splice(parseInt($(this).attr('id').split('_')[1])+1,0,coord);					
 					updateCoords();
 				},
 			});
