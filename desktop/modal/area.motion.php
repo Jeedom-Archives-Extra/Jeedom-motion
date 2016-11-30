@@ -51,23 +51,23 @@ $('.AreaContent .CameraSnap img').load(function() {
 		$('.AreaContent .Areas')
 			.append($('<div>')
 				.addClass('Area')
-				.attr('id','area_'+loop));
+				.attr('id',loop));
 		/*if(areas.lenght>0){
 			if(areas.indexOf(loop+1)>=0)
 				$('.AreaContent').find('#area_'+loop).addClass('Select');
 		}*/
 	};
-	var offsetImg = $('.AreaContent').find('img').offset();
+	/*var offsetImg = $('.AreaContent').find('img').offset();
 	var offsetArea =$('.AreaContent').find('.Areas').offset();
 	$('.AreaContent').find('.Areas').css('width', $(this).width());
 	$('.AreaContent').find('.Areas').css('height',$(this).height());
 	$('.AreaContent').find('.Area').css('width', $(this).width()/3);
 	$('.AreaContent').find('.Area').css('height',$(this).height()/3);
 	$('.AreaContent').find('.Areas').css('left',offsetImg.left - offsetArea.left);
-	$('.AreaContent').find('.Areas').css('top', offsetImg.top - offsetArea.top);
+	$('.AreaContent').find('.Areas').css('top', offsetImg.top - offsetArea.top);*/
 });
 $('body').on('click','.Area',function (e) {
-	var AreaSelect=parseInt($(this).attr('id').split('_')[1])+1;
+	//var AreaSelect=parseInt($(this).attr('id').split('_')[1])+1;
 	/*if (areas.indexOf(AreaSelect)>=0)
 	{
 		$(this).removeClass('Select');
