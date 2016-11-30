@@ -76,7 +76,7 @@ onImgLoad('img', function(){
  	$('.AreaContent .Area').css('height',$(this).height()/3);		
  	$('.AreaContent .Areas').css('left',offsetImg.left - offsetArea.left);		
  	$('.AreaContent .Areas').css('top', offsetImg.top - offsetArea.top);	
-	areas.each(function(area){
+	$.each(areas,function(area){
 		$('.AreaContent .Area[id='+area+']').addClass('Select');
 	});
 });
