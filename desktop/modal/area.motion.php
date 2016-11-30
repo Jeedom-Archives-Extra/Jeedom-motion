@@ -42,10 +42,20 @@ $eqLogic=eqLogic::byId(init('id'));
 	<div class="Snapshot">
 		<img class="CameraSnap" src="<?php echo $eqLogic->getSnapshot();?>"/>
 	</div>
-	<div class="Areas"></div>
+	<div class="Areas">
+		<div class="Area" id="1"></div>
+		<div class="Area" id="2"></div>
+		<div class="Area" id="3"></div>
+		<div class="Area" id="4"></div>
+		<div class="Area" id="5"></div>
+		<div class="Area" id="6"></div>
+		<div class="Area" id="7"></div>
+		<div class="Area" id="8"></div>
+		<div class="Area" id="9"></div>
+	</div>
 </div>
 <script>
-$('.AreaContent .CameraSnap .CameraSnap').load(function() {		 
+//$('.AreaContent .CameraSnap .CameraSnap').load(function() {		 
  	/*for(var loop=0; loop<9; loop++){		
  		$('.AreaContent .Areas')		
  			.append($('<div>')		
@@ -64,10 +74,10 @@ $('.AreaContent .CameraSnap .CameraSnap').load(function() {
  	$('.AreaContent').find('.Area').css('height',$(this).height()/3);		
  	$('.AreaContent').find('.Areas').css('left',offsetImg.left - offsetArea.left);		
  	$('.AreaContent').find('.Areas').css('top', offsetImg.top - offsetArea.top);*/		
- });		
-// $('body').on('click','.Area',function (e) {		
- 	//var AreaSelect=parseInt($(this).attr('id').split('_')[1])+1;		
- 	/*if (areas.indexOf(AreaSelect)>=0)		
+ //});		
+ $('body').on('click','.Area',function (e) {		
+ 	var AreaSelect=parseInt($(this).attr('id'))+1;		
+ 	if (areas.indexOf(AreaSelect)>=0)		
  	{		
  		$(this).removeClass('Select');		
  		areas=areas.toString().replace(AreaSelect.toString(),'');		
@@ -76,6 +86,6 @@ $('.AreaContent .CameraSnap .CameraSnap').load(function() {
  	{		
  		$(this).addClass('Select');		
  		areas=areas+AreaSelect;		
- 	}*/		
- //}); 
+ 	}	
+ }); 
 </script>
