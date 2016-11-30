@@ -76,18 +76,22 @@ onImgLoad('img', function(){
  	$('.AreaContent .Area').css('height',$(this).height()/3);		
  	$('.AreaContent .Areas').css('left',offsetImg.left - offsetArea.left);		
  	$('.AreaContent .Areas').css('top', offsetImg.top - offsetArea.top);	
+	areas.each(function(area){
+		$('.AreaContent .Area[id='+area+']').addClass('Select');
+	});
 });
 $('body').on('click','.Area',function() {		
- 	var AreaSelect=parseInt($(this).attr('id'))+1;		
+ 	var AreaSelect=$(this).attr('id');		
  	if (areas.indexOf(AreaSelect)>=0)		
  	{		
  		$(this).removeClass('Select');		
- 		areas=areas.toString().replace(AreaSelect.toString(),'');		
+ 		//areas=areas.toString().replace(AreaSelect.toString(),'');
  	}		
  	else		
  	{		
  		$(this).addClass('Select');		
- 		areas=areas+AreaSelect;		
+ 		//areas=areas+AreaSelect;		
  	}	
+	areas=$('.Select').attr('id').join("");
  }); 
 </script>
