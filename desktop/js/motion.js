@@ -136,10 +136,7 @@ $('body').on('click','.editArea', function() {
 	if($(this).closest('.cmd').find('.cmdAttr[data-l1key=configuration][data-l2key=area]').val()!= undefined)
 		areas=$(this).closest('.cmd').find('.cmdAttr[data-l1key=configuration][data-l2key=area]').val();
 	
-	$('#md_modal').dialog({
-		title: "{{Editer la zone de detection}}",
-		height: 600,
-		width: 550});
+	$('#md_modal').dialog({	title: "{{Editer la zone de detection}}"});
 	$('#md_modal').load('index.php?v=d&plugin=motion&modal=area.motion&id=' + $('.eqLogicAttr[data-l1key=id]').val());
 	$('#md_modal').dialog('open');
 	$("#md_modal").dialog('option', 'buttons', {
