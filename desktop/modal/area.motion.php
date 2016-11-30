@@ -68,7 +68,7 @@ $('.AreaContent .CameraSnap img').load(function() {
 });
 $('body').on('click','.Area',function (e) {
 	var AreaSelect=parseInt($(this).attr('id').split('_')[1])+1;
-	if (areas.indexOf(AreaSelect)>=0)
+	/*if (areas.indexOf(AreaSelect)>=0)
 	{
 		$(this).removeClass('Select');
 		areas=areas.toString().replace(AreaSelect.toString(),'');
@@ -77,6 +77,6 @@ $('body').on('click','.Area',function (e) {
 	{
 		$(this).addClass('Select');
 		areas=areas+AreaSelect;
-	}
+	}*/
 }); 
 </script>
