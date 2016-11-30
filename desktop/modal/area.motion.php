@@ -85,14 +85,13 @@ $('body').on('click','.Area',function() {
  	if (areas.indexOf(AreaSelect)>=0)		
  	{		
  		$(this).removeClass('Select');		
- 		//areas=areas.toString().replace(AreaSelect.toString(),'');
+ 		areas=areas.toString().replace(AreaSelect.toString(),'');
  	}		
  	else		
  	{		
  		$(this).addClass('Select');		
- 		//areas=areas+AreaSelect;		
+ 		areas=areas+AreaSelect;		
  	}	
-	areas=$('.Select').attr('id').toString();
 	alert(areas);
  }); 
 </script>
