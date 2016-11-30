@@ -65,7 +65,7 @@ $('.AreaContent .CameraSnap .CameraSnap').load(function() {
  	$('.AreaContent').find('.Areas').css('left',offsetImg.left - offsetArea.left);		
  	$('.AreaContent').find('.Areas').css('top', offsetImg.top - offsetArea.top);*/		
  });		
- $('body').on('click','.Area',function (e) {		
+// $('body').on('click','.Area',function (e) {		
  	//var AreaSelect=parseInt($(this).attr('id').split('_')[1])+1;		
  	/*if (areas.indexOf(AreaSelect)>=0)		
  	{		
@@ -77,5 +77,5 @@ $('.AreaContent .CameraSnap .CameraSnap').load(function() {
  		$(this).addClass('Select');		
  		areas=areas+AreaSelect;		
  	}*/		
- }); 
+ //}); 
 </script>
