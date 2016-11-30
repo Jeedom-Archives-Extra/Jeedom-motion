@@ -68,8 +68,8 @@ onImgLoad('img', function(){
  	//var offsetArea =$('.AreaContent .Areas').offset();		
  	$('.AreaContent .Areas').css('width', $(this).width());		
  	$('.AreaContent .Areas').css('height',$(this).height());		
- 	$('.AreaContent .Area').css('width', $(this).width()/3);		
- 	$('.AreaContent .Area').css('height',$(this).height()/3);		
+ 	$('.AreaContent .Area').css('width', ($(this).width()/3)-2);		
+ 	$('.AreaContent .Area').css('height',($(this).height()/3)-2);		
  	//$('.AreaContent .Areas').css('left',offsetImg.left - offsetArea.left);		
  	//$('.AreaContent .Areas').css('top', offsetImg.top - offsetArea.top);	
 	$.each(areas.split(''),function(area){
