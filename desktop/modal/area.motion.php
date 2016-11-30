@@ -39,13 +39,13 @@ $eqLogic=eqLogic::byId(init('id'));
 }
 </style>
 <div class="AreaContent">
-	<div class="CameraSnap">
-		<img src="<?php echo $eqLogic->getSnapshot();?>"/>
+	<div class="Snapshot">
+		<img class="CameraSnap" src="<?php echo $eqLogic->getSnapshot();?>"/>
 	</div>
 	<div class="Areas"></div>
 </div>
 <script>
-$('.AreaContent .CameraSnap img').load(function() {		 
+$('.AreaContent .CameraSnap .CameraSnap').load(function() {		 
  	/*for(var loop=0; loop<9; loop++){		
  		$('.AreaContent .Areas')		
  			.append($('<div>')		
