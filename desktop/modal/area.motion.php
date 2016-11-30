@@ -39,14 +39,17 @@ $eqLogic=eqLogic::byId(init('id'));
 }
 </style>
 <div class="AreaContent">
-	<img src="<?php echo $eqLogic->getSnapshot();?>"/>
-	<span class="Areas"></span>
+	<div class="CameraSnap">
+		<img src="<?php echo $eqLogic->getSnapshot();?>"/>
+	</div>
+	<div class="Areas"></div>
 </div>
 <div id="debug"></div>
 <script>
-$('.AreaContent').find('img').load(function() {
+var areas=$('.cmdAttr[data-l1key=configuration][data-l2key=area]').val();
+$('.AreaContent .CameraSnap img').load(function() {
 	for(var loop=0; loop<9; loop++){
-		$('.AreaContent').find('.Areas')
+		$('.AreaContent .Areas')
 			.append($('<div>')
 				.addClass('Area')
 				.attr('id','area_'+loop));
