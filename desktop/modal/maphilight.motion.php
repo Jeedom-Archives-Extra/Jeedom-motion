@@ -2,6 +2,7 @@
 if (!isConnect('admin')) {
 	throw new Exception('{{401 - Accès non autorisé}}');
 }
+$eqLogic=eqLogic::byId(init('id'));
 include_file('desktop', 'jquery.maphilight.min', 'js', 'motion');
  ?>
 <style>
@@ -34,32 +35,11 @@ include_file('desktop', 'jquery.maphilight.min', 'js', 'motion');
 }
 </style>
 <div class="polygon">
+  	<img class="CameraSnap" src="<?php echo $eqLogic->getSnapshot();?>"/>
 	<div id="div_displayArea"></div>
 	<map name="map" id="map"></map>
 </div>
 <script>
-
-$.ajax({
-	type: 'POST',
-	url: 'plugins/motion/core/ajax/motion.ajax.php',
-	data: {
-		action: 'WidgetHtml',
-		cameraId:eqLogiqId
-	},
-	dataType: 'json',
-	global: false,
-	error: function (request, status, error) {
-		handleAjaxError(request, status, error, $('#div_updatepreRequisAlert'));
-	},
-	success: function (data) {
-		if (data.result)
-		{
-			$('.polygon').append(data.result);
-			$('.polygon').find('.directDisplay'+eqLogiqId).clone().appendTo(".AreaContent");
-			$('.polygon').find('.eqLogic').remove('.eqLogic');
-		}
-	}
-});
 var coords=[];
 for(var loop=0; loop<areas.length; loop=loop+2)
 {
