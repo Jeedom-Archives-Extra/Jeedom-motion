@@ -46,15 +46,16 @@ $eqLogic=eqLogic::byId(init('id'));
 </div>
 <div id="debug"></div>
 <script>
-var areas=$('.cmdAttr[data-l1key=configuration][data-l2key=area]').val();
 $('.AreaContent .CameraSnap img').load(function() {
 	for(var loop=0; loop<9; loop++){
 		$('.AreaContent .Areas')
 			.append($('<div>')
 				.addClass('Area')
 				.attr('id','area_'+loop));
-		if(areas.indexOf(loop+1)>=0)
-			$('.AreaContent').find('#area_'+loop).addClass('Select');
+		/*if(areas.lenght>0){
+			if(areas.indexOf(loop+1)>=0)
+				$('.AreaContent').find('#area_'+loop).addClass('Select');
+		}*/
 	};
 	var offsetImg = $('.AreaContent').find('img').offset();
 	var offsetArea =$('.AreaContent').find('.Areas').offset();
