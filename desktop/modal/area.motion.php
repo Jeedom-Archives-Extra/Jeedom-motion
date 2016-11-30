@@ -22,15 +22,11 @@ $eqLogic=eqLogic::byId(init('id'));
 }
 .Area
 {
+	margin:0;
+	padding:0;
 	display:inline-block;
 	border-style: solid;
-    border-width: 2px;
-	margin-right: -2px;
-	margin-top: -2px;
-	margin-bottom: -2px;
-	padding:0;
-	font-size: 0;
-	word-spacing: -1;
+    	border-width: 2px;
 }
 .Select
 {
