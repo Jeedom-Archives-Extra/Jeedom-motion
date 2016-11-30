@@ -533,11 +533,7 @@ class motion extends eqLogic {
 		foreach($this->getCmd('info','maphilight',null,true) as $Commande){
 			if(is_object($Commande)){
 				$pointLocation = new pointLocation();
-				$points = array("50 70","70 40","-20 30","100 10","-10 -10","40 -20","110 -20");
-				$polygon = array("-50 30","50 70","100 50","80 10","110 -10","110 -30","-20 -50","-30 -40","10 -10","-10 10","-30 -20","-50 30");
-				// Les coordonnées du dernier point doivent être les mêmes que celles du premier, pour "boucler la boucle"
-				$IsInArea=$pointLocation->pointInPolygon($Parametres['X']." ".$Parametres['Y'], $Commande->getConfiguration('maphilightArea'));
-				//$IsInArea=maphilightDetect($Parametres['X'],$Parametres['Y'],$Commande->getConfiguration('maphilightArea'));
+				$IsInArea=$pointLocation->pointInPolygon(array($Parametres['X'],$Parametres['Y']), $Commande->getConfiguration('maphilightArea'));
 				log::add('motion','debug','Les coordonées de la détection '.$Parametres['X'].' '.$Parametres['Y'].' sont =>'.$IsInArea);
 				$Commande->setCollectDate('');
 				if ($IsInArea=='outside')
@@ -547,33 +543,6 @@ class motion extends eqLogic {
 				$Commande->save();
 			}
 		}
-	}
-	public function maphilightDetect($DetectX,$DetectY,$Area){
-		$TopY='';
-		for ($loop=0; $loop>count($Area); $loop=$loop+2)
-		{
-			if ($TopY=='')
-			{
-				if ($DetectX>=$Area[$loop]&& $DetectX<=$Area[$loop+2])
-				{
-					$TopY=$Area[$loop+1];
-				}
-			}
-			else
-			{
-				if ($DetectX<=$Area[$loop]&& $DetectX>=$Area[$loop+2])
-				{	
-					if ($DetectY<=$TopY&& $DetectY>=$Area[$loop+1])
-					{
-						return true;
-					}
-					else
-						$TopY='';
-				}
-			}
-		}
-		if ($TopY=='')
-			return false;
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//                                                                                                                                               //
