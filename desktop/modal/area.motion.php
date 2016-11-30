@@ -92,7 +92,7 @@ $('body').on('click','.Area',function() {
  		$(this).addClass('Select');		
  		//areas=areas+AreaSelect;		
  	}	
-	areas=$('.Select').attr('id').join("");
+	areas=$('.Select').attr('id').toString();
 	alert(areas);
  }); 
 </script>
