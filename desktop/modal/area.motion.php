@@ -35,9 +35,7 @@ $eqLogic=eqLogic::byId(init('id'));
 }
 </style>
 <div class="AreaContent">
-	<div class="Snapshot">
-		<img class="CameraSnap" src="<?php echo $eqLogic->getSnapshot();?>"/>
-	</div>
+	<img class="CameraSnap" src="<?php echo $eqLogic->getSnapshot();?>"/>
 	<div class="Areas">
 		<div class="Area" id="1"></div>
 		<div class="Area" id="2"></div>
@@ -64,6 +62,7 @@ var onImgLoad = function(selector, callback){
     });
 };
 onImgLoad('img', function(){	
+	alert('Image load');
  	$('.AreaContent .Areas').css('width', $(this).width());		
  	$('.AreaContent .Areas').css('height',$(this).height());		
  	$('.AreaContent .Area').css('width', ($(this).width()/3)-1);		
@@ -84,5 +83,6 @@ $('body').on('click','.Area',function() {
  		$(this).addClass('Select');		
  		areas=areas+AreaSelect;		
  	}	
+	alert(areas);
  }); 
 </script>
