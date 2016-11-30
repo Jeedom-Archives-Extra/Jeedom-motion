@@ -22,7 +22,7 @@ $eqLogic=eqLogic::byId(init('id'));
 }
 .Area
 {
-	margin:0;
+	margin:-2px;
 	padding:0;
 	display:inline-block;
 	border-style: solid;
