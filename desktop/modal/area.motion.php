@@ -93,5 +93,6 @@ $('body').on('click','.Area',function() {
  		//areas=areas+AreaSelect;		
  	}	
 	areas=$('.Select').attr('id').join("");
+	alert(areas);
  }); 
 </script>
