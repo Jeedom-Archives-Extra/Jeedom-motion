@@ -42,8 +42,8 @@
 					return true;
 			}
 		}
-		public function pointStringToCoordinates($pointString) {
-			$coordinates = explode(" ", $pointString);
+		public function pointStringToCoordinates($coordinates) {
+			//$coordinates = explode(" ", $pointString);
 			return array("x" => $coordinates[0], "y" => $coordinates[1]);
 		}
 	}
