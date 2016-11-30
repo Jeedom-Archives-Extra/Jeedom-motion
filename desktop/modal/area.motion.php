@@ -63,15 +63,11 @@ var onImgLoad = function(selector, callback){
         }
     });
 };
-onImgLoad('img', function(){
- 	//var offsetImg = $(this).offset();		
- 	//var offsetArea =$('.AreaContent .Areas').offset();		
+onImgLoad('img', function(){	
  	$('.AreaContent .Areas').css('width', $(this).width());		
  	$('.AreaContent .Areas').css('height',$(this).height());		
- 	$('.AreaContent .Area').css('width', ($(this).width()/3)-2);		
- 	$('.AreaContent .Area').css('height',($(this).height()/3)-2);		
- 	//$('.AreaContent .Areas').css('left',offsetImg.left - offsetArea.left);		
- 	//$('.AreaContent .Areas').css('top', offsetImg.top - offsetArea.top);	
+ 	$('.AreaContent .Area').css('width', ($(this).width()/3)-1);		
+ 	$('.AreaContent .Area').css('height',($(this).height()/3)-1);		
 	$.each(areas.split(''),function(area){
 		$('.AreaContent .Area[id='+area+']').addClass('Select');
 	});
@@ -88,6 +84,5 @@ $('body').on('click','.Area',function() {
  		$(this).addClass('Select');		
  		areas=areas+AreaSelect;		
  	}	
-	alert(areas);
  }); 
 </script>
