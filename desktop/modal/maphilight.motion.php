@@ -46,11 +46,11 @@ for(var loop=0; loop<areas.length; loop=loop+2)
 	var coord=[areas[loop],areas[loop+1]]
 	coords.push(coord);
 };
-$('.directDisplay').on('click', function (e) {
+$('.CameraSnap').on('click', function (e) {
 	setCoordinates(e);
 }); 
 function hightlight() {
-	$('.directDisplay').find('img').maphilight({
+	$('.CameraSnap').maphilight({
 		stroke: true,
 		fade: true, 
 		strokeColor: '4F95EA',
@@ -67,7 +67,7 @@ function hightlight() {
 function setCoordinates(e) {
 	var x = e.pageX;
 	var y = e.pageY;
-	var offset = $('.directDisplay').find('img').offset();
+	var offset = $('.CameraSnap').offset();
 	x -= parseInt(offset.left);
 	y -= parseInt(offset.top);
 	if(x < 0) { x = 0; }
