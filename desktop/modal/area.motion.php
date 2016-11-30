@@ -55,18 +55,29 @@ $eqLogic=eqLogic::byId(init('id'));
 	</div>
 </div>
 <script>
-//$('.AreaContent .CameraSnap .CameraSnap').load(function() {		 
-	
- 	var offsetImg = $('.AreaContent .CameraSnap .CameraSnap').offset();		
+var onImgLoad = function(selector, callback){
+    $(selector).each(function(){
+        if (this.complete || /*for IE 10-*/ $(this).height() > 0) {
+            callback.apply(this);
+        }
+        else {
+            $(this).on('load', function(){
+                callback.apply(this);
+            });
+        }
+    });
+};
+onImgLoad('img', function(){
+ 	var offsetImg = $(this).offset();		
  	var offsetArea =$('.AreaContent .Areas').offset();		
- 	$('.AreaContent .Areas').css('width', $('.AreaContent .CameraSnap .CameraSnap').width());		
- 	$('.AreaContent .Areas').css('height',$('.AreaContent .CameraSnap .CameraSnap').height());		
- 	$('.AreaContent .Area').css('width', $('.AreaContent .CameraSnap .CameraSnap').width()/3);		
- 	$('.AreaContent .Area').css('height',$('.AreaContent .CameraSnap .CameraSnap').height()/3);		
+ 	$('.AreaContent .Areas').css('width', $(this).width());		
+ 	$('.AreaContent .Areas').css('height',$(this).height());		
+ 	$('.AreaContent .Area').css('width', $(this).width()/3);		
+ 	$('.AreaContent .Area').css('height',$(this).height()/3);		
  	$('.AreaContent .Areas').css('left',offsetImg.left - offsetArea.left);		
- 	$('.AreaContent .Areas').css('top', offsetImg.top - offsetArea.top);*	
- //});		
- $('body').on('click','.Area',function (e) {		
+ 	$('.AreaContent .Areas').css('top', offsetImg.top - offsetArea.top);	
+});
+$('body').on('click','.Area',function() {		
  	var AreaSelect=parseInt($(this).attr('id'))+1;		
  	if (areas.indexOf(AreaSelect)>=0)		
  	{		
