@@ -56,24 +56,15 @@ $eqLogic=eqLogic::byId(init('id'));
 </div>
 <script>
 //$('.AreaContent .CameraSnap .CameraSnap').load(function() {		 
- 	/*for(var loop=0; loop<9; loop++){		
- 		$('.AreaContent .Areas')		
- 			.append($('<div>')		
- 				.addClass('Area')		
- 				.attr('id',loop));		
- 		/*if(areas.lenght>0){		
- 			if(areas.indexOf(loop+1)>=0)		
- 				$('.AreaContent').find('#area_'+loop).addClass('Select');		
- 		}*/		
- 	//};		
- 	/*var offsetImg = $('.AreaContent').find('img').offset();		
- 	var offsetArea =$('.AreaContent').find('.Areas').offset();		
- 	$('.AreaContent').find('.Areas').css('width', $(this).width());		
- 	$('.AreaContent').find('.Areas').css('height',$(this).height());		
- 	$('.AreaContent').find('.Area').css('width', $(this).width()/3);		
- 	$('.AreaContent').find('.Area').css('height',$(this).height()/3);		
- 	$('.AreaContent').find('.Areas').css('left',offsetImg.left - offsetArea.left);		
- 	$('.AreaContent').find('.Areas').css('top', offsetImg.top - offsetArea.top);*/		
+	
+ 	var offsetImg = $('.AreaContent .CameraSnap .CameraSnap').offset();		
+ 	var offsetArea =$('.AreaContent .Areas').offset();		
+ 	$('.AreaContent .Areas').css('width', $('.AreaContent .CameraSnap .CameraSnap').width());		
+ 	$('.AreaContent .Areas').css('height',$('.AreaContent .CameraSnap .CameraSnap').height());		
+ 	$('.AreaContent .Area').css('width', $('.AreaContent .CameraSnap .CameraSnap').width()/3);		
+ 	$('.AreaContent .Area').css('height',$('.AreaContent .CameraSnap .CameraSnap').height()/3);		
+ 	$('.AreaContent .Areas').css('left',offsetImg.left - offsetArea.left);		
+ 	$('.AreaContent .Areas').css('top', offsetImg.top - offsetArea.top);*	
  //});		
  $('body').on('click','.Area',function (e) {		
  	var AreaSelect=parseInt($(this).attr('id'))+1;		
