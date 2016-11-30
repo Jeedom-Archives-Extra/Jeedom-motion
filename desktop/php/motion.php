@@ -600,12 +600,12 @@ $eqLogics = eqLogic::byType('motion');
 					<div class="tab-pane" id="TextDisplay">
 					  <br/>
 						<legend>Texte a afficher sur le flux</legend>
-							# %Y = year, %m = month, %d = date,</br>
-							# %H = hour, %M = minute, %S = second,</br>
-							# %v = event, %q = frame number, %t = thread (camera) number,</br>
-							# %D = changed pixels, %N = noise level,</br>
-							# %i and %J = width and height of motion area,</br>
-							# %K and %L = X and Y coordinates of motion center</br>
+							# %Y = year, %m = month, %d = date,<br/>
+							# %H = hour, %M = minute, %S = second,<br/>
+							# %v = event, %q = frame number, %t = thread (camera) number,<br/>
+							# %D = changed pixels, %N = noise level,<br/>
+							# %i and %J = width and height of motion area,<br/>
+							# %K and %L = X and Y coordinates of motion center<br/>
 							# %C = value defined by text_event
 						<div class="form-horizontal">
 							<div class="form-group">
@@ -653,13 +653,13 @@ $eqLogics = eqLogic::byType('motion');
 					</div>
 					<div class="tab-pane" id="Filenames">
 						<legend>Parametre du nom des fichier</legend>
-							# %Y = year, %m = month, %d = date,</br>
-							# %H = hour, %M = minute, %S = second,</br>
-							# %v = event, %q = frame number, %t = thread (camera) number,</br>
-							# %D = changed pixels, %N = noise level,</br>
-							# %i and %J = width and height of motion area,</br>
-							# %K and %L = X and Y coordinates of motion center</br>
-							# %C = value defined by text_event</br>
+							# %Y = year, %m = month, %d = date,<br/>
+							# %H = hour, %M = minute, %S = second,<br/>
+							# %v = event, %q = frame number, %t = thread (camera) number,<br/>
+							# %D = changed pixels, %N = noise level,<br/>
+							# %i and %J = width and height of motion area,<br/>
+							# %K and %L = X and Y coordinates of motion center<br/>
+							# %C = value defined by text_event<br/>
 						<div class="form-horizontal">
 							<div class="form-group">
 								<label class="col-md-2  control-label">Nom du fichier snapshot :</label>
@@ -836,9 +836,9 @@ $eqLogics = eqLogic::byType('motion');
             <thead>
                 <tr>
                     <th>{{}}</th>
-                    <th>{{Nom}}</th>
-					<th>{{Action}}</th>
-                    <th>{{}}</th>
+                    	<th>{{Nom}}</th>
+			<th>{{Action}}</th>
+                   	<th>{{}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -853,9 +853,7 @@ $eqLogics = eqLogic::byType('motion');
                 </div>
             </fieldset>
         </form>
-
     </div>
 </div>
-
 <?php include_file('desktop', 'motion', 'js', 'motion'); ?>
 <?php include_file('core', 'plugin.template', 'js'); ?>
