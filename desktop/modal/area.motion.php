@@ -23,10 +23,10 @@ $eqLogic=eqLogic::byId(init('id'));
 .Area
 {
 	margin:-2px;
-	padding:0;
+	padding:-1px;
 	display:inline-block;
 	border-style: solid;
-    	border-width: 2px;
+    border-width: 2px;
 }
 .Select
 {
@@ -61,17 +61,16 @@ var onImgLoad = function(selector, callback){
         }
     });
 };
-onImgLoad('img', function(){	
-	alert('Image load');
+onImgLoad('.CameraSnap', function(){	
  	$('.AreaContent .Areas').css('width', $(this).width());		
  	$('.AreaContent .Areas').css('height',$(this).height());		
- 	$('.AreaContent .Area').css('width', ($(this).width()/3)-1);		
- 	$('.AreaContent .Area').css('height',($(this).height()/3)-1);		
-	$.each(areas.split(''),function(area){
+ 	$('.AreaContent .Area').css('width', $(this).width()/3);		
+ 	$('.AreaContent .Area').css('height',$(this).height()/3);		
+	$.each(areas.split(''),function(index,area){
 		$('.AreaContent .Area[id='+area+']').addClass('Select');
 	});
 });
-$('body').on('click','.Area',function() {		
+$('body').on('click','.AreaContent .Area',function() {		
  	var AreaSelect=$(this).attr('id');		
  	if (areas.indexOf(AreaSelect)>=0)		
  	{		
@@ -83,6 +82,5 @@ $('body').on('click','.Area',function() {
  		$(this).addClass('Select');		
  		areas=areas+AreaSelect;		
  	}	
-	alert(areas);
  }); 
 </script>
