@@ -1,29 +1,7 @@
-<div class="cmd #history# tooltips cmd-widget container-fluid" data-type="info" data-subtype="binary" data-cmd_id="#id#" title="#collectDate#">
-	<style>
-		.polygon {
-			  background-repeat: no-repeat;
-			  position:relative;
-			  width: 100%;
-			  height: 100%;
-		}
-	</style>
-	<!--div class="row">
-		<div class="center-block col-xs-12 h5 cmdName" id="cmdName#id#" style="margin-top:0;"><strong>#valueName#</strong></div>
-		<div class="center-block col-xs-12 iconCmd#id#" style="position:relative; width:180px; padding-right:120px; text-align:right;"></div>
-	</div-->
-	<div class="polygon">
-		<div id="div_displayArea"></div>
-		<map name="map" id="map"></map>
-	</div>
-	<script src="plugins/motion/desktop/js/jquery.maphilight.min.js">
-		if ("#displayName#" == "1") {
-			$(".cmd[data-cmd_id=#id#] .cmdName").show();
-			$(".cmd[data-cmd_id=#id#]").css("min-height", "185px");
-		} else {
-			$(".cmd[data-cmd_id=#id#] .cmdName").hide();
-			$(".cmd[data-cmd_id=#id#]").css("min-height", "165px");
-		}
-		$(".iconCmd#id#").empty();
+<div class="cmd cmd-widget" data-type="info" data-subtype="binary" data-cmd_id="#id#">
+	<map name="map" id="map"></map>
+	<script src="plugins/motion/desktop/js/jquery.maphilight.min.js"></script>
+	<script>
 		var hightlightColor='365E71';
 		if ("#state#" == "1")
 			hightlightColor='365E71';
@@ -33,7 +11,7 @@
 			.addClass("area") 
 			.attr('shape',shape)
 			.attr('coords',coords.toString()));
-		$(".cmd[data-cmd_id=#id#] ImgVideoFlux").maphilight({
+		$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.ImgVideoFlux').maphilight({
 			stroke: true,
 			fade: true, 
 			strokeColor: '4F95EA',
