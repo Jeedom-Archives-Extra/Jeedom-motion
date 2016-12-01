@@ -70,16 +70,18 @@ onImgLoad('.CameraSnap', function(){
 		$('.AreaContent .Area[id='+area+']').addClass('Select');
 	});
 });
-$('body').on('click','.AreaContent .Area',function() {		
+
+$('body').on('click','.AreaContent .Area',function(event) {
+  	$( event.target ).toggleClass( "Select" );		
  	var AreaSelect=$(this).attr('id');		
  	if (areas.indexOf(AreaSelect)>=0)		
  	{		
- 		$(this).removeClass('Select');		
+ 		//$(this).removeClass('Select');		
  		areas=areas.toString().replace(AreaSelect.toString(),'');
  	}		
  	else		
  	{		
- 		$(this).addClass('Select');		
+ 		//$(this).addClass('Select');		
  		areas=areas+AreaSelect;		
  	}	
  }); 
