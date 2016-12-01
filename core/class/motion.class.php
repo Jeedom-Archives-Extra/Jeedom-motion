@@ -188,7 +188,7 @@ class motion extends eqLogic {
 						/*if($maphilightArea=="")
 							$maphilightArea .='<div class="polygon"><div id="div_displayArea"></div><map name="map" id="map"></map></div>';
 						*/
-						$replace['#area#'] = $cmd->getConfiguration('maphilightArea');
+						$replace['#areas#'] = $cmd->getConfiguration('maphilightArea');
 						$maphilightArea .= template_replace($replace, $cmd->toHtml($_version, $cmdColor));
 					break;
 					default: 
