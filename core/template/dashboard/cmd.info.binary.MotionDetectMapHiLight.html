@@ -28,29 +28,23 @@
 		if ("#state#" == "1")
 			hightlightColor='365E71';
 		var coords=JSON.parse('#areas#');
-		updateCoords($(this).closest('.eqLogic-widget').find('#map'));
-		function hightlight(imageMapper) {
-			imageMapper.maphilight({
-				stroke: true,
-				fade: true, 
-				strokeColor: '4F95EA',
-				alwaysOn: true,
-				fillColor: hightlightColor,
-				fillOpacity: 0.2,
-				shadow: true,
-				shadowColor: hightlightColor ,
-				shadowRadius: 5,
-				shadowOpacity: 0.6,
-				shadowPosition: 'outside'
-			});
-		}
-		function updateCoords(map) {
-			var shape = (coords.length <= 2) ? 'rect' : 'poly';
-			map.html($('<area>')
-				.addClass("area") 
-				.attr('shape',shape)
-				.attr('coords',coords.toString()));
-			hightlight(map.closest('.eqLogic-widget').find('.ImgVideoFlux'));
-		}
+		var shape = (coords.length <= 2) ? 'rect' : 'poly';
+		$(".cmd[data-cmd_id=#id#] #map").html($('<area>')
+			.addClass("area") 
+			.attr('shape',shape)
+			.attr('coords',coords.toString()));
+		$(".cmd[data-cmd_id=#id#] ImgVideoFlux").maphilight({
+			stroke: true,
+			fade: true, 
+			strokeColor: '4F95EA',
+			alwaysOn: true,
+			fillColor: hightlightColor,
+			fillOpacity: 0.2,
+			shadow: true,
+			shadowColor: hightlightColor ,
+			shadowRadius: 5,
+			shadowOpacity: 0.6,
+			shadowPosition: 'outside'
+		});
 	</script>
 </div>
