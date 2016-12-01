@@ -550,8 +550,8 @@ class motion extends eqLogic {
 		foreach($this->getCmd('info','maphilight',null,true) as $Commande){
 			if(is_object($Commande)){
 				log::add('motion','debug','Mise a jours de l\'état de MapHiLight : '.$Commande->getHumanName());
-				$pointLocation = new pointLocation();
-				$IsInArea=$pointLocation->pointInPolygon(array($Parametres['X'],$Parametres['Y']), $Commande->getConfiguration('maphilightArea'));
+				$pointLocation = new pointLocation($Commande->getConfiguration('maphilightArea'));
+				$IsInArea=$pointLocation->pointInPolygon(array("x" => $Parametres['X'],"y" => $Parametres['Y']));
 				log::add('motion','debug','Les coordonées de la détection x='.$Parametres['X'].' y='.$Parametres['Y'].' sont =>'.$IsInArea);
 				$Commande->setCollectDate('');
 				if ($IsInArea=='outside')
