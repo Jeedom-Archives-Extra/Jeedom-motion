@@ -1,5 +1,5 @@
 <div class="cmd cmd-widget" data-type="info" data-subtype="binary" data-cmd_id="#id#">
-	<script src="plugins/motion/desktop/js/jquery.maphilight.min.js"></script>
+	<script type="text/javascript" src="plugins/motion/desktop/js/jquery.maphilight.min.js"></script>
 	<script>
 		var hightlightColor='3498db';
 		if ("#state#" == "1")
@@ -15,12 +15,15 @@
 			$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.MapHiLight').append(
               			$('<area>')
 				      	.addClass("area")
-				      	.attr('data-maphilight', JSON.stringify(data))
-				      	.trigger('alwaysOn.maphilight')
 				      	.attr('shape',shape)
+					.attr('title,"#name#")
+					.attr('alt',"#name#")
+					//.attr('href',"")
+					//.attr('target',"_blank")
 			  		.attr('coords',coords.toString()));
-          	if(coords.lenght>1)
-          		$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.ImgVideoFlux').maphilight();
-        });
+			$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.ImgVideoFlux').maphilight();
+			$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.MapHiLight area')
+				.attr('data-maphilight', JSON.stringify(data)).trigger('alwaysOn.maphilight');
+        	});
 	</script>
 </div>
