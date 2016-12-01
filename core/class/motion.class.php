@@ -170,12 +170,12 @@ class motion extends eqLogic {
 		);
 		$action = '';
 		$maphilightArea = '';
+		$detect="";
 		foreach ($this->getCmd() as $cmd) {
-			if($cmd->getLogicalId() == '')
 			if ($cmd->getIsVisible() == 1) {
 				switch($cmd->getLogicalId()){
 					case 'detect':
-						$replace_eqLogic['#detect#'] = $cmd->toHtml($_version, $cmdColor);
+						$detect = $cmd->toHtml($_version, $cmdColor);
 					break;
 					case 'lastImg':
 					case 'detect':
@@ -187,7 +187,8 @@ class motion extends eqLogic {
 					case 'maphilight':
 						/*if($maphilightArea=="")
 							$maphilightArea .='<div class="polygon"><div id="div_displayArea"></div><map name="map" id="map"></map></div>';
-						*/$replace['#area#'] = $cmd->getConfiguration('maphilightArea');
+						*/
+						$replace['#area#'] = $cmd->getConfiguration('maphilightArea');
 						$maphilightArea .= template_replace($replace, $cmd->toHtml($_version, $cmdColor));
 					break;
 					default: 
@@ -202,6 +203,7 @@ class motion extends eqLogic {
 				}
 			}
 		}
+		$replace_eqLogic['#detect#']= $detect;
 		$replace_eqLogic['#maphilightArea#'] = $maphilightArea;
 		$replace_eqLogic['#action#'] = $action;
 		if ($_version == 'dview' || $_version == 'mview') {
