@@ -1,4 +1,4 @@
-<div style="padding:0;width:165px;min-height:165px;" class="cmd #history# tooltips cmd-widget container-fluid" data-type="info" data-subtype="binary" data-cmd_id="#id#" title="#collectDate#">
+<div class="cmd #history# tooltips cmd-widget container-fluid" data-type="info" data-subtype="binary" data-cmd_id="#id#" title="#collectDate#">
 	<?php
 		include_file('desktop', 'jquery.maphilight.min', 'js', 'motion');
 	?>
@@ -30,7 +30,7 @@
 		var hightlightColor='365E71';
 		if ("#state#" == "1")
 			hightlightColor='365E71';
-		var coords=JSON.parse("#areas#");
+		var coords=JSON.parse('#areas#');
 		updateCoords();
 		function hightlight() {
 			$(this).colset('.eqLogic-widget').find('.ImgVideoFlux').maphilight({
