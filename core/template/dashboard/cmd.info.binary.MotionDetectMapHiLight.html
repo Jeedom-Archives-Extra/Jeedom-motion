@@ -35,12 +35,16 @@ include_file('desktop', 'jquery.maphilight.min', 'js', 'motion');
 	<map name="map" id="map"></map>
 </div>
 <script>
-if(areas.length>2){
+/*if(areas.length>2){
 	var coords=JSON.parse(areas);
   	updateCoords();
-}	
+}*/
+var hightlightColor='365E71';
+if ("#state#" == "1")
+	hightlightColor='365E71';
+   
 function hightlight() {
-	$('.CameraSnap').maphilight({
+	$(this).colset('.eqLogic-widget').find('.ImgVideoFlux').maphilight({
 		stroke: true,
 		fade: true, 
 		strokeColor: '4F95EA',
@@ -48,7 +52,7 @@ function hightlight() {
 		fillColor: '365E71',
 		fillOpacity: 0.2,
 		shadow: true,
-		shadowColor: '365E71',
+		shadowColor: hightlightColor ,
 		shadowRadius: 5,
 		shadowOpacity: 0.6,
 		shadowPosition: 'outside'
