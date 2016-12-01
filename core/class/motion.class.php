@@ -169,11 +169,14 @@ class motion extends eqLogic {
 			'#cmdColor#' => $cmdColor,
 		);
 		$action = '';
+		$maphilightArea = '';
 		foreach ($this->getCmd() as $cmd) {
-			if($cmd->getLogicalId() == 'detect')
-				$replace_eqLogic['#detect#'] = $cmd->toHtml($_version, $cmdColor);
+			if($cmd->getLogicalId() == '')
 			if ($cmd->getIsVisible() == 1) {
 				switch($cmd->getLogicalId()){
+					case 'detect':
+						$replace_eqLogic['#detect#'] = $cmd->toHtml($_version, $cmdColor);
+					break;
 					case 'lastImg':
 					case 'detect':
 					case 'detectionactif':
@@ -182,14 +185,10 @@ class motion extends eqLogic {
 					case 'browseRecord':
 					break;
 					case 'maphilight':
-						if ($cmd->getDisplay('hideOn' . $version) == 1) 
-							continue;
-						if ($cmd->getDisplay('forceReturnLineBefore', 0) == 1) 
-							$action .= '<br/>';
-						$replace['#area#'] = $cmd->getConfiguration('maphilightArea');
-						$action .= template_replace($replace, $cmd->toHtml($_version, $cmdColor));
-						if ($cmd->getDisplay('forceReturnLineAfter', 0) == 1) 
-							$action .= '<br/>';
+						/*if($maphilightArea=="")
+							$maphilightArea .='<div class="polygon"><div id="div_displayArea"></div><map name="map" id="map"></map></div>';
+						*/$replace['#area#'] = $cmd->getConfiguration('maphilightArea');
+						$maphilightArea .= template_replace($replace, $cmd->toHtml($_version, $cmdColor));
 					break;
 					default: 
 						if ($cmd->getDisplay('hideOn' . $version) == 1) 
@@ -203,7 +202,7 @@ class motion extends eqLogic {
 				}
 			}
 		}
-
+		$replace_eqLogic['#maphilightArea#'] = $maphilightArea;
 		$replace_eqLogic['#action#'] = $action;
 		if ($_version == 'dview' || $_version == 'mview') {
 			$object = $this->getObject();
