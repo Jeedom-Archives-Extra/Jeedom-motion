@@ -1,23 +1,25 @@
 <?php
 	class pointLocation {
 		private $pointOnVertex = true; 
-		// Vérifier si le point est exactement sur un sommet ?
-		public function pointInPolygon($point, $polygon, $pointOnVertex = true) {
+		private $polygon = array(); 
+		function __construct($polygon=array(), $pointOnVertex = true) {
 			$this->pointOnVertex = $pointOnVertex;
+			$polygon[]=$polygon[0];
 			// Transformer chaque couple de coordonnées en un tableau de 2 valeurs (x et y)
-			$point = $this->pointStringToCoordinates($point);
-			$vertices = array(); 
 			foreach ($polygon as $vertex) 
-				$vertices[] = $this->pointStringToCoordinates($vertex); 
+				$this->polygon[] = $this->pointStringToCoordinates($vertex); 
+		}
+		// Vérifier si le point est exactement sur un sommet ?
+		public function pointInPolygon($point) {
 			// Vérfier si le point est exactement sur un sommet
-			if ($this->pointOnVertex == true && $this->pointOnVertex($point, $vertices) == true) 
+			if ($this->pointOnVertex == true && $this->pointOnVertex($point, $this->polygon) == true) 
 				return "vertex";
 			// Vérifier si le point est dans le polygone ou sur le bord
 			$intersections = 0; 
-			$vertices_count = count($vertices);
-			for ($i=1; $i < $vertices_count; $i++) {
-				$vertex1 = $vertices[$i-1]; 
-				$vertex2 = $vertices[$i];
+			$polygon_count = count($this->polygon);
+			for ($i=1; $i < $polygon_count; $i++) {
+				$vertex1 = $this->polygon[$i-1]; 
+				$vertex2 = $this->polygon[$i];
 				// Vérifier si le point est sur un bord horizontal
 				if ($vertex1['y'] == $vertex2['y'] && $vertex1['y'] == $point['y'] && $point['x'] > min($vertex1['x'], $vertex2['x']) && $point['x'] < max($vertex1['x'], $vertex2['x']))  
 					return "boundary";
