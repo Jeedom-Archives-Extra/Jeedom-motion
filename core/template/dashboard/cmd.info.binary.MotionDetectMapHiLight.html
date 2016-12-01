@@ -33,7 +33,7 @@
 		var coords=JSON.parse('#areas#');
 		updateCoords();
 		function hightlight() {
-			$(this).colset('.eqLogic-widget').find('.ImgVideoFlux').maphilight({
+			$(this).closest('.eqLogic-widget').find('.ImgVideoFlux').maphilight({
 				stroke: true,
 				fade: true, 
 				strokeColor: '4F95EA',
@@ -49,7 +49,7 @@
 		}
 		function updateCoords() {
 			var shape = (coords.length <= 2) ? 'rect' : 'poly';
-			$(this).colset('.eqLogic-widget').find('#map').html($('<area>')
+			$(this).closest('.eqLogic-widget').find('#map').html($('<area>')
 				.addClass("area") 
 				.attr('shape',shape)
 				.attr('coords',coords.toString()));
