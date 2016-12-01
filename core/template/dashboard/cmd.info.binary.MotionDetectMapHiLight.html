@@ -28,9 +28,9 @@
 		if ("#state#" == "1")
 			hightlightColor='365E71';
 		var coords=JSON.parse('#areas#');
-		updateCoords();
-		function hightlight() {
-			$(this).closest('.eqLogic-widget').find('.ImgVideoFlux').maphilight({
+		updateCoords($(this).closest('.eqLogic-widget').find('#map'));
+		function hightlight(imageMapper) {
+			imageMapper.maphilight({
 				stroke: true,
 				fade: true, 
 				strokeColor: '4F95EA',
@@ -44,13 +44,13 @@
 				shadowPosition: 'outside'
 			});
 		}
-		function updateCoords() {
+		function updateCoords(map) {
 			var shape = (coords.length <= 2) ? 'rect' : 'poly';
-			$(this).closest('.eqLogic-widget').find('#map').html($('<area>')
+			map.html($('<area>')
 				.addClass("area") 
 				.attr('shape',shape)
 				.attr('coords',coords.toString()));
-			hightlight();
+			hightlight(map.closest('.eqLogic-widget').find('.ImgVideoFlux'));
 		}
 	</script>
 </div>
