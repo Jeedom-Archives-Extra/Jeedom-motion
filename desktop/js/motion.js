@@ -187,7 +187,7 @@ function addCmdToTable(_cmd) {
 				.append($('<i class="fa fa-check">'))
 				.text('{{Editer}}')
 				.trigger("click"))
-			.append($('<input type="hidden" class="cmdAttr" data-l1key="configuration" data-l2key="area">')));
+			.append($('<input type="hidden" class="cmdAttr" data-l1key="configuration" data-l2key="area"/>')));
 	}
 	if (_cmd.logicalId =='maphilight')
 	{
@@ -196,7 +196,9 @@ function addCmdToTable(_cmd) {
 				.append($('<i class="fa fa-check">'))
 				.text('{{Editer}}')
 				.trigger("click"))
-			.append($('<input type="hidden" class="cmdAttr" data-l1key="configuration" data-l2key="maphilightArea">')));
+			.append($('<input type="hidden" class="cmdAttr" data-l1key="template" data-l2key="dashboard" value="MotionDetectMapHiLight"/>'))
+			.append($('<input type="hidden" class="cmdAttr" data-l1key="template" data-l2key="mobile" value="MotionDetectMapHiLight"/>'))
+			.append($('<input type="hidden" class="cmdAttr" data-l1key="configuration" data-l2key="maphilightArea"/>')));
 	}
 	tr.append(action);
 	var parmetre=$('<td>');
