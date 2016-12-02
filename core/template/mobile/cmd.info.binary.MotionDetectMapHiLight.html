@@ -1,26 +1,30 @@
 <div class="cmd cmd-widget" data-type="info" data-subtype="binary" data-cmd_id="#id#">
-	<script src="plugins/motion/desktop/js/jquery.maphilight.min.js"></script>
+	<script type="text/javascript" src="plugins/motion/desktop/js/jquery.maphilight.min.js"></script>
 	<script>
-		var hightlightColor='3498db';
+		var hightlightColor='FF0000';
 		if ("#state#" == "1")
-			hightlightColor='2c3e50';
+			hightlightColor='00FF00';
 		var coords=JSON.parse('#areas#');
 		var shape = (coords.length <= 2) ? 'rect' : 'poly';
 		var data = {};
 		data.alwaysOn = false;
-       		data.fillColor = '3498db';
-        	data.strokeColor = '';
-        	data.fillOpacity = '0.6';
+		data.fill = true;
+		data.fillColor = hightlightColor;
+		data.fillOpacity = '1';
+		data.strokeColor = '0000FF';
 		$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.ImgVideoFlux').ready(function(){
 			$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.MapHiLight').append(
               			$('<area>')
 				      	.addClass("area")
-				      	.attr('data-maphilight', JSON.stringify(data))
-				      	.trigger('alwaysOn.maphilight')
 				      	.attr('shape',shape)
+					.attr('title',"#name#")
+					.attr('alt',"#id#")
+					.attr('data-maphilight', JSON.stringify(data))
+					//.attr('href',"")
+					//.attr('target',"_blank")
 			  		.attr('coords',coords.toString()));
-          	if(coords.lenght>1)
-          		$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.ImgVideoFlux').maphilight();
-        });
+			$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.ImgVideoFlux').maphilight();
+			$('area[alt=#id#]').trigger('alwaysOn.maphilight');
+        	});
 	</script>
 </div>
