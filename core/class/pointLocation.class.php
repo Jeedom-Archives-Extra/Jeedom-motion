@@ -2,12 +2,16 @@
 	class pointLocation {
 		private $pointOnVertex = true; 
 		private $polygon = array(); 
-		function __construct($polygon=array(), $pointOnVertex = true) {
+		function __construct($polygon, $pointOnVertex = true) {
 			$this->pointOnVertex = $pointOnVertex;
 			// Transformer chaque couple de coordonnées en un tableau de 2 valeurs (x et y)
-			foreach ($polygon as $vertex) 
-				$this->polygon[] = $this->pointStringToCoordinates($vertex); 
-			$this->polygon[] =$this->polygon[0];
+			if(is_array($polygon) && count($polygon) >0){
+				foreach ($polygon as $vertex) 
+					$this->polygon[] = $this->pointStringToCoordinates($vertex); 
+				$this->polygon[] =$this->polygon[0];
+			}
+			else
+				return false;
 		}
 		// Vérifier si le point est exactement sur un sommet ?
 		public function pointInPolygon($point) {
