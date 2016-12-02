@@ -4,10 +4,10 @@
 		private $polygon = array(); 
 		function __construct($polygon=array(), $pointOnVertex = true) {
 			$this->pointOnVertex = $pointOnVertex;
-			$polygon[]=$polygon[0];
 			// Transformer chaque couple de coordonnées en un tableau de 2 valeurs (x et y)
 			foreach ($polygon as $vertex) 
 				$this->polygon[] = $this->pointStringToCoordinates($vertex); 
+			$this->polygon[] =$this->polygon[0];
 		}
 		// Vérifier si le point est exactement sur un sommet ?
 		public function pointInPolygon($point) {
