@@ -1,6 +1,19 @@
 <div class="cmd cmd-widget" data-type="info" data-subtype="binary" data-cmd_id="#id#">
 	<script type="text/javascript" src="plugins/motion/desktop/js/jquery.maphilight.min.js"></script>
 	<script>
+		var onImgLoad = function(selector, callback){
+		    $(selector).each(function(){
+			if (this.complete || /*for IE 10-*/ $(this).height() > 0) {
+			    callback.apply(this);
+			}
+			else {
+			    $(this).on('load', function(){
+				callback.apply(this);
+			    });
+			}
+		    });
+		};
+		
 		var hightlightColor='FF0000';
 		if ("#state#" == "1")
 			hightlightColor='00FF00';
@@ -11,20 +24,34 @@
 		data.fill = true;
 		data.fillColor = hightlightColor;
 		data.fillOpacity = '1';
-		data.strokeColor = '0000FF';
+		data.strokeColor = hightlightColor;
 		$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.ImgVideoFlux').ready(function(){
-			$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.MapHiLight').append(
-              			$('<area>')
-				      	.addClass("area")
-				      	.attr('shape',shape)
-					.attr('title',"#name#")
-					.attr('alt',"#id#")
-					.attr('data-maphilight', JSON.stringify(data))
-					//.attr('href',"")
-					//.attr('target',"_blank")
-			  		.attr('coords',coords.toString()));
-			$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.ImgVideoFlux').maphilight();
-			$('area[alt=#id#]').trigger('alwaysOn.maphilight');
+			onImgLoad('.ImgVideoFlux', function(){
+				$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.MapHiLight').append(
+					$('<area>')
+						.addClass("area")
+						.attr('shape',shape)
+						.attr('title',"#name#")
+						.attr('alt',"#id#")
+						//.attr('data-maphilight', JSON.stringify(data))
+						//.attr('href',"")
+						//.attr('target',"_blank")
+						.attr('coords',coords.toString()));
+				$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.ImgVideoFlux')
+					.maphilight(
+						stroke: true,
+						fade: true, 
+						strokeColor: hightlightColor,
+						alwaysOn: true,
+						fillColor: hightlightColor,
+						fillOpacity: 0.2,
+						shadow: true,
+						shadowColor: '000000',
+						shadowRadius: 5,
+						shadowOpacity: 0.6,
+						shadowPosition: 'outside');
+				$('area[alt=#id#]').trigger('alwaysOn.maphilight');
+			});
         	});
 	</script>
 </div>
