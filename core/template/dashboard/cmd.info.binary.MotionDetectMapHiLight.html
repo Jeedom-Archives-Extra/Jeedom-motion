@@ -37,7 +37,19 @@
 						//.attr('href',"")
 						//.attr('target',"_blank")
 						.attr('coords',coords.toString()));
-				$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.ImgVideoFlux').maphilight(data);
+				$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.ImgVideoFlux')
+					.maphilight(
+						stroke: true,
+						fade: true, 
+						strokeColor: hightlightColor,
+						alwaysOn: true,
+						fillColor: hightlightColor,
+						fillOpacity: 0.2,
+						shadow: true,
+						shadowColor: '000000',
+						shadowRadius: 5,
+						shadowOpacity: 0.6,
+						shadowPosition: 'outside');
 				$('area[alt=#id#]').trigger('alwaysOn.maphilight');
 			});
         	});
