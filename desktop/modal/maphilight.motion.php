@@ -48,7 +48,19 @@ if(areas.length>2){
 $('.CameraSnap').on('click', function (e) {
 	setCoordinates(e);
 }); 
-function hightlight() {
+var onImgLoad = function(selector, callback){
+    $(selector).each(function(){
+        if (this.complete || /*for IE 10-*/ $(this).height() > 0) {
+            callback.apply(this);
+        }
+        else {
+            $(this).on('load', function(){
+                callback.apply(this);
+            });
+        }
+    });
+};
+onImgLoad('.CameraSnap', function(){	
 	$('.CameraSnap').maphilight({
 		stroke: true,
 		fade: true, 
@@ -62,7 +74,7 @@ function hightlight() {
 		shadowOpacity: 0.6,
 		shadowPosition: 'outside'
 	});
-}
+});
 function setCoordinates(e) {
 	var x = e.pageX;
 	var y = e.pageY;
