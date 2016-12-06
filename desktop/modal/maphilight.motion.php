@@ -43,7 +43,6 @@ include_file('desktop', 'jquery.maphilight.min', 'js', 'motion');
 var coords=[];
 if(areas.length>2){
 	var coords=JSON.parse(areas);
-  	updateCoords();
 }	
 $('.CameraSnap').on('click', function (e) {
 	setCoordinates(e);
@@ -60,7 +59,10 @@ var onImgLoad = function(selector, callback){
         }
     });
 };
-onImgLoad('.CameraSnap', function(){	
+onImgLoad('.CameraSnap', function(){
+  	updateCoords();
+});
+function hightlight(){
 	$('.CameraSnap').maphilight({
 		stroke: true,
 		fade: true, 
@@ -74,7 +76,7 @@ onImgLoad('.CameraSnap', function(){
 		shadowOpacity: 0.6,
 		shadowPosition: 'outside'
 	});
-});
+};
 function setCoordinates(e) {
 	var x = e.pageX;
 	var y = e.pageY;
