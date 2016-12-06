@@ -19,11 +19,11 @@
 				      	.attr('shape',shape)
 					.attr('title',"#name#")
 					.attr('alt',"#id#")
-					.attr('data-maphilight', JSON.stringify(data))
+					//.attr('data-maphilight', JSON.stringify(data))
 					//.attr('href',"")
 					//.attr('target',"_blank")
 			  		.attr('coords',coords.toString()));
-			$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.ImgVideoFlux').maphilight();
+			$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.ImgVideoFlux').maphilight(data);
 			$('area[alt=#id#]').trigger('alwaysOn.maphilight');
         	});
 	</script>
