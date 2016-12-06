@@ -19,12 +19,6 @@
 			hightlightColor='00FF00';
 		var coords=JSON.parse('#areas#');
 		var shape = (coords.length <= 2) ? 'rect' : 'poly';
-		var data = {};
-		data.alwaysOn = false;
-		data.fill = true;
-		data.fillColor = hightlightColor;
-		data.fillOpacity = '1';
-		data.strokeColor = hightlightColor;
 		$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.ImgVideoFlux').ready(function(){
 			onImgLoad('.ImgVideoFlux', function(){
 				$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.MapHiLight').append(
@@ -33,12 +27,11 @@
 						.attr('shape',shape)
 						.attr('title',"#name#")
 						.attr('alt',"#id#")
-						//.attr('data-maphilight', JSON.stringify(data))
 						//.attr('href',"")
 						//.attr('target',"_blank")
 						.attr('coords',coords.toString()));
 				$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.ImgVideoFlux')
-					.maphilight(
+					.maphilight({
 						stroke: true,
 						fade: true, 
 						strokeColor: hightlightColor,
@@ -49,7 +42,8 @@
 						shadowColor: '000000',
 						shadowRadius: 5,
 						shadowOpacity: 0.6,
-						shadowPosition: 'outside');
+						shadowPosition: 'outside'
+					});
 				$('area[alt=#id#]').trigger('alwaysOn.maphilight');
 			});
         	});
