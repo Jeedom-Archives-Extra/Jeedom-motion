@@ -213,4 +213,8 @@ function addCmdToTable(_cmd) {
 	$('#table_cmd tbody').append(tr);
 	$('#table_cmd tbody tr:last').setValues(_cmd, '.cmdAttr');
 	UpdateCameraUSB();
-	}
+	if (_cmd.logicalId =='maphilight'){
+ 		$('#table_cmd .cmdAttr[data-l1key=template][data-l2key=dashboard]').val('MotionDetectMapHiLight');
+   		$('#table_cmd .cmdAttr[data-l1key=template][data-l2key=mobile]').val('MotionDetectMapHiLight');
+  	}
+}  
