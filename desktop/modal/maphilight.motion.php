@@ -44,7 +44,7 @@ var coords=[];
 if(areas.length>2){
 	var coords=JSON.parse(areas);
 }	
-$('.CameraSnap').on('click', function (e) {
+$('body').on('click', '.CameraSnap', function (e) {
 	setCoordinates(e);
 }); 
 var onImgLoad = function(selector, callback){
