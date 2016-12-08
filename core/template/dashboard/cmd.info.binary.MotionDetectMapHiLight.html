@@ -7,34 +7,32 @@
 				hightlightColor='00FF00';
 			var coords=JSON.parse('#areas#');
 			var shape = (coords.length <= 2) ? 'rect' : 'poly';
-			$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('#Video#id#').ready(function(){
-				var data= {};
-				      data.stroke=true;
-				      data.fade=true;
-				      data.strokeColor= hightlightColor;
-				      data.alwaysOn= true;
-				      data.fillColor= hightlightColor;
-				      data.fillOpacity= 0.2;
-				      data.shadow= true;
-				      data.shadowColor= '000000';
-				      data.shadowRadius= 5;
-				      data.shadowOpacity= 0.6;
-				      data.shadowPosition= 'outside';
-				      if($('.MapHiLight .area[alt=#id#]').length ==0){
-					      $(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.MapHiLight').append(
-						      $('<area>')
-						      .addClass("area")
-						      .attr('shape',shape)
-						      .attr('title',"#name#")
-						      .attr('alt',"#id#")
-						      .attr('data-maphilight',JSON.stringify(data))
-						      //.attr('href',"")
-						      //.attr('target',"_blank")
-						      .attr('coords',coords.toString()));
-				      }
-				$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('#Video#id#').maphilight();
-				$('.area[alt=#id#]').trigger('alwaysOn.maphilight');
-			});
+			var data= {};
+			      data.stroke=true;
+			      data.fade=true;
+			      data.strokeColor= hightlightColor;
+			      data.alwaysOn= true;
+			      data.fillColor= hightlightColor;
+			      data.fillOpacity= 0.2;
+			      data.shadow= true;
+			      data.shadowColor= '000000';
+			      data.shadowRadius= 5;
+			      data.shadowOpacity= 0.6;
+			      data.shadowPosition= 'outside';
+			      if($('.MapHiLight .area[alt=#id#]').length ==0){
+				      $(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.MapHiLight').append(
+					      $('<area>')
+					      .addClass("area")
+					      .attr('shape',shape)
+					      .attr('title',"#name#")
+					      .attr('alt',"#id#")
+					      .attr('data-maphilight',JSON.stringify(data))
+					      //.attr('href',"")
+					      //.attr('target',"_blank")
+					      .attr('coords',coords.toString()));
+			      }
+			$('#Video#id#').maphilight();
+			$('.area[alt=#id#]').trigger('alwaysOn.maphilight');
         	});
 	</script>
 </div>
