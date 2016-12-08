@@ -513,7 +513,7 @@ class motion extends eqLogic {
 	public function SendLastSnap($file){
 		if($this->getConfiguration('alertMessageCommand')!=''){
 			$directory=$this->getSnapshotDiretory(true);
-			if(file_existe($directory.$file){
+			if(file_existe($directory.$file)){
 				$_options['files']=array();
 					$_options['files'][]=$directory.$file;
 				/*foreach (array_diff(scandir($directory,1), array('..', '.')) as $file) {
