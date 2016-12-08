@@ -4,11 +4,11 @@
         <span style="font-weight:bold;"><a href="#eqLink#">#name#</a></span>
     </center>
     <center>
-        <span class="directDisplay zoom cursor" style="width : 90%;max-height:90%">
+        <span style="width : 90%;max-height:90%">
 			<span class="Detection" style="position:absolute;right:0;">
 				#detect#
 			</span>
-			<img class="ImgVideoFlux img-responsive"src="plugins/motion/core/template/icones/no-image-blanc.png"  data-eqLogic_id="#id#" style="z-index:1" onload="refreshImgCam#id#();"/>
+			<img id="Video#id#"class="ImgVideoFlux img-responsive"src="plugins/motion/core/template/icones/no-image-blanc.png"  data-eqLogic_id="#id#" style="z-index:1" onload="refreshImgCam#id#();"/>
 		</span>
         #action#
         <span class="cmd cmd-widget" data-type="action" data-subtype="other">
@@ -40,7 +40,7 @@
 						return;
 					}
 					if(!data.result){
-						$(".ImgVideoFlux").attr('src','plugins/motion/core/template/icones/no-image-blanc.png');
+						$("#Video#id#").attr('src','plugins/motion/core/template/icones/no-image-blanc.png');
 					}
 					else {
 						var url = data.result;
@@ -49,8 +49,8 @@
 						}else{
 							url += '?t='+(new Date()).getTime();
 						}
-                    				$(".eqLogic[data-eqLogic_id=#id#] .ImgVideoFlux").attr('src',url);
-							 if($('.eqLogic[data-eqLogic_id=#id#] .directDisplay').html() != undefined)
+                    				$(".eqLogic[data-eqLogic_id=#id#] #Video#id#").attr('src',url);
+							 if($('.eqLogic[data-eqLogic_id=#id#] #Video#id#').html() != undefined)
 							   timeoutCamera#id# = setTimeout(refreshImgCam#id#, '#refreshDelay#');
 					}
 				}
