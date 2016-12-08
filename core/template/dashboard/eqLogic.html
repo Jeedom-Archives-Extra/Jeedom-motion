@@ -1,4 +1,5 @@
 <div class="eqLogic eqLogic-widget allowResize" data-eqLogic_id="#id#" data-version="dashboard" style="background-color: #background_color#;height: #height#;width: #width#;#style#;min-height: 80px;min-weight:80px;">
+	<script type="text/javascript" src="plugins/motion/desktop/js/jquery.maphilight.min.js"></script>
 	<span class="statusCmd" style="position : absolute;left : 5px;bottom:0px; width : 30px;z-index: 1030;"></span>
     	<center class="widget-name">
         	<span style="font-weight:bold;"><a href="#eqLink#">#name#</a></span>
@@ -48,6 +49,7 @@
 						}else{
 							url += '?t='+(new Date()).getTime();
 						}
+						$('#Video#id#').maphilight();
                     				$(".eqLogic[data-eqLogic_id=#id#] #Video#id#").attr('src',url);
 							 if($('.eqLogic[data-eqLogic_id=#id#] #Video#id#').html() != undefined)
 							   timeoutCamera#id# = setTimeout(refreshImgCam#id#, '#refreshDelay#');
