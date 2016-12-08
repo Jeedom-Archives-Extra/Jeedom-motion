@@ -1,53 +1,40 @@
 <div class="cmd cmd-widget" data-type="info" data-subtype="binary" data-cmd_id="#id#">
 	<script type="text/javascript" src="plugins/motion/desktop/js/jquery.maphilight.min.js"></script>
 	<script>
-		var onImgLoad = function(selector, callback){
-		    $(selector).each(function(){
-			if (this.complete || /*for IE 10-*/ $(this).height() > 0) {
-			    callback.apply(this);
-			}
-			else {
-			    $(this).on('load', function(){
-				callback.apply(this);
-			    });
-			}
-		    });
-		};
-		
-		var hightlightColor='FF0000';
-		if ("#state#" == "0")
-			hightlightColor='00FF00';
-		var coords=JSON.parse('#areas#');
-		var shape = (coords.length <= 2) ? 'rect' : 'poly';
-		$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.ImgVideoFlux').ready(function(){
-			//onImgLoad('.ImgVideoFlux', function(){  
-			var data= {};
-			      data.stroke=true;
-			      data.fade=true;
-			      data.strokeColor= hightlightColor;
-			      data.alwaysOn= true;
-			      data.fillColor= hightlightColor;
-			      data.fillOpacity= 0.2;
-			      data.shadow= true;
-			      data.shadowColor= '000000';
-			      data.shadowRadius= 5;
-			      data.shadowOpacity= 0.6;
-			      data.shadowPosition= 'outside';
-			      if($('.MapHiLight .area[alt=#id#]').length ==0){
-				      $(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.MapHiLight').append(
-					      $('<area>')
-					      .addClass("area")
-					      .attr('shape',shape)
-					      .attr('title',"#name#")
-					      .attr('alt',"#id#")
-					      .attr('data-maphilight',JSON.stringify(data))
-					      //.attr('href',"")
-					      //.attr('target',"_blank")
-					      .attr('coords',coords.toString()));
-			      }
-			$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.ImgVideoFlux').maphilight();
-			$('.area[alt=#id#]').trigger('alwaysOn.maphilight');
-		//});
+		$(function() {		
+			var hightlightColor='FF0000';
+			if ("#state#" == "0")
+				hightlightColor='00FF00';
+			var coords=JSON.parse('#areas#');
+			var shape = (coords.length <= 2) ? 'rect' : 'poly';
+			$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('#Video#id#').ready(function(){
+				var data= {};
+				      data.stroke=true;
+				      data.fade=true;
+				      data.strokeColor= hightlightColor;
+				      data.alwaysOn= true;
+				      data.fillColor= hightlightColor;
+				      data.fillOpacity= 0.2;
+				      data.shadow= true;
+				      data.shadowColor= '000000';
+				      data.shadowRadius= 5;
+				      data.shadowOpacity= 0.6;
+				      data.shadowPosition= 'outside';
+				      if($('.MapHiLight .area[alt=#id#]').length ==0){
+					      $(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.MapHiLight').append(
+						      $('<area>')
+						      .addClass("area")
+						      .attr('shape',shape)
+						      .attr('title',"#name#")
+						      .attr('alt',"#id#")
+						      .attr('data-maphilight',JSON.stringify(data))
+						      //.attr('href',"")
+						      //.attr('target',"_blank")
+						      .attr('coords',coords.toString()));
+				      }
+				$(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('#Video#id#').maphilight();
+				$('.area[alt=#id#]').trigger('alwaysOn.maphilight');
+			});
         	});
 	</script>
 </div>
