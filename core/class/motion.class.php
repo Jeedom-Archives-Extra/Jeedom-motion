@@ -539,11 +539,11 @@ class motion extends eqLogic {
 	}
 	public function UpdateDetection($Parametres){
 		log::add('motion','debug','Détection sur la camera => '.$this->getName().' => '.$Parametres['state']);
-		$this->SendLastSnap($Parametres['file']);
+		$this->SendLastSnap($Parametres['file'].'.jpg');
 		$Commande=$this->getCmd('info','detect');
 		if(is_object($Commande))
 		{
-			$Commande->setCollectDate('');
+			//$Commande->setCollectDate('');
 			$Commande->event($Parametres['state']);
 			$Commande->save();
 		}
@@ -556,7 +556,7 @@ class motion extends eqLogic {
 				$pointLocation = new pointLocation($Commande->getConfiguration('maphilightArea'));
 				$IsInArea=$pointLocation->pointInPolygon(array("x" => $Parametres['X'],"y" => $Parametres['Y']));
 				log::add('motion','debug','Les coordonées de la détection x='.$Parametres['X'].' y='.$Parametres['Y'].' sont =>'.$IsInArea);
-				$Commande->setCollectDate('');
+				//$Commande->setCollectDate('');
 				if ($IsInArea=='outside')
 					$Commande->event(false);
 				else
@@ -673,7 +673,7 @@ class motionCmd extends cmd {
 				$MotionService->detection($valeur,$IdMotionCamera);
 				log::add('motion','debug','La detection sur la camera '.$this->getEqLogic()->getName().' est a :'.$return);
 				$listener=cmd::byId($this->getValue());
-				$listener->setCollectDate('');
+				//$listener->setCollectDate('');
 				$listener->event($return);
 				$listener->save();
 			break;
@@ -683,7 +683,7 @@ class motionCmd extends cmd {
 				$MotionService->detection($valeur,$IdMotionCamera);
 				log::add('motion','debug','La detection sur la camera '.$this->getEqLogic()->getName().' est a :'.$return);
 				$listener=cmd::byId($this->getValue());
-				$listener->setCollectDate('');
+				//$listener->setCollectDate('');
 				$listener->event($return);
 				$listener->save();
 			break;
@@ -693,14 +693,14 @@ class motionCmd extends cmd {
 				$MotionService->detection($valeur,$IdMotionCamera);
 				log::add('motion','debug','La detection sur la camera '.$this->getEqLogic()->getName().' est a :'.$return);
 				$listener=cmd::byId($this->getValue());
-				$listener->setCollectDate('');
+				//$listener->setCollectDate('');
 				$listener->event($return);
 				$listener->save();
 			break;
 			case 'detectionstatus':
 				$return=$MotionService->getCameraStatut($IdMotionCamera);
 				log::add('motion','debug','La detection sur la camera '.$this->getEqLogic()->getName().' est a :'.$return);
-				$this->setCollectDate('');
+				//$this->setCollectDate('');
 				$this->event($return);
 				$this->save();
 			break;
