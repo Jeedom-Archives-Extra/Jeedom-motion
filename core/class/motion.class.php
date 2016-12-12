@@ -112,40 +112,27 @@ class motion extends eqLogic {
 		$this->setConfiguration('ipv6_enabled',0);       
     	}
 	public function postSave() {
-		//if($this->getLogicalId()==''){
-			//if(count(eqLogic::byLogicalId('/etc/motion/motion.conf','motion',true))==0)
-			//	$file='/etc/motion/motion.conf';
-			//else
-				$file='/etc/motion/thread'.$this->getId().'.conf';
-			//$this->setLogicalId($file);
-			//$this->save();
-		//}else{
-			self::NewThread($this);
-			self::AddCommande($this,__('Parcourir les video', __FILE__),'browseRecord',"info", 'binary');
-			self::AddCommande($this,'Détection','detect',"info", 'binary','','','Motion');
-			self::AddCommande($this,'Prendre une photo','snapshot',"action", 'other','<i class="fa fa-camera"></i>');
-			self::AddCommande($this,'Enregistrer une video','makemovie',"action", 'other','<i class="fa fa-circle"></i>');
-			$StatusDetection= self::AddCommande($this,'Status la détection','detectionstatus',"info", 'binary');
-			$CommandeDetection=self::AddCommande($this,'Activer la détection','detectionactif',"action", 'other');
-			$CommandeDetection->setValue($StatusDetection->getId());
-			$CommandeDetection->save();
-			$CommandeDetection=self::AddCommande($this,'Desactiver la détection','detectionpause',"action", 'other');
-			$CommandeDetection->setValue($StatusDetection->getId());
-			$CommandeDetection->save();
-			$CommandeDetection=self::AddCommande($this,'Activer/Desactiver la détection','detectionaction',"action", 'other','','MotionDetect');
-			$CommandeDetection->setValue($StatusDetection->getId());
-			$CommandeDetection->save();
-		//}
+		$file='/etc/motion/thread'.$this->getId().'.conf';
+		self::NewThread($this);
+		self::AddCommande($this,__('Parcourir les video', __FILE__),'browseRecord',"info", 'binary');
+		self::AddCommande($this,'Détection','detect',"info", 'binary','','','Motion');
+		self::AddCommande($this,'Prendre une photo','snapshot',"action", 'other','<i class="fa fa-camera"></i>');
+		self::AddCommande($this,'Enregistrer une video','makemovie',"action", 'other','<i class="fa fa-circle"></i>');
+		$StatusDetection= self::AddCommande($this,'Status la détection','detectionstatus',"info", 'binary');
+		$CommandeDetection=self::AddCommande($this,'Activer la détection','detectionactif',"action", 'other');
+		$CommandeDetection->setValue($StatusDetection->getId());
+		$CommandeDetection->save();
+		$CommandeDetection=self::AddCommande($this,'Desactiver la détection','detectionpause',"action", 'other');
+		$CommandeDetection->setValue($StatusDetection->getId());
+		$CommandeDetection->save();
+		$CommandeDetection=self::AddCommande($this,'Activer/Desactiver la détection','detectionaction',"action", 'other','','MotionDetect');
+		$CommandeDetection->setValue($StatusDetection->getId());
+		$CommandeDetection->save();
     	}
 	public function preRemove() {
 		self::RemoveThread($this);
     	}
  	public function toHtml($_version = 'dashboard') {
-      
-		/*$replace = $this->preToHtml($_version);
-		if (!is_array($replace)) {
-			return $replace;
-		}*/
 		if ($this->getIsEnable() != 1) {
 			return '';
 		}
@@ -185,9 +172,6 @@ class motion extends eqLogic {
 					case 'browseRecord':
 					break;
 					case 'maphilight':
-						/*if($maphilightArea=="")
-							$maphilightArea .='<div class="polygon"><div id="div_displayArea"></div><map name="map" id="map"></map></div>';
-						*/
 						$replace['#areas#'] = $cmd->getConfiguration('maphilightArea');
 						$maphilightArea .= template_replace($replace, $cmd->toHtml($_version, $cmdColor));
 					break;
@@ -250,8 +234,6 @@ class motion extends eqLogic {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static function UpdateMotionConf() {
 		$file='/etc/motion/motion.conf';
-		/*$Camera=eqLogic::byLogicalId('/etc/motion/motion.conf','motion',false);
-		self::WriteThread($Camera,$file);*/
 		if($fp = fopen($file,"w")){
 			fputs($fp,'daemon on');
 			fputs($fp, "\n");
@@ -376,7 +358,6 @@ class motion extends eqLogic {
 		}
 	}
 	public static function NewThread($Camera) {
-		//$file=$Camera->getLogicalId();
 		$file='/etc/motion/thread'.$Camera->getId().'.conf';
 		self::WriteThread($Camera,$file);
 		self::UpdateMotionConf();
@@ -421,7 +402,6 @@ class motion extends eqLogic {
 				break;
 			}
 		}
-		//log::add('motion','debug','URL de la Camera: '.$urlStream);
 		return $urlStream;
 	}
 	public function url_exists($url) {
@@ -513,16 +493,10 @@ class motion extends eqLogic {
 	public function SendLastSnap($file){
 		if($this->getConfiguration('alertMessageCommand')!=''){
 			$directory=$this->getSnapshotDiretory(true);
+			log::add('motion','debug','photo:'.$directory.$file);
 			if(file_exists($directory.$file)){
 				$_options['files']=array();
 					$_options['files'][]=$directory.$file;
-				/*foreach (array_diff(scandir($directory,1), array('..', '.')) as $file) {
-					$path_parts = pathinfo($file);
-					if($path_parts['extension'] == 'jpg'){
-						$_options['files'][]=$directory.$file;
-						break;
-					}
-				}*/
 				$_options['title'] = '[Jeedom][Motion] Détéction sur la camera '.$this->getHumanName();
 				$_options['message'] = 'La camera '.$this->getHumanName(). ' a détécté un mouvement. Voici le snapshot qui a ete pris';
 				log::add('motion','debug','Envoie d\'un message avec les derniere photo:'.json_encode($_options['files']));
@@ -543,7 +517,7 @@ class motion extends eqLogic {
 		$Commande=$this->getCmd('info','detect');
 		if(is_object($Commande))
 		{
-			//$Commande->setCollectDate('');
+			$Commande->setCollectDate('');
 			$Commande->event($Parametres['state']);
 			$Commande->save();
 		}
@@ -556,7 +530,7 @@ class motion extends eqLogic {
 				$pointLocation = new pointLocation($Commande->getConfiguration('maphilightArea'));
 				$IsInArea=$pointLocation->pointInPolygon(array("x" => $Parametres['X'],"y" => $Parametres['Y']));
 				log::add('motion','debug','Les coordonées de la détection x='.$Parametres['X'].' y='.$Parametres['Y'].' sont =>'.$IsInArea);
-				//$Commande->setCollectDate('');
+				$Commande->setCollectDate('');
 				if ($IsInArea=='outside')
 					$Commande->event(false);
 				else
@@ -673,7 +647,7 @@ class motionCmd extends cmd {
 				$MotionService->detection($valeur,$IdMotionCamera);
 				log::add('motion','debug','La detection sur la camera '.$this->getEqLogic()->getName().' est a :'.$return);
 				$listener=cmd::byId($this->getValue());
-				//$listener->setCollectDate('');
+				$listener->setCollectDate('');
 				$listener->event($return);
 				$listener->save();
 			break;
@@ -683,7 +657,7 @@ class motionCmd extends cmd {
 				$MotionService->detection($valeur,$IdMotionCamera);
 				log::add('motion','debug','La detection sur la camera '.$this->getEqLogic()->getName().' est a :'.$return);
 				$listener=cmd::byId($this->getValue());
-				//$listener->setCollectDate('');
+				$listener->setCollectDate('');
 				$listener->event($return);
 				$listener->save();
 			break;
@@ -693,14 +667,14 @@ class motionCmd extends cmd {
 				$MotionService->detection($valeur,$IdMotionCamera);
 				log::add('motion','debug','La detection sur la camera '.$this->getEqLogic()->getName().' est a :'.$return);
 				$listener=cmd::byId($this->getValue());
-				//$listener->setCollectDate('');
+				$listener->setCollectDate('');
 				$listener->event($return);
 				$listener->save();
 			break;
 			case 'detectionstatus':
 				$return=$MotionService->getCameraStatut($IdMotionCamera);
 				log::add('motion','debug','La detection sur la camera '.$this->getEqLogic()->getName().' est a :'.$return);
-				//$this->setCollectDate('');
+				$this->setCollectDate('');
 				$this->event($return);
 				$this->save();
 			break;
