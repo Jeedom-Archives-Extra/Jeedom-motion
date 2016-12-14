@@ -276,7 +276,11 @@ class motion extends eqLogic {
 			fputs($fp, 'target_dir '.$Camera->getSnapshotDiretory(true));
 			fputs($fp, "\n");
 			$adress=network::getNetworkAccess('internal').'/plugins/motion/core/php/detect.php';
-			fputs($fp, 'on_event_end curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$Camera->getId().'&state=0&file='.$Camera->getConfiguration('picture_filename').'&width=%i&height=%J&X=%K&Y=%L"');
+			fputs($fp, 'on_event_start curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$Camera->getId().'&state=1"');
+			fputs($fp, "\n");
+			fputs($fp, 'on_motion_detected curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$Camera->getId().'&state=1&file='.$Camera->getConfiguration('picture_filename').'&width=%i&height=%J&X=%K&Y=%L"');
+			fputs($fp, "\n");
+			fputs($fp, 'on_event_end curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$Camera->getId().'&state=0"');
 			fputs($fp, "\n");
 			//Definition du parametre area_detect
 			$AreaDetect='';
@@ -287,10 +291,7 @@ class motion extends eqLogic {
 			if ($AreaDetect!=''){
 				fputs($fp, 'area_detect '.$AreaDetect);					
 				fputs($fp, "\n");
-				fputs($fp, 'on_area_detected curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$Camera->getId().'&state=1&file='.$Camera->getConfiguration('picture_filename').'&width=%i&height=%J&X=%K&Y=%L"');
-				fputs($fp, "\n");
-			}else{
-				fputs($fp, 'on_event_start curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$Camera->getId().'&state=1&file='.$Camera->getConfiguration('picture_filename').'&width=%i&height=%J&X=%K&Y=%L"');
+				fputs($fp, 'on_area_detected curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$Camera->getId().'&state=1&file='.$Camera->getConfiguration('picture_filename').'"');
 				fputs($fp, "\n");
 			}
 			fputs($fp, 'netcam_keepalive force');
