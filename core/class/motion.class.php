@@ -514,7 +514,8 @@ class motion extends eqLogic {
 	}
 	public function UpdateDetection($Parametres){
 		log::add('motion','debug','Détection sur la camera => '.$this->getName().' => '.$Parametres['state']);
-		$this->SendLastSnap($Parametres['file'].'.jpg');
+		if(isset($Parametres['file']))
+			$this->SendLastSnap($Parametres['file'].'.jpg');
 		$Commande=$this->getCmd('info','detect');
 		if(is_object($Commande))
 		{
@@ -525,18 +526,21 @@ class motion extends eqLogic {
 		else
 			log::add('motion','debug','Impossible de trouver la commande');
 		$this->CleanFolder();
-		foreach($this->getCmd('info','maphilight',null,true) as $Commande){
-			if(is_object($Commande)){
-				log::add('motion','debug','Mise a jours de l\'état de MapHiLight : '.$Commande->getHumanName());
-				$pointLocation = new pointLocation($Commande->getConfiguration('maphilightArea'));
-				$IsInArea=$pointLocation->pointInPolygon(array("x" => $Parametres['X'],"y" => $Parametres['Y']));
-				log::add('motion','debug','Les coordonées de la détection x='.$Parametres['X'].' y='.$Parametres['Y'].' sont =>'.$IsInArea);
-				$Commande->setCollectDate('');
-				if ($IsInArea=='outside')
-					$Commande->event(false);
-				else
-					$Commande->event(true);
-				$Commande->save();
+		
+		if(isset($Parametres['X']) && isset($Parametres['Y'])){
+			foreach($this->getCmd('info','maphilight',null,true) as $Commande){
+				if(is_object($Commande)){
+					log::add('motion','debug','Mise a jours de l\'état de MapHiLight : '.$Commande->getHumanName());
+					$pointLocation = new pointLocation($Commande->getConfiguration('maphilightArea'));
+					$IsInArea=$pointLocation->pointInPolygon(array("x" => $Parametres['X'],"y" => $Parametres['Y']));
+					log::add('motion','debug','Les coordonées de la détection x='.$Parametres['X'].' y='.$Parametres['Y'].' sont =>'.$IsInArea);
+					$Commande->setCollectDate('');
+					if ($IsInArea=='outside')
+						$Commande->event(false);
+					else
+						$Commande->event(true);
+					$Commande->save();
+				}
 			}
 		}
 	}
