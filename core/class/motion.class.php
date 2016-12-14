@@ -161,10 +161,8 @@ class motion extends eqLogic {
 		foreach ($this->getCmd() as $cmd) {
 			if ($cmd->getIsVisible() == 1) {
 				switch($cmd->getLogicalId()){
-					case 'detect':
-						//$replace=array();
-						//if(isset($cmd->getConfiguration('DetectArea')))
-							$replace['#MotionArea#'] = $cmd->getConfiguration('DetectArea');
+					case 'detect':	
+						$replace['#MotionArea#'] = ($cmd->getConfiguration('DetectArea') == '') ? '[]' : $cmd->getConfiguration('DetectArea'));
 						$detect = template_replace($replace, $cmd->toHtml($_version, $cmdColor));
 					break;
 					case 'lastImg':
