@@ -1,0 +1,35 @@
+<div class="cmd cmd-widget" data-type="info" data-subtype="binary" data-cmd_id="#id#">
+	<script>
+		$(function() {		
+			var coords=JSON.parse('#MotionArea#');
+			var data= {};
+			data.stroke=true;
+			data.fade=true;
+			data.strokeColor= '00FF00';
+			data.alwaysOn= true;
+      data.fill= true;
+			if ("#state#" == "0")
+        data.fill= false;
+			data.fillColor= '00FF00';
+			data.fillOpacity= 0.2;
+			data.shadow= true;
+			data.shadowColor= '000000';
+			data.shadowRadius= 5;
+			data.shadowOpacity= 0.6;
+			data.shadowPosition= 'outside';
+			      if($('.MapHiLight .area[alt=#id#]').length ==0){
+				      $(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.MapHiLight').append(
+					      $('<area>')
+					      .addClass("area")
+					      .attr('shape','rect')
+					      .attr('title',"#name#")
+					      .attr('alt',"#id#")
+					      .attr('data-maphilight',JSON.stringify(data))
+					      //.attr('href',"")
+					      //.attr('target',"_blank")
+					      .attr('coords',coords.toString()));
+			      }
+			$('.area[alt=#id#]').trigger('alwaysOn.maphilight');
+        	});
+	</script>
+</div>
