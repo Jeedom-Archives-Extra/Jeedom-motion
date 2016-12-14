@@ -115,7 +115,7 @@ class motion extends eqLogic {
 		$file='/etc/motion/thread'.$this->getId().'.conf';
 		self::NewThread($this);
 		self::AddCommande($this,__('Parcourir les video', __FILE__),'browseRecord',"info", 'binary');
-		self::AddCommande($this,'Détection','detect',"info", 'binary','','','Motion');
+		self::AddCommande($this,'Détection','detect',"info", 'binary','','MotionDetectZone');
 		self::AddCommande($this,'Prendre une photo','snapshot',"action", 'other','<i class="fa fa-camera"></i>');
 		self::AddCommande($this,'Enregistrer une video','makemovie',"action", 'other','<i class="fa fa-circle"></i>');
 		$StatusDetection= self::AddCommande($this,'Status la détection','detectionstatus',"info", 'binary');
@@ -162,10 +162,13 @@ class motion extends eqLogic {
 			if ($cmd->getIsVisible() == 1) {
 				switch($cmd->getLogicalId()){
 					case 'detect':
+						$replace=array();
 						$detect = $cmd->toHtml($_version, $cmdColor);
+						if(isset($cmd->getConfiguration('DetectArea')))
+							$replace['#MotionArea#'] = $cmd->getConfiguration('DetectArea');
+						$detect = template_replace($replace, $cmd->toHtml($_version, $cmdColor));
 					break;
 					case 'lastImg':
-					case 'detect':
 					case 'detectionactif':
 					case 'detectionpause':
 					case 'detectionstatus':
@@ -520,29 +523,35 @@ class motion extends eqLogic {
 		if(is_object($Commande))
 		{
 			$Commande->setCollectDate('');
-			$Commande->event($Parametres['state']);
+			$Commande->event($Parametres['state']);		
+			if(isset($Parametres['X']) && isset($Parametres['Y'])){
+				foreach($this->getCmd('info','maphilight',null,true) as $maphilightCmd){
+					if(is_object($Commande)){
+						log::add('motion','debug','Mise a jours de l\'état de MapHiLight : '.$maphilightCmd->getHumanName());
+						$pointLocation = new pointLocation($maphilightCmd->getConfiguration('maphilightArea'));
+						$IsInArea=$pointLocation->pointInPolygon(array("x" => $Parametres['X'],"y" => $Parametres['Y']));
+						log::add('motion','debug','Les coordonées de la détection x='.$Parametres['X'].' y='.$Parametres['Y'].' sont =>'.$IsInArea);
+						$maphilightCmd->setCollectDate('');
+						if ($IsInArea=='outside')
+							$maphilightCmd->event(false);
+						else
+							$maphilightCmd->event(true);
+						$maphilightCmd->save();
+					}
+				}
+				if(isset($Parametres['width']) && isset($Parametres['height'])){
+					$coord=array($Parametres['X']+($Parametres['width']/2),
+						     $Parametres['Y']+($Parametres['height']/2),
+						     $Parametres['X']-($Parametres['width']/2),
+						     $Parametres['Y']-($Parametres['height']/2));
+					$Commande->setConfiguration('DetectArea',json_encode($coord));
+				}
+			}
 			$Commande->save();
 		}
 		else
 			log::add('motion','debug','Impossible de trouver la commande');
 		$this->CleanFolder();
-		
-		if(isset($Parametres['X']) && isset($Parametres['Y'])){
-			foreach($this->getCmd('info','maphilight',null,true) as $Commande){
-				if(is_object($Commande)){
-					log::add('motion','debug','Mise a jours de l\'état de MapHiLight : '.$Commande->getHumanName());
-					$pointLocation = new pointLocation($Commande->getConfiguration('maphilightArea'));
-					$IsInArea=$pointLocation->pointInPolygon(array("x" => $Parametres['X'],"y" => $Parametres['Y']));
-					log::add('motion','debug','Les coordonées de la détection x='.$Parametres['X'].' y='.$Parametres['Y'].' sont =>'.$IsInArea);
-					$Commande->setCollectDate('');
-					if ($IsInArea=='outside')
-						$Commande->event(false);
-					else
-						$Commande->event(true);
-					$Commande->save();
-				}
-			}
-		}
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//                                                                                                                                               //
@@ -618,6 +627,8 @@ class motionCmd extends cmd {
 		if($this->getLogicalId() == '')
 		{
 			$this->setLogicalId('maphilight');
+     			$this->setTemplate('dashboard', 'MotionDetectMapHiLight');
+			$this->setTemplate('mobile', 'MotionDetectMapHiLight');
 		}
 	}
 	public function execute($_options = array()) {
