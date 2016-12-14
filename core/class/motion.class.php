@@ -162,9 +162,8 @@ class motion extends eqLogic {
 			if ($cmd->getIsVisible() == 1) {
 				switch($cmd->getLogicalId()){
 					case 'detect':
-						$replace=array();
-						$detect = $cmd->toHtml($_version, $cmdColor);
-						if(isset($cmd->getConfiguration('DetectArea')))
+						//$replace=array();
+						//if(isset($cmd->getConfiguration('DetectArea')))
 							$replace['#MotionArea#'] = $cmd->getConfiguration('DetectArea');
 						$detect = template_replace($replace, $cmd->toHtml($_version, $cmdColor));
 					break;
@@ -526,7 +525,7 @@ class motion extends eqLogic {
 			$Commande->event($Parametres['state']);		
 			if(isset($Parametres['X']) && isset($Parametres['Y'])){
 				foreach($this->getCmd('info','maphilight',null,true) as $maphilightCmd){
-					if(is_object($Commande)){
+					if(is_object($maphilightCmd)){
 						log::add('motion','debug','Mise a jours de l\'état de MapHiLight : '.$maphilightCmd->getHumanName());
 						$pointLocation = new pointLocation($maphilightCmd->getConfiguration('maphilightArea'));
 						$IsInArea=$pointLocation->pointInPolygon(array("x" => $Parametres['X'],"y" => $Parametres['Y']));
