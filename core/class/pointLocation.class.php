@@ -15,6 +15,7 @@
 		}
 		// Vérifier si le point est exactement sur un sommet ?
 		public function pointInPolygon($point) {
+			log::add('motion','debug','Points polygon : '.json_encode($this->polygon));
 			// Vérfier si le point est exactement sur un sommet
 			if ($this->pointOnVertex == true && $this->pointOnVertex($point, $this->polygon) == true) 
 				return "vertex";
@@ -36,6 +37,8 @@
 						$intersections++; 
 				} 
 			} 
+			
+			log::add('motion','debug','Nb intersections : '.$intersections);
 			// Si le nombre de bords par lesquels on passe est impair, le point est dans le polygone. 
 			if ($intersections % 2 != 0) 
 				return "inside";
