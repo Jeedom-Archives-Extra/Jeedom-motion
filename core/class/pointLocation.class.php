@@ -4,10 +4,8 @@
 		private $polygon = array(); 
 		function __construct($polygon, $pointOnVertex = true) {
 			$this->pointOnVertex = $pointOnVertex;
-			log::add('motion','debug','point coordinates : '.$polygon);
 			if(is_string($polygon))
 				$polygon=json_decode($polygon);
-			log::add('motion','debug','point coordinates : '.json_encode($polygon));
 			// Transformer chaque couple de coordonnées en un tableau de 2 valeurs (x et y)
 			if(is_array($polygon) && count($polygon) >0){
 				foreach ($polygon as $vertex)
@@ -19,7 +17,6 @@
 		}
 		// Vérifier si le point est exactement sur un sommet ?
 		public function pointInPolygon($point) {
-			log::add('motion','debug','Points polygon : '.json_encode($this->polygon));
 			// Vérfier si le point est exactement sur un sommet
 			if ($this->pointOnVertex == true && $this->pointOnVertex($point, $this->polygon) == true) 
 				return "vertex";
@@ -42,7 +39,6 @@
 				} 
 			} 
 			
-			log::add('motion','debug','Nb intersections : '.$intersections);
 			// Si le nombre de bords par lesquels on passe est impair, le point est dans le polygone. 
 			if ($intersections % 2 != 0) 
 				return "inside";
