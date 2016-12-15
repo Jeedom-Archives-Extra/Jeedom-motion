@@ -4,9 +4,11 @@
 		private $polygon = array(); 
 		function __construct($polygon, $pointOnVertex = true) {
 			$this->pointOnVertex = $pointOnVertex;
+			log::add('motion','debug','point coordinates : '.$polygon);
+			log::add('motion','debug','point coordinates : '.json_encode($polygon));
 			// Transformer chaque couple de coordonnées en un tableau de 2 valeurs (x et y)
 			if(is_array($polygon) && count($polygon) >0){
-				foreach ($polygon as $vertex) 
+				foreach ($polygon as $vertex)
 					$this->polygon[] = $this->pointStringToCoordinates($vertex); 
 				$this->polygon[] =$this->polygon[0];
 			}
@@ -53,6 +55,7 @@
 		}
 		public function pointStringToCoordinates($coordinates) {
 			//$coordinates = explode(" ", $pointString);
+			log::add('motion','debug','point coordinates : '.json_encode($coordinates));
 			return array("x" => $coordinates[0], "y" => $coordinates[1]);
 		}
 	}
