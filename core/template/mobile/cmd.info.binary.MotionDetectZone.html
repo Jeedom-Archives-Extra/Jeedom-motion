@@ -26,9 +26,7 @@
 					      .addClass("area")
 					      .attr('shape','rect')
 					      .attr('title',"#name#")
-					      .attr('alt',"#id#")
-					      //.attr('href',"")
-					      //.attr('target',"_blank"));
+					      .attr('alt',"#id#"));
 			      }
 			$('.area[alt=#id#]').attr('data-maphilight',JSON.stringify(data)).attr('coords',coords.toString());
 			$('.area[alt=#id#]').trigger('alwaysOn.maphilight');
