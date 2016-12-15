@@ -22,14 +22,12 @@
 				      $(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.MapHiLight').append(
 					      $('<area>')
 					      .addClass("area")
-					      .attr('shape',shape)
 					      .attr('title',"#name#")
-					      .attr('alt',"#id#")
-					      .attr('data-maphilight',JSON.stringify(data))
-					      //.attr('href',"")
-					      //.attr('target',"_blank")
-					      .attr('coords',coords.toString()));
+					      .attr('alt',"#id#"));
 			      }
+			$('.area[alt=#id#]').attr('shape',shape)
+					      .attr('coords',coords.toString())
+					      .attr('data-maphilight',JSON.stringify(data));
 			$('.area[alt=#id#]').trigger('alwaysOn.maphilight');
         	});
 	</script>
