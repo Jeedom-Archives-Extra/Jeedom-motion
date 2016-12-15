@@ -513,37 +513,40 @@ class motion extends eqLogic {
 		}
 	}
 	public function UpdateDetection($Parametres){
-		log::add('motion','debug','Détection sur la camera => '.$this->getName().' => '.$Parametres['state']);
+		$State=$Parametres['state'];
+		log::add('motion','debug','Détection sur la camera => '.$this->getName().' => '.$State);
 		if(isset($Parametres['file']))
 			$this->SendLastSnap($Parametres['file'].'.jpg');
 		$Commande=$this->getCmd('info','detect');
 		if(is_object($Commande))
-		{
-			$Commande->setCollectDate('');
-			$Commande->event($Parametres['state']);		
-			if(isset($Parametres['X']) && isset($Parametres['Y'])){
-				foreach($this->getCmd('info','maphilight',null,true) as $maphilightCmd){
-					if(is_object($maphilightCmd)){
-						log::add('motion','debug','Mise a jours de l\'état de MapHiLight : '.$maphilightCmd->getHumanName());
+		{	
+			foreach($this->getCmd('info','maphilight',null,true) as $maphilightCmd){
+				if(is_object($maphilightCmd)){
+					$maphilightCmd->setCollectDate('');
+					$maphilightCmd->event($State);
+					log::add('motion','debug','Mise a jours de l\'état de MapHiLight : '.$maphilightCmd->getHumanName());
+					if(isset($Parametres['X']) && isset($Parametres['Y'])){
 						$pointLocation = new pointLocation($maphilightCmd->getConfiguration('maphilightArea'));
 						$IsInArea=$pointLocation->pointInPolygon(array("x" => $Parametres['X'],"y" => $Parametres['Y']));
 						log::add('motion','debug','Les coordonées de la détection x='.$Parametres['X'].' y='.$Parametres['Y'].' sont =>'.$IsInArea);
-						$maphilightCmd->setCollectDate('');
 						if ($IsInArea=='outside')
 							$maphilightCmd->event(false);
 						else
 							$maphilightCmd->event(true);
-						$maphilightCmd->save();
 					}
-				}
-				if(isset($Parametres['width']) && isset($Parametres['height'])){
-					$coord=array($Parametres['X']+($Parametres['width']/2),
-						     $Parametres['Y']+($Parametres['height']/2),
-						     $Parametres['X']-($Parametres['width']/2),
-						     $Parametres['Y']-($Parametres['height']/2));
-					$Commande->setConfiguration('DetectArea',json_encode($coord));
+					$maphilightCmd->save();
 				}
 			}
+			if(isset($Parametres['X']) && isset($Parametres['Y']) && isset($Parametres['width']) && isset($Parametres['height']))
+				$coord=array($Parametres['X']+($Parametres['width']/2),
+					     $Parametres['Y']+($Parametres['height']/2),
+					     $Parametres['X']-($Parametres['width']/2),
+					     $Parametres['Y']-($Parametres['height']/2));
+			else
+				$coord=array();
+			$Commande->setCollectDate('');
+			$Commande->event($State);	
+			$Commande->setConfiguration('DetectArea',json_encode($coord));
 			$Commande->save();
 		}
 		else
@@ -560,8 +563,8 @@ class motion extends eqLogic {
 		if($result != ""){
 			return $result;
 		}
-        return false;
-    }
+        	return false;
+	}
 	public static function dependancy_info() {
 		$return = array();
 		$return['log'] = 'motion_update';
