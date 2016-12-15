@@ -3,16 +3,19 @@
 		$(function() {		
 			var coords=JSON.parse('#MotionArea#');
 			var data= {};
-			data.stroke=true;
 			data.fade=true;
-			data.strokeColor= '00FF00';
+			data.strokeColor= '0100FF';
 			data.alwaysOn= true;
-      data.fill= true;
-			if ("#state#" == "0")
-        data.fill= false;
-			data.fillColor= '00FF00';
-			data.fillOpacity= 0.2;
+      			data.fill= true;
 			data.shadow= true;
+			data.stroke=true;
+			if ("#state#" == "0"){
+       				data.fill = false;
+       				data.shadow = false;
+				data.stroke=false;
+			}
+			data.fillColor= '0100FF';
+			data.fillOpacity= 0.2;
 			data.shadowColor= '000000';
 			data.shadowRadius= 5;
 			data.shadowOpacity= 0.6;
@@ -24,11 +27,10 @@
 					      .attr('shape','rect')
 					      .attr('title',"#name#")
 					      .attr('alt',"#id#")
-					      .attr('data-maphilight',JSON.stringify(data))
 					      //.attr('href',"")
-					      //.attr('target',"_blank")
-					      .attr('coords',coords.toString()));
+					      //.attr('target',"_blank"));
 			      }
+			$('.area[alt=#id#]').attr('data-maphilight',JSON.stringify(data)).attr('coords',coords.toString());
 			$('.area[alt=#id#]').trigger('alwaysOn.maphilight');
         	});
 	</script>
