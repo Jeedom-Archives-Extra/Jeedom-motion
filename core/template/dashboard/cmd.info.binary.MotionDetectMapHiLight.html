@@ -29,6 +29,7 @@
 					      .attr('coords',coords.toString())
 					      .attr('data-maphilight',JSON.stringify(data));
 			$('.area[alt=#id#]').trigger('alwaysOn.maphilight');
+			$('.area[alt=#id#]').trigger('update');
         	});
 	</script>
 </div>
