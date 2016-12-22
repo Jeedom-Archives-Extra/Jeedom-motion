@@ -2,6 +2,7 @@
 if (!isConnect('admin')) {
 	throw new Exception('{{401 - Accès non autorisé}}');
 }
+$eqLogic=eqLogic::byId(init('id'));
 include_file('desktop', 'jquery.maphilight.min', 'js', 'motion');
  ?>
 <style>
@@ -34,43 +35,35 @@ include_file('desktop', 'jquery.maphilight.min', 'js', 'motion');
 }
 </style>
 <div class="polygon">
+  	<img class="CameraSnap" usemap="#map" src="<?php echo $eqLogic->getSnapshot();?>"/>
 	<div id="div_displayArea"></div>
 	<map name="map" id="map"></map>
 </div>
 <script>
-
-$.ajax({
-	type: 'POST',
-	url: 'plugins/motion/core/ajax/motion.ajax.php',
-	data: {
-		action: 'WidgetHtml',
-		cameraId:eqLogiqId
-	},
-	dataType: 'json',
-	global: false,
-	error: function (request, status, error) {
-		handleAjaxError(request, status, error, $('#div_updatepreRequisAlert'));
-	},
-	success: function (data) {
-		if (data.result)
-		{
-			$('.polygon').append(data.result);
-			$('.polygon').find('.directDisplay'+eqLogiqId).clone().appendTo(".AreaContent");
-			$('.polygon').find('.eqLogic').remove('.eqLogic');
-		}
-	}
-});
 var coords=[];
-for(var loop=0; loop<areas.length; loop=loop+2)
-{
-	var coord=[areas[loop],areas[loop+1]]
-	coords.push(coord);
-};
-$('.directDisplay').on('click', function (e) {
+if(areas.length>2){
+	var coords=JSON.parse(areas);
+}	
+$('body').on('click', '.CameraSnap', function (e) {
 	setCoordinates(e);
 }); 
-function hightlight() {
-	$('.directDisplay').find('img').maphilight({
+var onImgLoad = function(selector, callback){
+    $(selector).each(function(){
+        if (this.complete || /*for IE 10-*/ $(this).height() > 0) {
+            callback.apply(this);
+        }
+        else {
+            $(this).on('load', function(){
+                callback.apply(this);
+            });
+        }
+    });
+};
+onImgLoad('.CameraSnap', function(){
+  	updateCoords();
+});
+function hightlight(){
+	$('.CameraSnap').maphilight({
 		stroke: true,
 		fade: true, 
 		strokeColor: '4F95EA',
@@ -83,27 +76,27 @@ function hightlight() {
 		shadowOpacity: 0.6,
 		shadowPosition: 'outside'
 	});
-}
+};
 function setCoordinates(e) {
 	var x = e.pageX;
 	var y = e.pageY;
-	var offset = $('.directDisplay').find('img').offset();
+	var offset = $('.CameraSnap').offset();
 	x -= parseInt(offset.left);
 	y -= parseInt(offset.top);
 	if(x < 0) { x = 0; }
 	if(y < 0) { y = 0; }
-	var coord=[x,y];
-	//alert(coord.join());
-	coords.push(coord);
-	updateCoords();
-	areas=coords.join();
+    if(x!=null && y!=null){
+        coords.push([x,y]);
+        updateCoords();
+    }
 }
 function updateCoords() {
+  	areas=JSON.stringify(coords);
 	var shape = (coords.length <= 2) ? 'rect' : 'poly';
 	$('#map').html($('<area>')
 		.addClass("area") 
 		.attr('shape',shape)
-		.attr('coords',coords.join()));
+		.attr('coords',coords.toString()));
 	hightlight();
 	editPolygon();
 }
@@ -165,15 +158,15 @@ function editPolygon() {
 					// Get middle position of resizer
 					var x = Math.round(ui.position.left) + (cornerWidth / 2) + 1;
 					var y = Math.round(ui.position.top) + (cornerHeight / 2) + 1;
-					coords[$(this).attr('id').explode('_')[1]][0]=x;
-					coords[$(this).attr('id').explode('_')[1]][1]=y;
+					coords[$(this).attr('id').split('_')[1]][0]=x;
+					coords[$(this).attr('id').split('_')[1]][1]=y;
 					updateCoords();
 				},
 			});
 
 			// Catch right click on corner resizer and remove point
 			cornerDiv.contextmenu(function(e) {
-				coords.splice(parseInt($(this).attr('id').explode('_')[1]),1);					
+				coords.splice(parseInt($(this).attr('id').split('_')[1]),1);					
 				updateCoords();
 			});
 			
@@ -188,7 +181,7 @@ function editPolygon() {
 					var x = Math.round(ui.position.left) + (cornerWidth / 2) + 1;
 					var y = Math.round(ui.position.top) + (cornerHeight / 2) + 1;
 					var coord=[x,y];
-					coords.splice(parseInt($(this).attr('id').explode('_')[1])+1,0,coord);					
+					coords.splice(parseInt($(this).attr('id').split('_')[1])+1,0,coord);					
 					updateCoords();
 				},
 			});

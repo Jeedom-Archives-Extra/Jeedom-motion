@@ -1,33 +1,33 @@
 <div class="eqLogic eqLogic-widget allowResize" data-eqLogic_id="#id#" data-version="dashboard" style="background-color: #background_color#;height: #height#;width: #width#;#style#;min-height: 80px;min-weight:80px;">
-    <span class="statusCmd" style="position : absolute;left : 5px;bottom:0px; width : 30px;z-index: 1030;"></span>
-    <center class="widget-name">
-        <span style="font-weight:bold;"><a href="#eqLink#">#name#</a></span>
-    </center>
-    <center>
-        <span style="width : 90%;max-height:90%">
-			<span class="Detection" style="position:absolute;right:0;">
-				#detect#
-			</span>
-			<img id="Video#id#"class="ImgVideoFlux img-responsive"src="plugins/motion/core/template/icones/no-image-blanc.png"  data-eqLogic_id="#id#" style="z-index:1" onload="refreshImgCam#id#();"/>
-		</span>
-        #action#
-        <span class="cmd cmd-widget" data-type="action" data-subtype="other">
-            <a class="camera_history btn btn-default btn-sm folder" data-eqLogic_id="#id#" style="background-color:#cmdColor# !important;border-color : transparent !important;"><i class="fa fa-folder-open"></i></a>
-        </span>
-    </center>
-</div>
+	<script type="text/javascript" src="plugins/motion/desktop/js/jquery.maphilight.min.js"></script>
+	<span class="statusCmd" style="position : absolute;left : 5px;bottom:0px; width : 30px;z-index: 1030;"></span>
+	<center class="widget-name">
+        	<span style="font-weight:bold;"><a href="#eqLink#">#name#</a></span>
+	</center>
+	<center>
+        	<span style="width : 90%;max-height:90%">
+			<span class="Detection" style="position:absolute;right:0;">#detect#</span>
+			<img id="Video#id#" class="img-responsive" usemap="#map#id#"src="plugins/motion/core/template/icones/no-image-blanc.png"  data-eqLogic_id="#id#" style="z-index:1" onload="refreshImgMotionCam('#id#');"/>
+  			<map class="MapHiLight" name="map#id#" id="map#id#"></map>
+			#maphilightArea#
+	    	</span>
+        	#action#
+        	<span class="cmd cmd-widget" data-type="action" data-subtype="other">
+        	    <a class="camera_history btn btn-default btn-sm folder" data-eqLogic_id="#id#" style="background-color:#cmdColor# !important;border-color : transparent !important;"><i class="fa fa-folder-open"></i></a>
+        	</span>
+    	</center>
     <script>
         $('.camera_history[data-eqLogic_id=#id#]').off().on('click', function () {
             $('#md_modal').dialog({title: "Historique #name#"});
 			$('#md_modal').load('index.php?v=d&plugin=motion&modal=motion.history&id=#id#').dialog('open');
         }); 
-		function refreshImgCam#id#(){	
+		function refreshImgMotionCam(id){	
 			$.ajax({// fonction permettant de faire de l'ajax
 				type: "POST", // methode de transmission des données au fichier php
 				url: "plugins/motion/core/ajax/motion.ajax.php", // url du fichier php
 				data: {
 					action: "RefreshFlux",
-					cameraId: "#id#",
+					cameraId: id
 				},
 				dataType: 'json',
 				global: false,
@@ -49,15 +49,16 @@
 						}else{
 							url += '?t='+(new Date()).getTime();
 						}
-                    				$(".eqLogic[data-eqLogic_id=#id#] #Video#id#").attr('src',url);
-							 if($('.eqLogic[data-eqLogic_id=#id#] #Video#id#').html() != undefined)
-							   timeoutCamera#id# = setTimeout(refreshImgCam#id#, '#refreshDelay#');
+						$('#Video'+id).maphilight();
+                    				$(".eqLogic[data-eqLogic_id="+id+"] #Video"+id).attr('src',url);
+							 if($(".eqLogic[data-eqLogic_id="+id+"] #Video"+id).html() != undefined)
+							   timeoutMotionCamera = setTimeout(refreshImgMotionCam(id), '#refreshDelay#');
 					}
 				}
 			});
 		}
-
-	 if (typeof timeoutCamera#id# !== "undefined") {
-	  clearTimeout(timeoutCamera#id#);
-	}
-</script>
+		 if (typeof timeoutMotionCamera !== "undefined") {
+		  clearTimeout(timeoutMotionCamera);
+		}
+	</script>
+</div>

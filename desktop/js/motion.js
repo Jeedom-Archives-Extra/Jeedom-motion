@@ -115,11 +115,8 @@ $('body').on('click','.editMaphilightArea', function() {
 	if($(this).closest('.cmd').find('.cmdAttr[data-l1key=configuration][data-l2key=maphilightArea]').val()!= undefined)
 		areas=$(this).closest('.cmd').find('.cmdAttr[data-l1key=configuration][data-l2key=maphilightArea]').val().split(',');
 	
-	$('#md_modal').dialog({
-		title: "{{Editer la zone de detection}}",
-		height: 600,
-		width: 550});
-	$('#md_modal').load('index.php?v=d&plugin=motion&modal=maphilight.motion')
+	$('#md_modal').dialog({title: "{{Editer la zone de detection}}"});
+	$('#md_modal').load('index.php?v=d&plugin=motion&modal=maphilight.motion&id=' + $('.eqLogicAttr[data-l1key=id]').val());
 	$('#md_modal').dialog('open');
 	$("#md_modal").dialog('option', 'buttons', {
 		"Annuler": function() {
@@ -190,7 +187,7 @@ function addCmdToTable(_cmd) {
 				.append($('<i class="fa fa-check">'))
 				.text('{{Editer}}')
 				.trigger("click"))
-			.append($('<input type="hidden" class="cmdAttr" data-l1key="configuration" data-l2key="area">')));
+			.append($('<input type="hidden" class="cmdAttr" data-l1key="configuration" data-l2key="area"/>')));
 	}
 	if (_cmd.logicalId =='maphilight')
 	{
@@ -199,7 +196,9 @@ function addCmdToTable(_cmd) {
 				.append($('<i class="fa fa-check">'))
 				.text('{{Editer}}')
 				.trigger("click"))
-			.append($('<input type="hidden" class="cmdAttr" data-l1key="configuration" data-l2key="maphilightArea">')));
+			.append($('<input type="hidden" class="cmdAttr" data-l1key="template" data-l2key="dashboard" value="MotionDetectMapHiLight"/>'))
+			.append($('<input type="hidden" class="cmdAttr" data-l1key="template" data-l2key="mobile" value="MotionDetectMapHiLight"/>'))
+			.append($('<input type="hidden" class="cmdAttr" data-l1key="configuration" data-l2key="maphilightArea"/>')));
 	}
 	tr.append(action);
 	var parmetre=$('<td>');
@@ -214,4 +213,8 @@ function addCmdToTable(_cmd) {
 	$('#table_cmd tbody').append(tr);
 	$('#table_cmd tbody tr:last').setValues(_cmd, '.cmdAttr');
 	UpdateCameraUSB();
-	}
+	if (_cmd.logicalId =='maphilight'){
+ 		$('#table_cmd .cmdAttr[data-l1key=template][data-l2key=dashboard]').val('MotionDetectMapHiLight');
+   		$('#table_cmd .cmdAttr[data-l1key=template][data-l2key=mobile]').val('MotionDetectMapHiLight');
+  	}
+}  
