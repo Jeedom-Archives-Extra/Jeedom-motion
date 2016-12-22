@@ -21,7 +21,7 @@
 			data.shadowOpacity= 0.6;
 			data.shadowPosition= 'outside';
 			      if($('.MapHiLight .area[alt=#id#]').length ==0){
-				      $(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.MapHiLight').append(
+				      $(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.MapHiLight').prepend(
 					      $('<area>')
 					      .addClass("area")
 					      .attr('shape','rect')
@@ -30,6 +30,7 @@
 			      }
 			$('.area[alt=#id#]').attr('data-maphilight',JSON.stringify(data)).attr('coords',coords.toString());
 			$('.area[alt=#id#]').trigger('alwaysOn.maphilight');
+			$('.area[alt=#id#]').trigger('update');
         	});
 	</script>
 </div>
