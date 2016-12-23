@@ -12,5 +12,5 @@ include::Installation.asciidoc[]
 == Paramétrage des equipements et des commandes
 include::Parametrage.asciidoc[]
 
-==FAQ
+== FAQ
 include::faq.asciidoc[]

@@ -1,6 +1,6 @@
 = Motion
 
-== Beschreibung
+== Description
 
 Motion est un logiciel de détection vidéo et qui permet de diffuser un flux vidéo via internet par le protocole HTTP. C’est une solution simple pour diffuser le flux de sa webcam en ligne ou pour détecter des mouvements dans le champ d’une caméra par exemple.
 
