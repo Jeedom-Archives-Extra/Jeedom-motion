@@ -1,4 +1,4 @@
-=== Installation des dépendances
+=== Dependencies install
 Pour faciliter la mise en place des dépendances, jeedom va gérer seul l'installation de motion.
 
 Dans la cadre réservé aux dépendances, vous allez avoir le statut de l'installation.
