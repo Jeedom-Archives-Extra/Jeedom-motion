@@ -1,4 +1,4 @@
-= Motion
+= Bewegung
 
 == Beschreibung
 
@@ -6,7 +6,7 @@ Motion est un logiciel de détection vidéo et qui permet de diffuser un flux vi
 
 Dans ce plugin motion sera utilisé pour ces capacité de detection de mouvement
 
-== Installation et configuration
+== Installation und Konfiguration
 include::Installation.asciidoc[]
 
 == Paramétrage des equipements et des commandes

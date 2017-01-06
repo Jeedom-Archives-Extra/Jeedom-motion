@@ -7,7 +7,7 @@ Sur cette image, j’ai dejà configuré une caméra, vous pouvez depuis cette p
 
 *Attention: * Ne pas configurer 2 fois la même caméra, cela peut entrainer un plantage du logiciel motion.
 
-=== Configuration générale
+=== Allgemeine Konfiguration
 
 image::../images/Configuration_Eqlogic.jpg[]
 
