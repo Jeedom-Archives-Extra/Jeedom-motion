@@ -9,11 +9,6 @@
       			data.fill= true;
 			data.shadow= true;
 			data.stroke=true;
-			if ("#state#" == "0"){
-       				data.fill = false;
-       				data.shadow = false;
-				data.stroke=false;
-			}
 			data.fillColor= '0100FF';
 			data.fillOpacity= 0.2;
 			data.shadowColor= '000000';
@@ -28,9 +23,13 @@
 					      .attr('title',"#name#")
 					      .attr('alt',"#id#"));
 			      }
-			$('.area[alt=#id#]').attr('data-maphilight',JSON.stringify(data)).attr('coords',coords.toString());
-			$('.area[alt=#id#]').trigger('alwaysOn.maphilight');
-			$('.area[alt=#id#]').trigger('update');
-      });
+			if ("#state#" == "0"){
+				$('.area[alt=#id#]').remove();
+			}else{
+				$('.area[alt=#id#]').attr('data-maphilight',JSON.stringify(data)).attr('coords',coords.toString());
+				$('.area[alt=#id#]').trigger('alwaysOn.maphilight');
+				$('.area[alt=#id#]').trigger('update');
+			}
+      		});
 	</script>
 </div>
