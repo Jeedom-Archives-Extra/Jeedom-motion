@@ -39,10 +39,10 @@ foreach (ls($directory, '*') as $file) {
 		if (!isset($files[$date])) {
 			$files[$date] = array();
 		}
-		if(strpos($file,'.avi')>0)
-			$type='video';
-		else
+		if(strpos($file,'.jpg')>0)
 			$type='photo';
+		else
+			$type='video';
 		$files[$date][$time][$type] = $file;
 	}
 }
