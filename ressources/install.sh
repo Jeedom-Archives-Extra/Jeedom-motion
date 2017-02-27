@@ -13,14 +13,6 @@ check_run()  {
     fi
     return $status
 }
-
-# Check for root priviledges
-if [ $(id -u) != 0 ]
-then
-	echo "Superuser (root) priviledges are required to install eibd"
-	echo "Please do 'sudo -s' first"
-	exit 1
-fi
 if [ -f "/etc/motion/" ]
 then
 	echo "*****************************************************************************************************"
