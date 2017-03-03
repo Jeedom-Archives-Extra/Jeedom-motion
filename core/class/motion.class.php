@@ -265,11 +265,19 @@ class motion extends eqLogic {
 			fclose($fp);
 		}
 	}
+	private function simpleName ($chaine){
+		// Le premier paramètre de la fonction iconv () est à adapter au codage de caractères utilisé par tes chaînes
+		// (ex. : 'ISO-8859-1' si les chaînes de caractères utilisent ce codage)
+		$string = iconv ('UTF-8', 'US-ASCII//TRANSLIT//IGNORE', $chaine);
+		$string = preg_replace ('#[^.0-9a-z]+#i', '', $string);
+		$string = strtolower ($string);
+		return $string;
+	}
 	private static function WriteThread($Camera,$file){
 		log::add('motion','debug','Mise a jours du fichier: '.$file);	
 		exec('sudo chmod 777 -R /etc/motion/');
 		if($fp = fopen($file,"w+")){
-			fputs($fp, 'text_left '.$Camera->getName());
+			fputs($fp, 'text_left '.$this->simpleName($Camera->getName()));
 			fputs($fp, "\n");
 			fputs($fp, 'target_dir '.$Camera->getSnapshotDiretory(true));
 			fputs($fp, "\n");
