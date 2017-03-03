@@ -21,10 +21,6 @@ then
 	echo "deb http://www.deb-multimedia.org jessie main non-free" | sudo tee -a /etc/apt/sources.list
 	echo "deb-src http://www.deb-multimedia.org jessie main non-free" | sudo tee -a /etc/apt/sources.list
 fi 
-echo 10 > /tmp/compilation_motion_in_progress
-sudo apt-get -y update
-echo 20 > /tmp/compilation_motion_in_progress
-sudo apt-get -y upgrade
 echo 30 > /tmp/compilation_motion_in_progress
 sudo apt-get install -y --force-yes  deb-multimedia-keyring
 echo 40 > /tmp/compilation_motion_in_progress
