@@ -1,7 +1,7 @@
 #!/bin/bash
 touch /tmp/compilation_motion_in_progress
 echo 0 > /tmp/compilation_motion_in_progress
-if [ -f "/etc/motion/" ]
+if [ -d "/etc/motion/" ]
 then
 	echo "*****************************************************************************************************"
 	echo "*                                Desinstallation des dépendance                                    *"
