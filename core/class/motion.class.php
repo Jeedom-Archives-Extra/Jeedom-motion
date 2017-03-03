@@ -442,8 +442,14 @@ class motion extends eqLogic {
 		}else {
 			//**** URL OK
 			$data=null;
-			while (substr_count($data,"Content-Length") != 2)
+			$startTime = time();
+			$timeout = 60;
+			while (substr_count($data,"Content-Length") != 2){
+				if(time() > $startTime + $timeout) {
+					break;
+				}
 				$data.=fread($ReadFlux,1024);
+			}
 			fclose($ReadFlux);
 			$data=substr($data,strpos($data,"\r\n\r\n")+4);
 			$data=trim(substr($data,0,stripos($data,"--object-ipcamera")-2));

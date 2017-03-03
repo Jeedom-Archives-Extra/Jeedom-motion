@@ -1,32 +1,14 @@
 #!/bin/bash
-INSTALL_DIR=/usr/local/bin
-TEMP_DIR=`mktemp -d /tmp/motion.XXXXXX`
-motion_url="http://downloads.sourceforge.net/project/motion/motion%20-%203.2/3.2.12/motion-3.2.12.tar.gz?r=&ts=1446122652&use_mirror=skylink"
 touch /tmp/compilation_motion_in_progress
 echo 0 > /tmp/compilation_motion_in_progress
-check_run()  {
-    "$@"
-    local status=$?
-    if [ $status -ne 0 ]; then
-        echo "error with $1" >&2
-	exit
-    fi
-    return $status
-}
-
-# Check for root priviledges
-if [ $(id -u) != 0 ]
-then
-	echo "Superuser (root) priviledges are required to install eibd"
-	echo "Please do 'sudo -s' first"
-	exit 1
-fi
-if [ -f "/etc/motion/" ]
+if [ -d "/etc/motion/" ]
 then
 	echo "*****************************************************************************************************"
 	echo "*                                Desinstallation des dépendance                                    *"
 	echo "*****************************************************************************************************"
 	sudo apt-get autoremove -y --force-yes  motion
+	sudo apt-get autoremove -y --force-yes  ffmpeg
+	sudo apt-get autoremove -y --force-yes  x264
 	rm -R /etc/motion/
 fi
 echo "*****************************************************************************************************"
@@ -39,10 +21,6 @@ then
 	echo "deb http://www.deb-multimedia.org jessie main non-free" | sudo tee -a /etc/apt/sources.list
 	echo "deb-src http://www.deb-multimedia.org jessie main non-free" | sudo tee -a /etc/apt/sources.list
 fi 
-echo 10 > /tmp/compilation_motion_in_progress
-sudo apt-get -y update
-echo 20 > /tmp/compilation_motion_in_progress
-sudo apt-get -y upgrade
 echo 30 > /tmp/compilation_motion_in_progress
 sudo apt-get install -y --force-yes  deb-multimedia-keyring
 echo 40 > /tmp/compilation_motion_in_progress
@@ -50,7 +28,7 @@ sudo apt-get -y update
 echo 50 > /tmp/compilation_motion_in_progress
 sudo apt-get remove -y --force-yes ffmpeg
 echo 60 > /tmp/compilation_motion_in_progress
-sudo apt-get install -y --force-yes ffmpeg x264
+sudo apt-get install -y --force-yes x264
 echo 70 > /tmp/compilation_motion_in_progress
 echo "*****************************************************************************************************"
 echo "*                                          Compilation de motion:                                   *"

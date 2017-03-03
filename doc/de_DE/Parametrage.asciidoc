@@ -1,20 +1,20 @@
-Il est maintenant temps de passer a la configuration des cameras
+Il est maintenant temps de passer à la configuration des caméras
 
 image::../images/motion_screenshot_Equipement.jpg[]
 
-Sur cette image, j’ai deja configurer une camera, vous pouvez depuis cette page soit editer les cameras deja parametrer soit en cree un autre
+Sur cette image, j’ai dejà configuré une caméra, vous pouvez depuis cette page soit editer les caméras dejà parametrées soit en créer une autre
 
 
-*Attention: * Ne pas configurer 2 fois la meme camera, cela peut entrainer un plantage du logiciel motion.
+*Attention: * Ne pas configurer 2 fois la même caméra, cela peut entrainer un plantage du logiciel motion.
 
-=== Configuration général
+=== Allgemeine Konfiguration
 
 image::../images/Configuration_Eqlogic.jpg[]
 
-Les paramtres de configurartion de cette page sont standard a ce que l'on retrouve sur jeedom.
-Seul le champs "Execution de l'analyse" est particulier, il permet de choisir sur quel jeedom de notre resaux on vas demandé l'execution de l'analise du flux de la camera configurée.
+Les paramètres de configuration de cette page sont standard à ce que l'on retrouve sur jeedom.
+Seul le champs "Execution de l'analyse" est particulier, il permet de choisir sur quel jeedom de notre réseaux on va demander l'execution de l'analyse du flux de la caméra configurée.
 
-=== Configuration des parametre de l’appareil de capture
+=== Configuration des paramètres de l’appareil de capture
 
 image::../images/Configuration_Capture.jpg[]
 
@@ -22,17 +22,17 @@ image::../images/Configuration_Capture.jpg[]
 
 *   La norme vidéo à utiliser (seulement pour la capture vidéo et TV tuner cartes)
 
-*   La fréquence à régler le tuner (kHz) (uniquement pour les cartes tuner TV)
+*   La fréquence du tuner (kHz) à régler (uniquement pour les cartes tuner TV)
 
 *   Faire pivoter l’image de ce nombre de degrés. La rotation affecte toutes les images enregistrées comme
 
-*   Largeur de l’image (pixels).
+* Die breite des Bildes (Pixel).
 
-*   Hauteur de l’image (pixels).
+* Die höhe des Bildes (Pixel).
 
-*   Le nombre maximum d’images à être capturé par seconde.(Plage valide: 2-100.)
+*   Le nombre maximum d’images à être capturées par seconde.(Plage valide: 2-100.)
 
-*   Délai minimum en secondes entre la capture des cadres de la caméra. Default: 0 = désactivé - le taux de capture est donnée par le framerate de la caméra. Cette option est utilisée lorsque vous souhaitez capturer des images à un taux inférieur à 2 par seconde. / Définir contrôles jpeg moins strictes pour les caméras réseau avec un firmware buggé pauvres /.
+*   Délai minimum en secondes entre la capture des cadres de la caméra. Default: 0 = désactivé - le taux de capture est donné par le framerate de la caméra. Cette option est utilisée lorsque vous souhaitez capturer des images à un taux inférieur à 2 par seconde. / Définir contrôles jpeg moins stricts pour les caméras réseau avec un firmware buggé pauvres /.
 
 *   Que mouvement réguler la luminosité d’un dispositif vidéo (par défaut: off). La fonction de auto_brightness utilise l’option de luminosité que sa valeur cible. Si la luminosité est auto_brightness zéro va ajuster à la valeur de luminosité moyenne de 128. Seulement recommandé pour les caméras sans luminosité automatique
 
@@ -119,7 +119,7 @@ image::../images/Configuration_FFMPEG.jpg[]
 
 *   Utilisation ffmpeg pour désentrelacer vidéo. Nécessaire si vous utilisez une caméra analogique Voir peignage horizontal sur des objets dans la vidéo ou des images animées.
 
-=== Configuration Affichage de texte
+=== Konfiguration Textanzeige
 
 image::../images/Configuration_Text.jpg[]
 
