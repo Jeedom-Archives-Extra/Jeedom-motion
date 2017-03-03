@@ -1,24 +1,14 @@
 #!/bin/bash
-INSTALL_DIR=/usr/local/bin
-TEMP_DIR=`mktemp -d /tmp/motion.XXXXXX`
-motion_url="http://downloads.sourceforge.net/project/motion/motion%20-%203.2/3.2.12/motion-3.2.12.tar.gz?r=&ts=1446122652&use_mirror=skylink"
 touch /tmp/compilation_motion_in_progress
 echo 0 > /tmp/compilation_motion_in_progress
-check_run()  {
-    "$@"
-    local status=$?
-    if [ $status -ne 0 ]; then
-        echo "error with $1" >&2
-	exit
-    fi
-    return $status
-}
 if [ -f "/etc/motion/" ]
 then
 	echo "*****************************************************************************************************"
 	echo "*                                Desinstallation des dépendance                                    *"
 	echo "*****************************************************************************************************"
 	sudo apt-get autoremove -y --force-yes  motion
+	sudo apt-get autoremove -y --force-yes  ffmpeg
+	sudo apt-get autoremove -y --force-yes  x264
 	rm -R /etc/motion/
 fi
 echo "*****************************************************************************************************"
