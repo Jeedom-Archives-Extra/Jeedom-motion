@@ -277,7 +277,7 @@ class motion extends eqLogic {
 		log::add('motion','debug','Mise a jours du fichier: '.$file);	
 		exec('sudo chmod 777 -R /etc/motion/');
 		if($fp = fopen($file,"w+")){
-			fputs($fp, 'text_left '.$this->simpleName($Camera->getName()));
+			fputs($fp, 'text_left '.$Camera->simpleName($Camera->getName()));
 			fputs($fp, "\n");
 			fputs($fp, 'target_dir '.$Camera->getSnapshotDiretory(true));
 			fputs($fp, "\n");
