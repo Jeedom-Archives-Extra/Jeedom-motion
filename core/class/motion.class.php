@@ -615,6 +615,10 @@ class motion extends eqLogic {
 		if ($deamon_info['launchable'] != 'ok') 
 			throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
 		if ($deamon_info['state'] != 'ok') {
+			exec('sudo rm /etc/motion/*');
+			foreach(eqLogic::byType('motion') as $Camera){		
+				$Camera->save();
+			}
 			exec('sudo chmod 777 /dev/video*');
 			log::remove('motion');
 			$file='/etc/motion/motion.log';
