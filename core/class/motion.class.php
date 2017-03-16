@@ -365,21 +365,9 @@ class motion extends eqLogic {
 		}
 	}
 	public static function NewThread($Camera) {
-		$file='/etc/motion/thread'.$Camera->getId().'.conf';
-		self::WriteThread($Camera,$file);
-		self::UpdateMotionConf();
 		self::deamon_start();
 	}
 	public static function RemoveThread($Camera) {
-		$file=$Camera->getLogicalId();
-		exec('sudo rm  '.$file);
-		if($file=='/etc/motion/motion.conf'){
-			$equipement=eqLogic::byType('motion')[0];
-			exec('sudo rm  '.$equipement->getLogicalId());
-			$equipement->setLogicalId('/etc/motion/motion.conf');
-			$equipement->save();
-		}
-		self::UpdateMotionConf();
 		self::deamon_start();
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -615,6 +603,12 @@ class motion extends eqLogic {
 		if ($deamon_info['launchable'] != 'ok') 
 			throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
 		if ($deamon_info['state'] != 'ok') {
+			exec('sudo rm /etc/motion/*');
+			foreach(eqLogic::byType('motion') as $Camera){		
+				$file='/etc/motion/thread'.$Camera->getId().'.conf';
+				self::WriteThread($Camera,$file);
+				self::UpdateMotionConf();
+			}
 			exec('sudo chmod 777 /dev/video*');
 			log::remove('motion');
 			$file='/etc/motion/motion.log';
