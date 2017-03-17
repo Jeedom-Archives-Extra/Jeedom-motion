@@ -3,7 +3,7 @@ set_time_limit(120);
  
 $port = $_GET['port']; 
  
-$src = fopen($_REQUEST['url'], 'rb');
+$src = fopen(urldecode($_REQUEST['url'], 'rb'));
 $timeout = time();
  
 header('Max-Age: 0');
