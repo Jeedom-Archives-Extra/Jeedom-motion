@@ -21,6 +21,8 @@
 		    $('#md_modal').dialog({title: "Historique #name#"});
 		    $('#md_modal').load('index.php?v=d&plugin=motion&modal=motion.history&id=#id#').dialog('open');
 	    });
-	    $('#Video#id#').maphilight();
+	    var refreshInterval = setInterval(function() {
+		    $('#Video#id#').maphilight();
+	    }, 20); 
 	</script>
 </div>
