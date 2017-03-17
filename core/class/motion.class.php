@@ -154,7 +154,7 @@ class motion extends eqLogic {
 			'#height#' => $this->getDisplay('height', 'auto'),
 			'#width#' => $this->getDisplay('width', 'auto'),
 			'#cmdColor#' => $cmdColor,
-			'#url#' => $this->getUrl()
+			'#url#' => urlencode($this->getUrl())
 		);
 		$action = '';
 		$maphilightArea = '';
