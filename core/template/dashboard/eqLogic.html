@@ -1,5 +1,6 @@
 <div class="eqLogic eqLogic-widget allowResize" data-eqLogic_id="#id#" data-version="dashboard" style="background-color: #background_color#;height: #height#;width: #width#;#style#;min-height: 80px;min-weight:80px;">
-	<script type="text/javascript" src="plugins/motion/desktop/js/jquery.maphilight.min.js"></script>
+	<script type="text/javascript" src="plugins/motion/desktop/js/jquery.maphilight.min.js"></script>	
+	<script type="text/javascript" src="plugins/motion/desktop/js/jquery.clipchamp.mjpeg.player.js"></script>
 	<span class="statusCmd" style="position : absolute;left : 5px;bottom:0px; width : 30px;z-index: 1030;"></span>
 	<center class="widget-name">
         	<span style="font-weight:bold;"><a href="#eqLink#">#name#</a></span>
@@ -7,7 +8,8 @@
 	<center>	
         	<span style="width : 90%;max-height:90%">
 			<span class="Detection" style="position:absolute;right:0;">#detect#</span>
-			<img id="Video#id#" class="img-responsive" usemap="#map#id#" src="plugins/motion/core/php/stream.php?url=#url#" alt=""/>
+			<div id="mjpeg_player#id#" style="width:640px;"></div>
+			<!--img id="Video#id#" class="img-responsive" usemap="#map#id#" src="plugins/motion/core/php/stream.php?url=#url#" alt=""/-->
   			<map class="MapHiLight" name="map#id#" id="map#id#"></map>
 			#maphilightArea#
 	    	</span>
@@ -21,8 +23,10 @@
 		    $('#md_modal').dialog({title: "Historique #name#"});
 		    $('#md_modal').load('index.php?v=d&plugin=motion&modal=motion.history&id=#id#').dialog('open');
 	    });
-	    var refreshInterval = setInterval(function() {
-		    $('#Video#id#').maphilight();
-	    }, 1000); 
+	    $('#mjpeg_player#id#').clipchamp_mjpeg_player("plugins/motion/core/php/stream.php?url=#url#", 5, true);
+	    
+	   // var refreshInterval = setInterval(function() {
+	//	    $('#Video#id#').maphilight();
+	  //  }, 1000); 
 	</script>
 </div>
