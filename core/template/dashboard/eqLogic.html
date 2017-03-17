@@ -4,13 +4,16 @@
 	<center class="widget-name">
         	<span style="font-weight:bold;"><a href="#eqLink#">#name#</a></span>
 	</center>
-	<center>
-        	<span style="width : 90%;max-height:90%">
+	<center>	
+		<video src="plugins/motion/core/php/stream.php?url=#url#" controls>
+		   Your browser does not support the <code>video</code> element.
+		</video>
+        	<!--span style="width : 90%;max-height:90%">
 			<span class="Detection" style="position:absolute;right:0;">#detect#</span>
 			<img id="Video#id#" class="img-responsive" usemap="#map#id#"src="plugins/motion/core/template/icones/no-image-blanc.png"  data-eqLogic_id="#id#" style="z-index:1" onload="refreshImgMotionCam('#id#');"/>
   			<map class="MapHiLight" name="map#id#" id="map#id#"></map>
 			#maphilightArea#
-	    	</span>
+	    	</span-->
         	#action#
         	<span class="cmd cmd-widget" data-type="action" data-subtype="other">
         	    <a class="camera_history btn btn-default btn-sm folder" data-eqLogic_id="#id#" style="background-color:#cmdColor# !important;border-color : transparent !important;"><i class="fa fa-folder-open"></i></a>
@@ -21,7 +24,7 @@
             $('#md_modal').dialog({title: "Historique #name#"});
 			$('#md_modal').load('index.php?v=d&plugin=motion&modal=motion.history&id=#id#').dialog('open');
         }); 
-		function refreshImgMotionCam(id){	
+		/*function refreshImgMotionCam(id){	
 			$.ajax({// fonction permettant de faire de l'ajax
 				type: "POST", // methode de transmission des données au fichier php
 				url: "plugins/motion/core/ajax/motion.ajax.php", // url du fichier php
@@ -59,6 +62,6 @@
 		}
 		 if (typeof timeoutMotionCamera !== "undefined") {
 		  clearTimeout(timeoutMotionCamera);
-		}
+		}*/
 	</script>
 </div>
