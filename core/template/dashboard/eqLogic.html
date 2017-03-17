@@ -22,8 +22,8 @@
 		    $('#md_modal').load('index.php?v=d&plugin=motion&modal=motion.history&id=#id#').dialog('open');
 	    });
 	    function refreshImgMotionCam(id){
-		    $('#Video#id#').attr('src',"plugins/motion/core/php/stream.php?url=#url#dummy="+new Date().valueOf());
-		    $('#Video#id#').maphilight();
+		    $('#Video'+id).attr('src',"plugins/motion/core/php/stream.php?url=#url#dummy="+new Date().valueOf());
+		    $('#Video'+id).maphilight();
 	    }
 	</script>
 </div>
