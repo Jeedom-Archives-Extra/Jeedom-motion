@@ -23,8 +23,10 @@
 		    $('#md_modal').dialog({title: "Historique #name#"});
 		    $('#md_modal').load('index.php?v=d&plugin=motion&modal=motion.history&id=#id#').dialog('open');
 	    });
-	    $('#mjpeg_player#id#').clipchamp_mjpeg_player("plugins/motion/core/php/stream.php?url=#url#", 5, true);
-	    
+	    $('#mjpeg_player#id#').clipchamp_mjpeg_player("plugins/motion/core/php/stream.php?url=#url#", 5, true,playerCallback);
+	    function playerCallback(wrapperElement, playerInterface) {
+		    playerInterface.finish();
+	    }
 	   // var refreshInterval = setInterval(function() {
 	//	    $('#Video#id#').maphilight();
 	  //  }, 1000); 
