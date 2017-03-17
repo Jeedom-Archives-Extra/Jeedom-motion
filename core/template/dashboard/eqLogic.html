@@ -17,13 +17,15 @@
         	</span>
     	</center>
     <script>
-        $('.camera_history[data-eqLogic_id=#id#]').off().on('click', function () {
-            $('#md_modal').dialog({title: "Historique #name#"});
-			$('#md_modal').load('index.php?v=d&plugin=motion&modal=motion.history&id=#id#').dialog('open');
-        }); 
-	$('#Video#id#').load(function() {
-		alert('test');
-	    $('#Video#id#').maphilight();
-	});
+	    $('.camera_history[data-eqLogic_id=#id#]').off().on('click', function () {
+		    $('#md_modal').dialog({title: "Historique #name#"});
+		    $('#md_modal').load('index.php?v=d&plugin=motion&modal=motion.history&id=#id#').dialog('open');
+	    });
+	    $.ready(function(){
+		    $('#Video#id#').load(function() {
+			    alert('test');
+			    $('#Video#id#').maphilight();
+		    });
+	    });
 	</script>
 </div>
