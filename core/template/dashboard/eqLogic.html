@@ -21,12 +21,9 @@
             $('#md_modal').dialog({title: "Historique #name#"});
 			$('#md_modal').load('index.php?v=d&plugin=motion&modal=motion.history&id=#id#').dialog('open');
         }); 
-	    
-	$.ready(function(){
-		$('Video#id#').load(function() {
-			alert('test');
-		    $('Video#id#').maphilight();
-		});
+	$('Video#id#').load(function() {
+		alert('test');
+	    $('Video#id#').maphilight();
 	});
 	</script>
 </div>
