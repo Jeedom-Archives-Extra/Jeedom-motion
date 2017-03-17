@@ -424,53 +424,8 @@ class motion extends eqLogic {
 			exec('sudo chmod 777 -R '.$directory);
 		return $directory;
 	}
-	public function getSnapshot() {
-		$directory=$this->getSnapshotDiretory();
-		$url=$this->getUrl();
-		if (!self::url_exists($url)){
-			log::add('motion','debug','Le flux video n\'eixte pas'.$url);
-			return 'plugins/motion/core/template/icones/no-image-blanc.png';
-		}
-		if(!$ReadFlux=@fopen($url,"r")){
-			log::add('motion','debug','Impossible d\'ouvrir le flux video '.$url);
-			return 'plugins/motion/core/template/icones/no-image-blanc.png';
-		}else {
-			//**** URL OK
-			$data=null;
-			$startTime = time();
-			$timeout = 60;
-			while (substr_count($data,"Content-Length") != 2){
-				if(time() > $startTime + $timeout) {
-					break;
-				}
-				$data.=fread($ReadFlux,1024);
-			}
-			fclose($ReadFlux);
-			$data=substr($data,strpos($data,"\r\n\r\n")+4);
-			$data=trim(substr($data,0,stripos($data,"--object-ipcamera")-2));
-			$data=trim(substr($data,0,stripos($data,"--myboundary")-2));
-			$data=trim(substr($data,0,stripos($data,"--BoundaryString")-2));
-			$output_file = $this->getId();
-			$output_file .= '.jpg';
-			if(file_exists($directory.$output_file))
-				exec('sudo rm '.$directory.$output_file);
-			if (empty($data))
-				return 'plugins/motion/core/template/icones/no-image-blanc.png';
-			file_put_contents($directory. $output_file, $data);
-			$url=dirname(__FILE__);
-			if(substr($url,-1)!='/')
-				$url.='/';
-			foreach(explode('/',$url) as $section)
-				$url.='../';	
-			if(substr($directory,0,1)=='/')
-				$url=substr($url,0,-1);
-			$url.=$directory . $output_file;
-			return 'core/php/downloadFile.php?pathfile=' . urlencode($url);
-		}
-		return 'plugins/motion/core/template/icones/no-image-blanc.png';
-	}	
 	public static function removeRecord($file) {
-		exec('sudo rm '. $file.' > /dev/null 2>/dev/null &');
+		exec('sudo rm '. $file);
 		log::add('motion','debug','Fichiers '.$file.' à été supprimée');
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
