@@ -1,9 +1,22 @@
 <div class="cmd cmd-widget" data-type="info" data-subtype="binary" data-cmd_id="#id#">
 	<script>
-		$(function() {	
-			var coords='#areas#';	
-				if(coords != '#areas#'){
-				coords=JSON.parse(coords);
+		$.ajax({// fonction permettant de faire de l'ajax
+			type: "POST", // methode de transmission des données au fichier php
+			url: "plugins/motion/core/ajax/motion.ajax.php", // url du fichier php
+			data: {
+				action: "getCoord",
+				cameraId: "#id#"
+			},
+			dataType: 'json',
+			global: false,
+			error: function(request, status, error) {
+				handleAjaxError(request, status, error);
+			},
+			success: function(data) { // si l'appel a bien fonctionné
+				if (data.state != 'ok') {
+					$('#div_alert').showAlert({message: data.result, level: 'danger'});
+					return;
+				var coords=JSON.parse(data.result);
 				var hightlightColor='FF0000';
 				if ("#state#" == "0")
 					hightlightColor='00FF00';
@@ -32,7 +45,9 @@
 						      .attr('data-maphilight',JSON.stringify(data));
 				$('.area[alt=#id#]').trigger('alwaysOn.maphilight');
 				$('.area[alt=#id#]').trigger('update');
+				}
+
 			}
-      		});
+		});
 	</script>
 </div>
