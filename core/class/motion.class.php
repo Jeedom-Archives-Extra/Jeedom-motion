@@ -161,31 +161,13 @@ class motion extends eqLogic {
 		$detect="";
 		foreach ($this->getCmd() as $cmd) {
 			if ($cmd->getIsVisible() == 1) {
-				switch($cmd->getLogicalId()){
-					case 'detect':	
-						$replace['#MotionArea#'] = ($cmd->getConfiguration('DetectArea') == '') ? '[]' : $cmd->getConfiguration('DetectArea');
-						$detect = template_replace($replace, $cmd->toHtml($_version, $cmdColor));
-					break;
-					case 'lastImg':
-					case 'detectionactif':
-					case 'detectionpause':
-					case 'detectionstatus':
-					case 'browseRecord':
-					break;
-					case 'maphilight':
-						$replace['#areas#'] = $cmd->getConfiguration('maphilightArea');
-						$maphilightArea .= template_replace($replace, $cmd->toHtml($_version, $cmdColor));
-					break;
-					default: 
-						if ($cmd->getDisplay('hideOn' . $version) == 1) 
-							continue;
-						if ($cmd->getDisplay('forceReturnLineBefore', 0) == 1) 
-							$action .= '<br/>';
-						$action .= $cmd->toHtml($_version, $cmdColor);
-						if ($cmd->getDisplay('forceReturnLineAfter', 0) == 1) 
-							$action .= '<br/>';
-					break;
-				}
+				if ($cmd->getDisplay('hideOn' . $version) == 1) 
+					continue;
+				if ($cmd->getDisplay('forceReturnLineBefore', 0) == 1) 
+					$action .= '<br/>';
+				$action .= $cmd->toHtml($_version, $cmdColor);
+				if ($cmd->getDisplay('forceReturnLineAfter', 0) == 1) 
+					$action .= '<br/>';
 			}
 		}
 		$replace_eqLogic['#detect#']= $detect;
