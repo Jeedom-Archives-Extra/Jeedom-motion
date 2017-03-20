@@ -86,7 +86,7 @@
 		}
 		if (init('action') == 'getCoord') {
 			$return='';
-			$cmd=cmd::byId(init('action'));
+			$cmd=cmd::byId(init('id'));
 			if(is_object($cmd)){
 				switch($cmd->getLogicalId()){
 					case 'detect':	
