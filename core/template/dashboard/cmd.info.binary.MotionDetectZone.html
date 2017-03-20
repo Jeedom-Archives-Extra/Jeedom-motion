@@ -1,9 +1,23 @@
 <div class="cmd cmd-widget" data-type="info" data-subtype="binary" data-cmd_id="#id#">
 	<script>
-		$(function() {		
-			var coords='#MotionArea#';
-			if(coords != '#MotionArea#'){
-				coords=JSON.parse(coords);
+		$.ajax({// fonction permettant de faire de l'ajax
+			type: "POST", // methode de transmission des données au fichier php
+			url: "plugins/motion/core/ajax/motion.ajax.php", // url du fichier php
+			data: {
+				action: "getCoord",
+				cameraId: "#id#"
+			},
+			dataType: 'json',
+			global: false,
+			error: function(request, status, error) {
+				handleAjaxError(request, status, error);
+			},
+			success: function(data) { // si l'appel a bien fonctionné
+				if (data.state != 'ok') {
+					$('#div_alert').showAlert({message: data.result, level: 'danger'});
+					return;
+				}
+				var coords=JSON.parse(data.result);
 				var data= {};
 				data.fade=true;
 				data.strokeColor= '0100FF';
@@ -17,14 +31,14 @@
 				data.shadowRadius= 5;
 				data.shadowOpacity= 0.6;
 				data.shadowPosition= 'outside';
-				      if($('.MapHiLight .area[alt=#id#]').length ==0){
-					      $(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.MapHiLight').prepend(
-						      $('<area>')
-						      .addClass("area")
-						      .attr('shape','rect')
-						      .attr('title',"#name#")
-						      .attr('alt',"#id#"));
-				      }
+			      	if($('.MapHiLight .area[alt=#id#]').length ==0){
+				      $(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.MapHiLight').prepend(
+					      $('<area>')
+					      .addClass("area")
+					      .attr('shape','rect')
+					      .attr('title',"#name#")
+					      .attr('alt',"#id#"));
+			      	}
 				if ("#state#" == "0"){
 					$('.area[alt=#id#]').remove();
 				}else{
@@ -33,6 +47,6 @@
 					$('.area[alt=#id#]').trigger('update');
 				}
 			}
-      		});
+		});
 	</script>
 </div>
