@@ -90,7 +90,7 @@
 			if(is_object($cmd)){
 				switch($cmd->getLogicalId()){
 					case 'detect':	
-						$return= $cmd->getConfiguration('DetectArea')
+						$return= $cmd->getConfiguration('DetectArea');
 					break;
 					case 'maphilight':
 						$return= $cmd->getConfiguration('maphilightArea');
