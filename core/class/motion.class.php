@@ -218,7 +218,7 @@ class motion extends eqLogic {
 		$cmdColor = ($this->getPrimaryCategory() == '') ? '' : jeedom::getConfiguration('eqLogic:category:' . $this->getPrimaryCategory() . ':' . $vcolor);
 		$replace_eqLogic = array(
 			'#id#' => $this->getId(),
-			'#refreshDelay#' => /*(1/$this->getConfiguration('framerate'))*1000*/1000,
+			'#refreshDelay#' => /*(1/$this->getConfiguration('framerate'))*10001000,
 		/*	'#background_color#' => $this->getBackgroundColor(jeedom::versionAlias($_version)),
 			'#humanname#' => $this->getHumanName(),
 			'#name#' => $this->getName(),
