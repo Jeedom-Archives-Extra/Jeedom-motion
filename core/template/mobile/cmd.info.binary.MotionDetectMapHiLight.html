@@ -1,34 +1,54 @@
 <div class="cmd cmd-widget" data-type="info" data-subtype="binary" data-cmd_id="#id#">
 	<script>
-		$(function() {		
-			var hightlightColor='FF0000';
-			if ("#state#" == "0")
-				hightlightColor='00FF00';
-			var coords=JSON.parse('#areas#');
-			var shape = (coords.length <= 2) ? 'rect' : 'poly';
-			var data= {};
-			      data.stroke=true;
-			      data.fade=true;
-			      data.strokeColor= hightlightColor;
-			      data.alwaysOn= true;
-			      data.fillColor= hightlightColor;
-			      data.fillOpacity= 0.2;
-			      data.shadow= true;
-			      data.shadowColor= '000000';
-			      data.shadowRadius= 5;
-			      data.shadowOpacity= 0.6;
-			      data.shadowPosition= 'outside';
-			      if($('.MapHiLight .area[alt=#id#]').length ==0){
-				      $(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.MapHiLight').append(
-					      $('<area>')
-					      .addClass("area")
-					      .attr('title',"#name#")
-					      .attr('alt',"#id#"));
-			      }
-			$('.area[alt=#id#]').attr('shape',shape)
-					      .attr('coords',coords.toString())
-					      .attr('data-maphilight',JSON.stringify(data));
-			$('.area[alt=#id#]').trigger('alwaysOn.maphilight');
-        	});
+		$.ajax({// fonction permettant de faire de l'ajax
+			type: "POST", // methode de transmission des données au fichier php
+			url: "plugins/motion/core/ajax/motion.ajax.php", // url du fichier php
+			data: {
+				action: "getCoord",
+				id: "#id#"
+			},
+			dataType: 'json',
+			global: false,
+			error: function(request, status, error) {
+				handleAjaxError(request, status, error);
+			},
+			success: function(data) { // si l'appel a bien fonctionné
+				if (data.state != 'ok') {
+					$('#div_alert').showAlert({message: data.result, level: 'danger'});
+					return;
+				}
+				if(data.result != ""){
+				var coords=JSON.parse(data.result);
+					var hightlightColor='FF0000';
+					if ("#state#" == "0")
+						hightlightColor='00FF00';
+					var shape = (coords.length <= 2) ? 'rect' : 'poly';
+					var data= {};
+					data.stroke=true;
+					data.fade=true;
+					data.strokeColor= hightlightColor;
+					data.alwaysOn= true;
+					data.fillColor= hightlightColor;
+					data.fillOpacity= 0.2;
+					data.shadow= true;
+					data.shadowColor= '000000';
+					data.shadowRadius= 5;
+					data.shadowOpacity= 0.6;
+					data.shadowPosition= 'outside';
+					if($('.MapHiLight .area[alt=#id#]').length ==0){
+					      $(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.MapHiLight').append(
+						      $('<area>')
+						      .addClass("area")
+						      .attr('title',"#name#")
+						      .attr('alt',"#id#"));
+					}
+					$('.area[alt=#id#]').attr('shape',shape)
+							      .attr('coords',coords.toString())
+							      .attr('data-maphilight',JSON.stringify(data));
+					$('.area[alt=#id#]').trigger('alwaysOn.maphilight');
+					$('.area[alt=#id#]').trigger('update');
+				}
+			}
+		});
 	</script>
 </div>
