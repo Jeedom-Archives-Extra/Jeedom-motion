@@ -1,35 +1,54 @@
 <div class="cmd cmd-widget" data-type="info" data-subtype="binary" data-cmd_id="#id#">
 	<script>
-		$(function() {		
-			var coords=JSON.parse('#MotionArea#');
-			var data= {};
-			data.fade=true;
-			data.strokeColor= '0100FF';
-			data.alwaysOn= true;
-      			data.fill= true;
-			data.shadow= true;
-			data.stroke=true;
-			if ("#state#" == "0"){
-       				data.fill = false;
-       				data.shadow = false;
-				data.stroke=false;
+		$.ajax({// fonction permettant de faire de l'ajax
+			type: "POST", // methode de transmission des données au fichier php
+			url: "plugins/motion/core/ajax/motion.ajax.php", // url du fichier php
+			data: {
+				action: "getCoord",
+				id: "#id#"
+			},
+			dataType: 'json',
+			global: false,
+			error: function(request, status, error) {
+				handleAjaxError(request, status, error);
+			},
+			success: function(data) { // si l'appel a bien fonctionné
+				if (data.state != 'ok') {
+					$('#div_alert').showAlert({message: data.result, level: 'danger'});
+					return;
+				}
+				if(data.result != ""){
+					var coords=JSON.parse(data.result);
+					var data= {};
+					data.fade=true;
+					data.strokeColor= '0100FF';
+					data.alwaysOn= true;
+					data.fill= true;
+					data.shadow= true;
+					data.stroke=true;
+					data.fillColor= '0100FF';
+					data.fillOpacity= 0.2;
+					data.shadowColor= '000000';
+					data.shadowRadius= 5;
+					data.shadowOpacity= 0.6;
+					data.shadowPosition= 'outside';
+					if($('.MapHiLight .area[alt=#id#]').length ==0){
+					      $(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.MapHiLight').prepend(
+						      $('<area>')
+						      .addClass("area")
+						      .attr('shape','rect')
+						      .attr('title',"#name#")
+						      .attr('alt',"#id#"));
+					}
+					if ("#state#" == "0"){
+						$('.area[alt=#id#]').remove();
+					}else{
+						$('.area[alt=#id#]').attr('data-maphilight',JSON.stringify(data)).attr('coords',coords.toString());
+						$('.area[alt=#id#]').trigger('alwaysOn.maphilight');
+						$('.area[alt=#id#]').trigger('update');
+					}
+				}
 			}
-			data.fillColor= '0100FF';
-			data.fillOpacity= 0.2;
-			data.shadowColor= '000000';
-			data.shadowRadius= 5;
-			data.shadowOpacity= 0.6;
-			data.shadowPosition= 'outside';
-			      if($('.MapHiLight .area[alt=#id#]').length ==0){
-				      $(".cmd[data-cmd_id=#id#]").closest('.eqLogic').find('.MapHiLight').append(
-					      $('<area>')
-					      .addClass("area")
-					      .attr('shape','rect')
-					      .attr('title',"#name#")
-					      .attr('alt',"#id#"));
-			      }
-			$('.area[alt=#id#]').attr('data-maphilight',JSON.stringify(data)).attr('coords',coords.toString());
-			$('.area[alt=#id#]').trigger('alwaysOn.maphilight');
-        	});
+		});
 	</script>
 </div>
