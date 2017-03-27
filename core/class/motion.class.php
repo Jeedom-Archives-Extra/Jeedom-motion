@@ -566,7 +566,7 @@ class motion extends eqLogic {
 				self::WriteThread($Camera,$file);
 				self::UpdateMotionConf();
 			}
-			exec('sudo chmod 777 /dev/video*');
+			//exec('sudo chmod 777 /dev/video*');
 			log::remove('motion');
 			$file='/etc/motion/motion.log';
 			if(!file_exists($file)){
