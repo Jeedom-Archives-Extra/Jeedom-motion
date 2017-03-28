@@ -9,7 +9,7 @@ then
 	sudo apt-get autoremove -y --force-yes  motion
 	sudo apt-get autoremove -y --force-yes  ffmpeg
 	sudo apt-get autoremove -y --force-yes  x264
-	rm -R /etc/motion/
+	#rm -R /etc/motion/
 fi
 echo "*****************************************************************************************************"
 echo "*                                          Installation de FFMPEG                                   *"
