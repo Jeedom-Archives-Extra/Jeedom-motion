@@ -9,7 +9,7 @@ then
 	sudo apt-get autoremove -y --force-yes  motion
 	sudo apt-get autoremove -y --force-yes  ffmpeg
 	sudo apt-get autoremove -y --force-yes  x264
-	rm -R /etc/motion/
+	#rm -R /etc/motion/
 fi
 echo "*****************************************************************************************************"
 echo "*                                          Installation de FFMPEG                                   *"
@@ -26,7 +26,8 @@ sudo apt-get install -y --force-yes  deb-multimedia-keyring
 echo 40 > /tmp/compilation_motion_in_progress
 sudo apt-get -y update
 echo 50 > /tmp/compilation_motion_in_progress
-sudo apt-get remove -y --force-yes ffmpeg
+sudo apt-get install -y --force-yes ffmpeg
+sudo apt-get install -y --force-yes v4l-utils
 echo 60 > /tmp/compilation_motion_in_progress
 sudo apt-get install -y --force-yes x264
 echo 70 > /tmp/compilation_motion_in_progress

@@ -35,7 +35,7 @@ $eqLogic=eqLogic::byId(init('id'));
 }
 </style>
 <div class="AreaContent">
-	<img class="CameraSnap" src="<?php echo $eqLogic->getSnapshot();?>"/>
+	<img class="CameraSnap" src="<?php echo 'plugins/motion/core/php/stream.php?url='. urlencode($eqLogic->getUrl());?>"/>
 	<div class="Areas">
 		<div class="Area" id="1"></div>
 		<div class="Area" id="2"></div>

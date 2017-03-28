@@ -132,7 +132,7 @@ class motion extends eqLogic {
 	public function preRemove() {
 		self::RemoveThread($this);
     	}
- 	public function toHtml($_version = 'dashboard') {
+	public function toHtml($_version = 'dashboard') {
 		if ($this->getIsEnable() != 1) {
 			return '';
 		}
@@ -154,6 +154,7 @@ class motion extends eqLogic {
 			'#height#' => $this->getDisplay('height', 'auto'),
 			'#width#' => $this->getDisplay('width', 'auto'),
 			'#cmdColor#' => $cmdColor,
+			'#url#' => urlencode($this->getUrl())
 		);
 		$action = '';
 		$maphilightArea = '';
@@ -194,7 +195,6 @@ class motion extends eqLogic {
 			$object = $this->getObject();
 			$replace_eqLogic['#name#'] = (is_object($object)) ? $object->getName() . ' - ' . $replace_eqLogic['#name#'] : $replace['#name#'];
 		}
-
 		$parameters = $this->getDisplay('parameters');
 		if (is_array($parameters)) {
 			foreach ($parameters as $key => $value) {
@@ -252,9 +252,11 @@ class motion extends eqLogic {
 			fputs($fp,'webcontrol_html_output off');
 			fputs($fp, "\n");
 			foreach(eqLogic::byType('motion') as $Camera){		
-				if(file_exists('/etc/motion/thread'.$Camera->getId().'.conf')){
-					fputs($fp,'thread /etc/motion/thread'.$Camera->getId().'.conf');
-					fputs($fp, "\n");
+				if($Camera->getIsEnable()){
+					if(file_exists('/etc/motion/thread'.$Camera->getId().'.conf')){
+						fputs($fp,'thread /etc/motion/thread'.$Camera->getId().'.conf');
+						fputs($fp, "\n");
+					}
 				}
 			}
 		}
@@ -423,53 +425,8 @@ class motion extends eqLogic {
 			exec('sudo chmod 777 -R '.$directory);
 		return $directory;
 	}
-	public function getSnapshot() {
-		$directory=$this->getSnapshotDiretory();
-		$url=$this->getUrl();
-		if (!self::url_exists($url)){
-			log::add('motion','debug','Le flux video n\'eixte pas'.$url);
-			return 'plugins/motion/core/template/icones/no-image-blanc.png';
-		}
-		if(!$ReadFlux=@fopen($url,"r")){
-			log::add('motion','debug','Impossible d\'ouvrir le flux video '.$url);
-			return 'plugins/motion/core/template/icones/no-image-blanc.png';
-		}else {
-			//**** URL OK
-			$data=null;
-			$startTime = time();
-			$timeout = 60;
-			while (substr_count($data,"Content-Length") != 2){
-				if(time() > $startTime + $timeout) {
-					break;
-				}
-				$data.=fread($ReadFlux,1024);
-			}
-			fclose($ReadFlux);
-			$data=substr($data,strpos($data,"\r\n\r\n")+4);
-			$data=trim(substr($data,0,stripos($data,"--object-ipcamera")-2));
-			$data=trim(substr($data,0,stripos($data,"--myboundary")-2));
-			$data=trim(substr($data,0,stripos($data,"--BoundaryString")-2));
-			$output_file = $this->getId();
-			$output_file .= '.jpg';
-			if(file_exists($directory.$output_file))
-				exec('sudo rm '.$directory.$output_file);
-			if (empty($data))
-				return 'plugins/motion/core/template/icones/no-image-blanc.png';
-			file_put_contents($directory. $output_file, $data);
-			$url=dirname(__FILE__);
-			if(substr($url,-1)!='/')
-				$url.='/';
-			foreach(explode('/',$url) as $section)
-				$url.='../';	
-			if(substr($directory,0,1)=='/')
-				$url=substr($url,0,-1);
-			$url.=$directory . $output_file;
-			return 'core/php/downloadFile.php?pathfile=' . urlencode($url);
-		}
-		return 'plugins/motion/core/template/icones/no-image-blanc.png';
-	}	
 	public static function removeRecord($file) {
-		exec('sudo rm '. $file.' > /dev/null 2>/dev/null &');
+		exec('sudo rm '. $file);
 		log::add('motion','debug','Fichiers '.$file.' à été supprimée');
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -609,7 +566,7 @@ class motion extends eqLogic {
 				self::WriteThread($Camera,$file);
 				self::UpdateMotionConf();
 			}
-			exec('sudo chmod 777 /dev/video*');
+			//exec('sudo chmod 777 /dev/video*');
 			log::remove('motion');
 			$file='/etc/motion/motion.log';
 			if(!file_exists($file)){
