@@ -35,7 +35,7 @@ include_file('desktop', 'jquery.maphilight.min', 'js', 'motion');
 }
 </style>
 <div class="polygon">
-  	<img class="CameraSnap" usemap="#map" src="<?php echo $eqLogic->getSnapshot();?>"/>
+  <img class="CameraSnap" usemap="#map" src="<?php echo 'plugins/motion/core/php/stream.php?url='. urlencode($eqLogic->getUrl());?>"/>
 	<div id="div_displayArea"></div>
 	<map name="map" id="map"></map>
 </div>
