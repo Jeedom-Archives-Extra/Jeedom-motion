@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 set_time_limit(120);
 $url=urldecode($_REQUEST['url']);
 $timeout = time();
