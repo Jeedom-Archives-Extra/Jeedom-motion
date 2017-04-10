@@ -24,6 +24,25 @@
 	    function refreshImgMotionCam#id#(){
 	    	$('#Video#id#').attr('src',"plugins/motion/core/php/stream.php?url=#url#&dummy="+new Date().valueOf());
 	    	$('#Video#id#').maphilight();
+	    	//Calcule de la proportion entre l'image reel et l'image affichié
+		var x=$('#Video#id#').get(0).naturalWidth/$('#Video#id#').width();
+		var y=$('#Video#id#').get(0).naturalHeight/$('#Video#id#').height();
+	    	//Application de la proportion au mapping
+		$( "eqLogic[data-eqlogic_id=#id#] .area" ).each(function( index ) {
+			var coord= $(this).attr('coords');
+			var newCoord=[];
+			var etat=false;
+			$.each(JSON.parse(coord),function(index, value){
+				if (etat){
+					newCoord.push(value/y);
+					etat=false;
+				}else{
+					newCoord.push(value/x);
+					etat=true;
+				}
+			});
+			$(this).attr('coords',newCoord);
+		});
 	    }
 	</script>
 </div>
