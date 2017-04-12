@@ -33,7 +33,17 @@
 			});
 		};
 		onImgLoad('.eqLogic[data-eqLogic_id=#id#] #fluxVideo', function(){
-			$('.eqLogic[data-eqLogic_id=#id#] #fluxVideo').maphilight();
+			var x=$(this).get(0).naturalWidth / $(this).width();
+			var y=$(this).get(0).naturalHeight / $(this).height();
+			$(this).closest('.eqLogic').find('area').each(function(){
+				var coords=$(this).attr('coords');
+				var newCoords=[];
+				$.each(coords.split(','),function(index, value){
+					newCoords.push(value/x);
+				});
+				$(this).attr('coords',newCoords.toString());
+			});
+			$(this).maphilight();
 		});
 	</script>
 </div>
