@@ -20,30 +20,20 @@
 		$('.camera_history[data-eqLogic_id=#id#]').off().on('click', function () {
 			$('#md_modal').dialog({title: "Historique #name#"});
 			$('#md_modal').load('index.php?v=d&plugin=motion&modal=motion.history&id=#id#').dialog('open');
-		});
-		var onImgLoad = function(selector, callback){
-			$(selector).each(function(){
-				if (this.complete || /*for IE 10-*/ $(this).height() > 0) {
-					callback.apply(this);
-				}else {
-					$(this).on('load', function(){
-						callback.apply(this);
-					});
-				}
-			});
-		};
-		onImgLoad('.eqLogic[data-eqLogic_id=#id#] #fluxVideo', function(){
-			var x=$(this).get(0).naturalWidth / $(this).width();
-			var y=$(this).get(0).naturalHeight / $(this).height();
-			$(this).closest('.eqLogic').find('area').each(function(){
+		});	
+		$('.eqLogic[data-eqLogic_id=#id#] #fluxVideo').on('load', function(){
+			$('.eqLogic[data-eqLogic_id=#id#] area').on('change',function(){
+				var x=$('.eqLogic[data-eqLogic_id=#id#] #fluxVideo').get(0).naturalWidth / $('.eqLogic[data-eqLogic_id=#id#] #fluxVideo').width();
+				var y=$('.eqLogic[data-eqLogic_id=#id#] #fluxVideo').get(0).naturalHeight / $('.eqLogic[data-eqLogic_id=#id#] #fluxVideo').height();
 				var coords=$(this).attr('coords');
 				var newCoords=[];
 				$.each(coords.split(','),function(index, value){
 					newCoords.push(value/x);
 				});
 				$(this).attr('coords',newCoords.toString());
+				$('.eqLogic[data-eqLogic_id=#id#] #fluxVideo').maphilight();
 			});
-			$(this).maphilight();
+			$('.eqLogic[data-eqLogic_id=#id#] area').trigger('change');
 		});
 	</script>
 </div>
