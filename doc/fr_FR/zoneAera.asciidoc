@@ -6,5 +6,5 @@ image::../images/ConfigurationAera.jpg[]
 
 En cliquant sur le bouton "Editer" de cette commande vous allez faire apparaitre l'editeur
 
-image::../images/ConfigurationAeraEditer.jpg[]
+image::../images/ConfigurationAeraEdite.jpg[]
 Il vous suffuit donc de selectionner ou deselection les zone que vous souhaitez pour la détection
