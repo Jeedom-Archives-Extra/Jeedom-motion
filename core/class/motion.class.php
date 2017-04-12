@@ -463,7 +463,7 @@ class motion extends eqLogic {
 					$cmd = cmd::byId(str_replace('#', '', $id));
 					if (is_object($cmd)) {
 						log::add('motion','debug','Envoie du message avec '.$cmd->getHumanName());
-						$cmd->execute($_options);
+						$cmd->event($_options);
 					}
 				}
 			}
