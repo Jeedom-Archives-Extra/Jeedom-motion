@@ -1,5 +1,5 @@
 Le plugin intergre une gestion de zone plus précise.
-Grace a l'editeur de map, nous allons pouvoir tres finement delimité nos zones
+Dank des Map-Editors, können wir sehr genau unsere Bereiche  abgrenzen.
 
 image::../images/BoutonAjouterZone.jpg[]
 On commance par cree une zone
