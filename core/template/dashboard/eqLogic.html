@@ -18,7 +18,7 @@
     	</center>
 	<script>
 		setTimeout(function() {
-			$('.eqLogic[data-eqLogic_id=#id#] .fluxVideo').attr('src','plugins/motion/core/php/stream.php?url=#url#&dummy='+new Date().valueOf()');
+			$('.eqLogic[data-eqLogic_id=#id#] .fluxVideo').attr('src','plugins/motion/core/php/stream.php?url=#url#&dummy='+new Date().valueOf());
 		}, 1000);
 		$('.camera_history[data-eqLogic_id=#id#]').off().on('click', function () {
 			$('#md_modal').dialog({title: "Historique #name#"});
