@@ -19,10 +19,10 @@
 	<script>
 		refresh();
 		function refresh(){
+			$('.eqLogic[data-eqLogic_id=#id#] .fluxVideo').attr('src','plugins/motion/core/php/stream.php?url=#url#&dummy='+new Date().valueOf());
 			setTimeout(function() {
 				refresh();
-				$('.eqLogic[data-eqLogic_id=#id#] .fluxVideo').attr('src','plugins/motion/core/php/stream.php?url=#url#&dummy='+new Date().valueOf());
-			}, 10000);
+				}, 10000);
 		}
 		$('.camera_history[data-eqLogic_id=#id#]').off().on('click', function () {
 			$('#md_modal').dialog({title: "Historique #name#"});
