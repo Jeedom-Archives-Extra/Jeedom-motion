@@ -7,7 +7,7 @@
 	<center>	
         	<span>
 			<span class="Detection" style="position:absolute;right:0;">#detect#</span>
-			<img class="img-responsive fluxVideo" usemap="#map#id#" src="plugins/motion/core/php/stream.php?url=#url#" alt="" data-eqLogic_id="#id#" style="z-index:1"/>
+			<img class="img-responsive fluxVideo" usemap="#map#id#" src="plugins/motion/core/template/icones/no-image-blanc.png" alt="" data-eqLogic_id="#id#" style="z-index:1"/>
   			<map class="MapHiLight" name="map#id#" id="map#id#"></map>
 			#maphilightArea#
 	    	</span>
@@ -17,6 +17,9 @@
         	</span>
     	</center>
 	<script>
+		setTimeout(function() {
+			$('.eqLogic[data-eqLogic_id=#id#] .fluxVideo').attr('src','plugins/motion/core/php/stream.php?url=#url#&dummy='+new Date().valueOf()');
+		}, 1000);
 		$('.camera_history[data-eqLogic_id=#id#]').off().on('click', function () {
 			$('#md_modal').dialog({title: "Historique #name#"});
 			$('#md_modal').load('index.php?v=d&plugin=motion&modal=motion.history&id=#id#').dialog('open');
