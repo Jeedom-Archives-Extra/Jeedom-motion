@@ -17,9 +17,13 @@
         	</span>
     	</center>
 	<script>
-		setTimeout(function() {
-			$('.eqLogic[data-eqLogic_id=#id#] .fluxVideo').attr('src','plugins/motion/core/php/stream.php?url=#url#&dummy='+new Date().valueOf());
-		}, 1000);
+		refresh();
+		function refresh(){
+			setTimeout(function() {
+				refresh();
+				$('.eqLogic[data-eqLogic_id=#id#] .fluxVideo').attr('src','plugins/motion/core/php/stream.php?url=#url#&dummy='+new Date().valueOf());
+			}, 1000);
+		}
 		$('.camera_history[data-eqLogic_id=#id#]').off().on('click', function () {
 			$('#md_modal').dialog({title: "Historique #name#"});
 			$('#md_modal').load('index.php?v=d&plugin=motion&modal=motion.history&id=#id#').dialog('open');
