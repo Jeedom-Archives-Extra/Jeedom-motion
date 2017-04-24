@@ -5,7 +5,7 @@ $url=urldecode($_REQUEST['url']);
 $timeout = time();
 if(!$src=@fopen($url,"rb")){
 	log::add('motion','debug','Impossible d\'ouvrir le flux video '.$url);
-	$src=@fopen('/plugins/motion/core/template/icones/no-image-blanc.png',"rb")
+	$src=@fopen('/plugins/motion/core/template/icones/no-image-blanc.png',"rb");
 }
 header('Max-Age: 0');
 header('Expires: 0');
