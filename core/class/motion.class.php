@@ -454,10 +454,8 @@ class motion extends eqLogic {
 			case "off":
 			break;
 			case "first":
-			if(file_exists($directory.$file)){
-				$files[]=$directory.$file;
-				log::add('motion','debug','photo:'.$directory.$file);
-			}
+				if(file_exists($directory.$file))
+					$files[]=$directory.$file;
 			break;
 			case "on":
 			case "best":
@@ -491,7 +489,6 @@ class motion extends eqLogic {
 		}
 	}
 	public function UpdateDetection($Parametres){
-		log::add('motion','debug','Détection sur la camera => '.json_encode($Parametres));
 		$State=$Parametres['state'];
 		log::add('motion','debug','Détection sur la camera => '.$this->getName().' => '.$State);
 		if(isset($Parametres['file']))
