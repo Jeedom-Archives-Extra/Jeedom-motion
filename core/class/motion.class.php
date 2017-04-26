@@ -147,7 +147,6 @@ class motion extends eqLogic {
 		$cmdColor = ($this->getPrimaryCategory() == '') ? '' : jeedom::getConfiguration('eqLogic:category:' . $this->getPrimaryCategory() . ':' . $vcolor);
 		$replace_eqLogic = array(
 			'#id#' => $this->getId(),
-			'#refreshDelay#' => /*(1/$this->getConfiguration('framerate'))*1000*/1000,
 			'#background_color#' => $this->getBackgroundColor(jeedom::versionAlias($_version)),
 			'#humanname#' => $this->getHumanName(),
 			'#name#' => $this->getName(),
@@ -450,14 +449,15 @@ class motion extends eqLogic {
 	}
 	public function getLastSnap($file){
 		$directory=$this->getSnapshotDiretory(true);
-		log::add('motion','debug','photo:'.$directory.$file);
 		$files=array();
 		switch($this->getConfiguration("output_pictures")){
 			case "off":
 			break;
 			case "first":
-			if(file_exists($directory.$file))
+			if(file_exists($directory.$file)){
 				$files[]=$directory.$file;
+				log::add('motion','debug','photo:'.$directory.$file);
+			}
 			break;
 			case "on":
 			case "best":
@@ -471,6 +471,7 @@ class motion extends eqLogic {
 				}
 			break;
 		}
+		log::add('motion','debug','photo:'.json_encode($files));
 		return $files;
 	}
 	public function SendLastSnap($file){
@@ -490,6 +491,7 @@ class motion extends eqLogic {
 		}
 	}
 	public function UpdateDetection($Parametres){
+		log::add('motion','debug','Détection sur la camera => '.json_encode($Parametres));
 		$State=$Parametres['state'];
 		log::add('motion','debug','Détection sur la camera => '.$this->getName().' => '.$State);
 		if(isset($Parametres['file']))
