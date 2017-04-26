@@ -42,7 +42,9 @@
 				$(this).attr('coords',newCoords.toString());
 				$('.eqLogic[data-eqLogic_id=#id#] .fluxVideo').maphilight();
 			});
-			$('.eqLogic[data-eqLogic_id=#id#] area').trigger('change');
+			$('.eqLogic[data-eqLogic_id=#id#] area').each(function(){
+				$(this).trigger('change');
+			})
 		});
 	</script>
 </div>
