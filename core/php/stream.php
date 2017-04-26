@@ -3,7 +3,7 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 set_time_limit(120);
 $url=urldecode($_REQUEST['url']);
 $timeout = time();
-$src=@fopen($url,"rb")
+$src=@fopen($url,"rb");
 if(!$src){
 	log::add('motion','debug','Impossible d\'ouvrir le flux video '.$url);
 	$src=@fopen('plugins/motion/core/template/icones/no-image-blanc.png',"rb");
