@@ -141,9 +141,9 @@ $eqLogics = eqLogic::byType('motion');
 								<label class="col-sm-2 control-label" ></label>
 								<div class="col-sm-9">
 									<label>{{Activer}}</label>
-									<input type="checkbox" class="eqLogicAttr" data-label-text="{{Activer}}" data-l1key="isEnable" checked/>
+									<input type="checkbox" class="eqLogicAttr" data-label-text="{{Activer}}" data-l1key="isEnable"/>
 									<label>{{Visible}}</label>
-									<input type="checkbox" class="eqLogicAttr" data-label-text="{{Visible}}" data-l1key="isVisible" checked/>
+									<input type="checkbox" class="eqLogicAttr" data-label-text="{{Visible}}" data-l1key="isVisible"/>
 								</div>
 							</div>
 							<div class="form-group">
@@ -516,7 +516,7 @@ $eqLogics = eqLogic::byType('motion');
 											<option value="on">On</option>
 											<option value="off">Off</option>
 											<option value="first">La première</option>
-											<option value="best" selected>La meilleur</option>
+											<option value="best">La meilleur</option>
 											<option value="center">Au millieu</option>
 										</select>
 								</div>
@@ -562,7 +562,7 @@ $eqLogics = eqLogic::byType('motion');
 								<div class="col-sm-3">
 									<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="ffmpeg_timelapse_mode" >
 										<option value="hourly">Toutes les heures</option>
-										<option value="daily" selected>Tous les jours</option>
+										<option value="daily">Tous les jours</option>
 										<option value="weekly-sunday">Tous les dimanche</option>
 										<option value="weekly-monday">Tous les lundi</option>
 										<option value="monthly">Tous les mois</option>
