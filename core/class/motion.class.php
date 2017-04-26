@@ -448,23 +448,43 @@ class motion extends eqLogic {
 		}
 		log::add('motion','debug','Le dossier '.$directory.' est a '.$size);
 	}
-	public function SendLastSnap($file){
-		if($this->getConfiguration('alertMessageCommand')!=''){
-			$directory=$this->getSnapshotDiretory(true);
-			log::add('motion','debug','photo:'.$directory.$file);
-			if(file_exists($directory.$file)){
-				$_options['files']=array();
-					$_options['files'][]=$directory.$file;
-				$_options['title'] = '[Jeedom][Motion] Détéction sur la camera '.$this->getHumanName();
-				$_options['message'] = 'La camera '.$this->getHumanName(). ' a détécté un mouvement. Voici le snapshot qui a ete pris';
-				log::add('motion','debug','Envoie d\'un message avec les derniere photo:'.json_encode($_options['files']));
-				$cmds = explode('&&', $this->getConfiguration('alertMessageCommand'));
-				foreach ($cmds as $id) {
-					$cmd = cmd::byId(str_replace('#', '', $id));
-					if (is_object($cmd)) {
-						log::add('motion','debug','Envoie du message avec '.$cmd->getHumanName());
-						$cmd->event($_options);
+	public function getLastSnap($file){
+		$directory=$this->getSnapshotDiretory(true);
+		log::add('motion','debug','photo:'.$directory.$file);
+		$files=array();
+		switch($this->getConfiguration("output_pictures")){
+			case "off":
+			break;
+			case "first":
+			if(file_exists($directory.$file))
+				$files[]=$directory.$file;
+			break;
+			case "on":
+			case "best":
+			case "center":
+				foreach (array_diff(scandir($directory,SCANDIR_SORT_DESCENDING), array('..', '.')) as $file) {
+					$path_parts = pathinfo($file);
+					if($path_parts['extension'] == 'jpg'){
+						$files[]=$directory.$file;
+						break;
 					}
+				}
+			break;
+		}
+		return $files;
+	}
+	public function SendLastSnap($file){
+		if($this->getConfiguration('alertMessageCommand')!=''){	
+			$_options['title'] = '[Jeedom][Motion] Détéction sur la camera '.$this->getHumanName();
+			$_options['message'] = 'La camera '.$this->getHumanName(). ' a détécté un mouvement. Voici le snapshot qui a ete pris';
+			$_options['files']=$this->getLastSnap($file);
+			log::add('motion','debug','Envoie d\'un message avec les derniere photo:'.json_encode($_options['files']));
+			$cmds = explode('&&', $this->getConfiguration('alertMessageCommand'));
+			foreach ($cmds as $id) {
+				$cmd = cmd::byId(str_replace('#', '', $id));
+				if (is_object($cmd)) {
+					log::add('motion','debug','Envoie du message avec '.$cmd->getHumanName());
+					$cmd->event($_options);
 				}
 			}
 		}
