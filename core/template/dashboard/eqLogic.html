@@ -17,6 +17,7 @@
         	</span>
     	</center>
 	<script>
+  	var responsive#id#;
 		refresh();
 		function refresh(){
 			$('.eqLogic[data-eqLogic_id=#id#] .fluxVideo').attr('src','plugins/motion/core/php/stream.php?url=#url#&dummy='+new Date().valueOf());
@@ -31,13 +32,12 @@
 			$('#md_modal').load('index.php?v=d&plugin=motion&modal=motion.history&id=#id#').dialog('open');
 		});	
 		$('.eqLogic[data-eqLogic_id=#id#] .fluxVideo').on('load', function(){
+            	responsive#id#=$('.eqLogic[data-eqLogic_id=#id#] .fluxVideo').get(0).naturalWidth / $('.eqLogic[data-eqLogic_id=#id#] .fluxVideo').width();
 			$('.eqLogic[data-eqLogic_id=#id#] area').on('change',function(){
-				var x=$('.eqLogic[data-eqLogic_id=#id#] .fluxVideo').get(0).naturalWidth / $('.eqLogic[data-eqLogic_id=#id#] .fluxVideo').width();
-				var y=$('.eqLogic[data-eqLogic_id=#id#] .fluxVideo').get(0).naturalHeight / $('.eqLogic[data-eqLogic_id=#id#] .fluxVideo').height();
 				var coords=$(this).attr('coords');
 				var newCoords=[];
 				$.each(coords.split(','),function(index, value){
-					newCoords.push(value/x);
+					newCoords.push(value/responsive#id#);
 				});
 				$(this).attr('coords',newCoords.toString());
 				$('.eqLogic[data-eqLogic_id=#id#] .fluxVideo').maphilight();
