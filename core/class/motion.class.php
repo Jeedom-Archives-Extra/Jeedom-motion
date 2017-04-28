@@ -452,14 +452,17 @@ class motion extends eqLogic {
 		$files=array();
 		switch($this->getConfiguration("output_pictures")){
 			case "off":
+				log::add('motion','debug','Motion ne prend pas de photo');
 			break;
 			case "first":
+				log::add('motion','debug','Motion séléctionne la premiere photo de la détéction');
 				if(file_exists($directory.$file))
 					$files[]=$directory.$file;
 			break;
 			case "on":
 			case "best":
 			case "center":
+				log::add('motion','debug','Envoie de la derniere photo prise par Motion');
 				foreach (array_diff(scandir($directory,SCANDIR_SORT_DESCENDING), array('..', '.')) as $file) {
 					$path_parts = pathinfo($file);
 					if($path_parts['extension'] == 'jpg'){
