@@ -7,7 +7,7 @@
 	<center>	
         	<span style="width : 90%;max-height:90%">
 			<span class="Detection" style="position:absolute;right:0;">#detect#</span>
-			<img id="Video#id#" class="img-responsive" usemap="#map#id#"src="plugins/motion/core/template/icones/no-image-blanc.png" alt="" data-eqLogic_id="#id#" style="z-index:1" onload="refreshImgMotionCam#id#();"/>
+			<img id="Video#id#" class="img-responsive" usemap="#map#id#" src="plugins/motion/core/php/stream.php?url=#url#" alt="" data-eqLogic_id="#id#" style="z-index:1"/>
   			<map class="MapHiLight" name="map#id#" id="map#id#"></map>
 			#maphilightArea#
 	    	</span>
@@ -21,9 +21,5 @@
 		    $('#md_modal').dialog({title: "Historique #name#"});
 		    $('#md_modal').load('index.php?v=d&plugin=motion&modal=motion.history&id=#id#').dialog('open');
 	    });
-	    function refreshImgMotionCam#id#(){
-		    $('#Video#id#').attr('src',"plugins/motion/core/php/stream.php?url=#url#&dummy="+new Date().valueOf());
-		    $('#Video#id#').maphilight();
-	    }
 	</script>
 </div>
