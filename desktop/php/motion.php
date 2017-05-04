@@ -71,7 +71,7 @@ $eqLogics = eqLogic::byType('motion');
 				<center>{{Information sur l'activité de motion}}</center>
 			</div>
 		</div>
-        <legend>{{Mes camera surveiller}}</legend>
+        <legend>{{Les caméras surveillées}}</legend>
 		<div class="eqLogicThumbnailContainer">
 			<?php
 			if (count($eqLogics) == 0) {
