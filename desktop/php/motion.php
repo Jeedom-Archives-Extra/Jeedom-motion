@@ -92,9 +92,6 @@ $eqLogics = eqLogic::byType('motion');
 		</div>
     </div>
 	<div class="eqLogic col-lg-12" style="border-left: 1px solid rgb(238, 238, 238); padding-left: 25px; height: auto; overflow: initial; padding-top: 5px;">
-		<a class="btn btn-success eqLogicAction pull-right" data-action="save"><i class="fa fa-check-circle"></i> Sauvegarder</a>
-		<a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fa fa-minus-circle"></i> Supprimer</a>
-		<a class="btn btn-default eqLogicAction pull-right" data-action="configure"><i class="fa fa-cogs"></i> Configuration avancée</a>
 		<ul class="nav nav-tabs" role="tablist">
 			<li role="presentation">
 				<a href="#" class="eqLogicAction" aria-controls="home" role="tab" data-toggle="tab" data-action="returnToThumbnailDisplay">
@@ -176,7 +173,7 @@ $eqLogics = eqLogic::byType('motion');
 							    </div> 
 						</div>
 					</div>
-			<div role="tabpanel"  class="tab-pane" id="StreamOptions">
+			<div role="tabpanel" class="tab-pane" id="StreamOptions">
 				<br/>
 				<legend>Option de streaming</legend>
 				<div class="form-horizontal">
@@ -228,7 +225,7 @@ $eqLogics = eqLogic::byType('motion');
 					</div>
 				</div>
 			</div>
-			<div role="tabpanel"  class="tab-pane" id="CaptureDeviceOptions">
+			<div role="tabpanel" class="tab-pane" id="CaptureDeviceOptions">
 			<br/>
 			<legend>Option des equipement de capture</legend>
 			<div class="form-horizontal">
@@ -397,7 +394,7 @@ $eqLogics = eqLogic::byType('motion');
 				</div>
 			</div>
 		</div>
-			<div role="tabpanel"  class="tab-pane" id="RoundRobin">
+			<div role="tabpanel" class="tab-pane" id="RoundRobin">
 				<br/>
 				<div class="form-horizontal">
 					<div class="form-group">
@@ -420,7 +417,7 @@ $eqLogics = eqLogic::byType('motion');
 					</div>
 				</div>
 			</div>
-			<div role="tabpanel"  class="tab-pane" id="MotionDetectionSettings">
+			<div role="tabpanel" class="tab-pane" id="MotionDetectionSettings">
 				<br/>
 				<div class="form-horizontal">
 					<div class="form-group">
@@ -501,7 +498,7 @@ $eqLogics = eqLogic::byType('motion');
 					</div>
 				</div>
 			</div>
-			<div role="tabpanel"  class="tab-pane" id="ImageFileOutput">
+			<div role="tabpanel" class="tab-pane" id="ImageFileOutput">
 			<br/>
 				<div class="form-horizontal">
 					<div class="form-group">
@@ -536,7 +533,7 @@ $eqLogics = eqLogic::byType('motion');
 					</div>
 				</div>
 			</div>
-			<div role="tabpanel"  class="tab-pane" id="FFMPEGoptions">  
+			<div role="tabpanel" class="tab-pane" id="FFMPEGoptions">  
 				<br/>
 				<div class="form-horizontal">
 					<div class="form-group">
@@ -597,7 +594,7 @@ $eqLogics = eqLogic::byType('motion');
 					</div>
 				</div>
 			</div>
-			<div role="tabpanel"  class="tab-pane" id="TextDisplay">
+			<div role="tabpanel" class="tab-pane" id="TextDisplay">
 			  <br/>
 					# %Y = year, %m = month, %d = date,<br/>
 					# %H = hour, %M = minute, %S = second,<br/>
@@ -650,7 +647,7 @@ $eqLogics = eqLogic::byType('motion');
 					</div>
 				</div>
 			</div>
-			<div role="tabpanel"  class="tab-pane" id="Filenames">
+			<div role="tabpanel" class="tab-pane" id="Filenames">
 					# %Y = year, %m = month, %d = date,<br/>
 					# %H = hour, %M = minute, %S = second,<br/>
 					# %v = event, %q = frame number, %t = thread (camera) number,<br/>
@@ -685,7 +682,7 @@ $eqLogics = eqLogic::byType('motion');
 					</div>
 				</div>
 			</div>
-			<div role="tabpanel"  class="tab-pane" id="GlobalNetworkOptions">
+			<div role="tabpanel" class="tab-pane" id="GlobalNetworkOptions">
 				<div class="form-horizontal">
 					<div class="form-group" id="Capture_device_options">
 						<label class="col-md-2  control-label">Utiliser IPV6 :</label>
@@ -695,7 +692,7 @@ $eqLogics = eqLogic::byType('motion');
 					</div>
 				</div>
 			</div>
-			<div role="tabpanel"  class="tab-pane" id="TrackingOptions">
+			<div role="tabpanel" class="tab-pane" id="TrackingOptions">
 				<div class="form-horizontal">
 					<div class="form-group" >
 						<label class="col-md-2  control-label">The generic type enables the definition of motion center and motion size to be used with the conversion specifiers for options like on_motion_detected :</label>
@@ -837,6 +834,11 @@ $eqLogics = eqLogic::byType('motion');
 					</tbody>
 				</table>
 			</div>
+		</div>
+		<div>
+			<a class="btn btn-success eqLogicAction pull-right" data-action="save"><i class="fa fa-check-circle"></i> Sauvegarder</a>
+			<a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fa fa-minus-circle"></i> Supprimer</a>
+			<a class="btn btn-default eqLogicAction pull-right" data-action="configure"><i class="fa fa-cogs"></i> Configuration avancée</a>
 		</div>
 	</div>
 </div>
