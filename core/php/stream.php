@@ -18,9 +18,9 @@ if($src){
 
 	while ( !feof($src) ) {
 		echo  fread($src, 2048);
-		if ( (time() - $timeout) >= 120 ) {
+		/*if ( (time() - $timeout) >= 120 ) {
 			exit();
-		}
+		}*/
 	}
 }
 ?>
