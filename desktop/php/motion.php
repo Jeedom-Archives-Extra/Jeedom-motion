@@ -34,7 +34,7 @@ $eqLogics = eqLogic::byType('motion');
 	}
 </style>
 <div class="row row-overflow">
-    <div class="col-md-2">
+    <div class="col-lg-2 col-md-3 col-sm-4">
         <div class="bs-sidebar">
             <ul id="ul_eqLogic" class="nav nav-list bs-sidenav">
                 <a class="btn btn-default eqLogicAction" style="width : 100%;margin-top : 5px;margin-bottom: 5px;" data-action="add"><i class="fa fa-plus-circle"></i> {{Ajouter une camera}}</a>
@@ -91,7 +91,7 @@ $eqLogics = eqLogic::byType('motion');
 			<?php } ?>
 		</div>
     </div>
-	<div class="eqLogic col-lg-12" style="border-left: 1px solid rgb(238, 238, 238); padding-left: 25px; height: auto; overflow: initial; padding-top: 5px;">
+	<div class="col-lg-10 col-md-9 col-sm-8 eqLogic" style="border-left: solid 1px #EEE; padding-left: 25px;display: none;">
 		<ul class="nav nav-tabs" role="tablist">
 			<li role="presentation">
 				<a href="#" class="eqLogicAction" aria-controls="home" role="tab" data-toggle="tab" data-action="returnToThumbnailDisplay">
@@ -114,6 +114,11 @@ $eqLogics = eqLogic::byType('motion');
 			<li role="presentation" class=""><a href="#GlobalNetworkOptions" role="tab" data-toggle="tab" aria-expanded="false"> {{Reseau}}</a></li>			
 			<li role="presentation" class=""><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false"><i class="fa fa-list-alt"></i>Commandes</a></li>
 		</ul>
+		<div>
+			<a class="btn btn-success eqLogicAction pull-right" data-action="save"><i class="fa fa-check-circle"></i> Sauvegarder</a>
+			<a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fa fa-minus-circle"></i> Supprimer</a>
+			<a class="btn btn-default eqLogicAction pull-right" data-action="configure"><i class="fa fa-cogs"></i> Configuration avancée</a>
+		</div>
 		<div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
 			<div role="tabpanel" class="tab-pane active" id="eqlogictab"> 
 						<br/>
@@ -835,12 +840,7 @@ $eqLogics = eqLogic::byType('motion');
 				</table>
 			</div>
 		</div>
-		<div>
-			<a class="btn btn-success eqLogicAction pull-right" data-action="save"><i class="fa fa-check-circle"></i> Sauvegarder</a>
-			<a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fa fa-minus-circle"></i> Supprimer</a>
-			<a class="btn btn-default eqLogicAction pull-right" data-action="configure"><i class="fa fa-cogs"></i> Configuration avancée</a>
 		</div>
-	</div>
 </div>
 <?php include_file('desktop', 'motion', 'js', 'motion'); ?>
 <?php include_file('core', 'plugin.template', 'js'); ?>
