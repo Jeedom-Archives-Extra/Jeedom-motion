@@ -96,8 +96,8 @@ $eqLogics = eqLogic::byType('motion');
 		<a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fa fa-minus-circle"></i> Supprimer</a>
 		<a class="btn btn-default eqLogicAction pull-right" data-action="configure"><i class="fa fa-cogs"></i> Configuration avancée</a>
 		<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation"><a href="#" class="eqLogicAction" aria-controls="home" role="tab" data-toggle="tab" data-action="returnToThumbnailDisplay"></li>
-			<li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true"></li>
+			<li role="presentation"><a href="#" class="eqLogicAction" aria-controls="home" role="tab" data-toggle="tab" data-action="returnToThumbnailDisplay"></a></li>
+			<li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true"></a></li>
 			<li role="presentation" class=""><a href="#CaptureDeviceOptions" role="tab" data-toggle="tab" aria-expanded="false"> {{Option de capture}}</a></li>
 			<li role="presentation" class=""><a href="#StreamOptions" role="tab" data-toggle="tab" aria-expanded="false"> {{Option de stream}}</a></li>
 			<li role="presentation" class=""><a href="#TrackingOptions" role="tab" data-toggle="tab" aria-expanded="false"> {{Option de Tracking}}</a></li>
