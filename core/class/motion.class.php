@@ -147,7 +147,6 @@ class motion extends eqLogic {
 		$cmdColor = ($this->getPrimaryCategory() == '') ? '' : jeedom::getConfiguration('eqLogic:category:' . $this->getPrimaryCategory() . ':' . $vcolor);
 		$replace_eqLogic = array(
 			'#id#' => $this->getId(),
-			'#refreshDelay#' => /*(1/$this->getConfiguration('framerate'))*1000*/1000,
 			'#background_color#' => $this->getBackgroundColor(jeedom::versionAlias($_version)),
 			'#humanname#' => $this->getHumanName(),
 			'#name#' => $this->getName(),
@@ -284,9 +283,9 @@ class motion extends eqLogic {
 			fputs($fp, 'target_dir '.$Camera->getSnapshotDiretory(true));
 			fputs($fp, "\n");
 			$adress=network::getNetworkAccess('internal').'/plugins/motion/core/php/detect.php';
-			fputs($fp, 'on_event_start curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$Camera->getId().'&state=1"');
+			fputs($fp, 'on_event_start curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$Camera->getId().'&state=1&file='.$Camera->getConfiguration('picture_filename').'"');
 			fputs($fp, "\n");
-			fputs($fp, 'on_motion_detected curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$Camera->getId().'&state=1&file='.$Camera->getConfiguration('picture_filename').'&width=%i&height=%J&X=%K&Y=%L"');
+			fputs($fp, 'on_motion_detected curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$Camera->getId().'&width=%i&height=%J&X=%K&Y=%L"');
 			fputs($fp, "\n");
 			fputs($fp, 'on_event_end curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$Camera->getId().'&state=0"');
 			fputs($fp, "\n");
@@ -299,7 +298,7 @@ class motion extends eqLogic {
 			if ($AreaDetect!=''){
 				fputs($fp, 'area_detect '.$AreaDetect);					
 				fputs($fp, "\n");
-				fputs($fp, 'on_area_detected curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$Camera->getId().'&state=1&file='.$Camera->getConfiguration('picture_filename').'"');
+				fputs($fp, 'on_area_detected curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$Camera->getId().'&width=%i&height=%J&X=%K&Y=%L"');
 				fputs($fp, "\n");
 			}
 			fputs($fp, 'netcam_keepalive force');
@@ -448,30 +447,51 @@ class motion extends eqLogic {
 		}
 		log::add('motion','debug','Le dossier '.$directory.' est a '.$size);
 	}
-	public function SendLastSnap($file){
-		if($this->getConfiguration('alertMessageCommand')!=''){
-			$directory=$this->getSnapshotDiretory(true);
-			log::add('motion','debug','photo:'.$directory.$file);
-			if(file_exists($directory.$file)){
-				$_options['files']=array();
-					$_options['files'][]=$directory.$file;
-				$_options['title'] = '[Jeedom][Motion] Détéction sur la camera '.$this->getHumanName();
-				$_options['message'] = 'La camera '.$this->getHumanName(). ' a détécté un mouvement. Voici le snapshot qui a ete pris';
-				log::add('motion','debug','Envoie d\'un message avec les derniere photo:'.json_encode($_options['files']));
-				$cmds = explode('&&', $this->getConfiguration('alertMessageCommand'));
-				foreach ($cmds as $id) {
-					$cmd = cmd::byId(str_replace('#', '', $id));
-					if (is_object($cmd)) {
-						log::add('motion','debug','Envoie du message avec '.$cmd->getHumanName());
-						$cmd->event($_options);
+	public function getLastSnap($file){
+		$directory=$this->getSnapshotDiretory(true);
+		$files=array();
+		switch($this->getConfiguration("output_pictures")){
+			case "off":
+				log::add('motion','debug','Motion ne prend pas de photo');
+			break;
+			case "first":
+				log::add('motion','debug','Motion séléctionne la premiere photo de la détéction');
+				if(file_exists($directory.$file))
+					$files[]=$directory.$file;
+			break;
+			case "on":
+			case "best":
+			case "center":
+				log::add('motion','debug','Envoie de la derniere photo prise par Motion');
+				foreach (array_diff(scandir($directory,SCANDIR_SORT_DESCENDING), array('..', '.')) as $file) {
+					$path_parts = pathinfo($file);
+					if($path_parts['extension'] == 'jpg'){
+						$files[]=$directory.$file;
+						break;
 					}
+				}
+			break;
+		}
+		log::add('motion','debug','photo:'.json_encode($files));
+		return $files;
+	}
+	public function SendLastSnap($file){
+		if($this->getConfiguration('alertMessageCommand')!=''){	
+			$_options['title'] = '[Jeedom][Motion] Détéction sur la camera '.$this->getHumanName();
+			$_options['message'] = 'La camera '.$this->getHumanName(). ' a détécté un mouvement. Voici le snapshot qui a ete pris';
+			$_options['files']=$this->getLastSnap($file);
+			log::add('motion','debug','Envoie d\'un message avec les derniere photo:'.json_encode($_options['files']));
+			$cmds = explode('&&', $this->getConfiguration('alertMessageCommand'));
+			foreach ($cmds as $id) {
+				$cmd = cmd::byId(str_replace('#', '', $id));
+				if (is_object($cmd)) {
+					log::add('motion','debug','Envoie du message avec '.$cmd->getHumanName());
+					$cmd->event($_options);
 				}
 			}
 		}
 	}
 	public function UpdateDetection($Parametres){
-		$State=$Parametres['state'];
-		log::add('motion','debug','Détection sur la camera => '.$this->getName().' => '.$State);
 		if(isset($Parametres['file']))
 			$this->SendLastSnap($Parametres['file'].'.jpg');
 		$Commande=$this->getCmd('info','detect');
@@ -479,18 +499,18 @@ class motion extends eqLogic {
 		{	
 			foreach($this->getCmd('info','maphilight',null,true) as $maphilightCmd){
 				if(is_object($maphilightCmd)){
-					$maphilightCmd->setCollectDate('');
-					$maphilightCmd->event($State);
 					log::add('motion','debug','Mise a jours de l\'état de MapHiLight : '.$maphilightCmd->getHumanName());
 					if(isset($Parametres['X']) && isset($Parametres['Y'])){
 						$pointLocation = new pointLocation($maphilightCmd->getConfiguration('maphilightArea'));
 						$IsInArea=$pointLocation->pointInPolygon(array("x" => $Parametres['X'],"y" => $Parametres['Y']));
 						log::add('motion','debug','Les coordonées de la détection x='.$Parametres['X'].' y='.$Parametres['Y'].' sont =>'.$IsInArea);
+						$maphilightCmd->setCollectDate('');
 						if ($IsInArea=='outside')
 							$maphilightCmd->event(false);
 						else
 							$maphilightCmd->event(true);
-					}
+					}else
+						$maphilightCmd->event(false);
 					$maphilightCmd->save();
 				}
 			}
@@ -501,8 +521,12 @@ class motion extends eqLogic {
 					     $Parametres['Y']-($Parametres['height']/2));
 			else
 				$coord=array();
-			$Commande->setCollectDate('');
-			$Commande->event($State);	
+			
+			if(isset($Parametres['state'])){
+				$Commande->setCollectDate('');
+				$Commande->event($Parametres['state']);	
+				log::add('motion','debug','Détection sur la camera => '.$this->getName().' => '.$Parametres['state']);
+			}
 			$Commande->setConfiguration('DetectArea',json_encode($coord));
 			$Commande->save();
 		}

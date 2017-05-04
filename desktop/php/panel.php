@@ -1,4 +1,6 @@
 <?php
+if(!motion::deamon_info()['state'])
+	motion::deamon_start();
 if (init('object_id') == '') {
 	$object = object::byId($_SESSION['user']->getOptions('defaultDashboardObject'));
 } else {

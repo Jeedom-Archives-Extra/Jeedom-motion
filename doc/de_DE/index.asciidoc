@@ -12,5 +12,11 @@ include::Installation.asciidoc[]
 == Einrichten von Geräten und Befehlen
 include::Parametrage.asciidoc[]
 
+== Configuration des Zone area
+include::zoneAera.asciidoc[]
+
+== Configuration des Zone MapHighLight
+include::zoneMaphighLight.asciidoc[]
+
 == FAQ
 include::faq.asciidoc[]

@@ -53,7 +53,7 @@
 		}
 		public function pointStringToCoordinates($coordinates) {
 			//$coordinates = explode(" ", $pointString);
-			log::add('motion','debug','point coordinates : '.json_encode($coordinates));
+			//log::add('motion','debug','point coordinates : '.json_encode($coordinates));
 			return array("x" => $coordinates[0], "y" => $coordinates[1]);
 		}
 	}
