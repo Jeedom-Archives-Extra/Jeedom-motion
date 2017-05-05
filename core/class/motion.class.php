@@ -449,7 +449,7 @@ class motion extends eqLogic {
 		}
 		log::add('motion','debug','Le dossier '.$directory.' est a '.$size);
 	}
-	public function getLastSnap($file){
+	public function getLastSnap($_file){
 		$directory=$this->getSnapshotDiretory(true);
 		$files=array();
 		switch($this->getConfiguration("output_pictures")){
@@ -459,7 +459,7 @@ class motion extends eqLogic {
 			case "first":
 				log::add('motion','debug','Motion séléctionne la premiere photo de la détéction');
 				if(file_exists($directory.$file))
-					$files[]=$directory.$file;
+					$files[]=$directory.$_file;
 			break;
 			case "on":
 			case "best":
@@ -474,7 +474,6 @@ class motion extends eqLogic {
 				}
 			break;
 		}
-		log::add('motion','debug','photo:'.json_encode($files));
 		return $files;
 	}
 	public function SendLastSnap($file){
@@ -488,7 +487,7 @@ class motion extends eqLogic {
 				$cmd = cmd::byId(str_replace('#', '', $id));
 				if (is_object($cmd)) {
 					log::add('motion','debug','Envoie du message avec '.$cmd->getHumanName());
-					$cmd->event($_options);
+					$cmd->execute($_options);
 				}
 			}
 		}
