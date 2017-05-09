@@ -169,11 +169,13 @@ $eqLogics = eqLogic::byType('motion');
 								<label class="col-md-2 control-label">{{Commande d'alerte (mail, slack...)}}</label>
 								<div class="col-md-8">
 									<div class="input-group">
-										<input type="text" class="eqLogicAttr" data-l1key="configuration" data-l2key="alertMessageCommand" placeholder="{{Commande mail pour l'envoi d'une capture}}"/>
+										<input class="form-control input-sm eqLogicAttr" data-l1key="configuration" data-type="alertMessageCommand" placeholder="{{Commande mail pour l'envoi d'une capture}}">
 										<span class="input-group-btn">
-									    		<a class="btn btn-default listCmdActionMessage" id="bt_selectActionMessage"><i class="fa fa-list-alt"></i></a>
+											<a class="btn btn-success btn-sm listCmdActionMessage" id="bt_selectActionMessage">
+												<i class="fa fa-list-alt"></i>
+											</a>
 										</span>
-								    	</div>
+									</div>
 								</div>      
 							    </div> 
 						</div>
@@ -185,13 +187,13 @@ $eqLogics = eqLogic::byType('motion');
 					<div class="form-group">
 						<label class="col-md-2 control-label">{{Streaming}}</label>
 						<div class="col-sm-3">
-							<input type="checkbox" class="eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="stream_motion" />
+							<input type="checkbox" class="form-control eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="stream_motion" />
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-2 control-label">{{Streaming uniquement en local}}</label>
 						<div class="col-sm-3">
-							<input type="checkbox" class="eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="stream_localhost" />
+							<input type="checkbox" class="form-control eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="stream_localhost" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -360,13 +362,13 @@ $eqLogics = eqLogic::byType('motion');
 				<div class="form-group">
 					<label class="col-md-2 control-label">{{Réglez les contrôles jpeg moins strictes}}</label>
 					<div class="col-sm-3">
-						<input type="checkbox" class="eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="netcam_tolerant_check" />
+						<input type="checkbox" class="form-control eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="netcam_tolerant_check" />
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-md-2 control-label">{{Laissez mouvement réguler la luminosité d'un dispositif vidéo}}</label>
 					<div class="col-sm-3">
-						<input type="checkbox" class="eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="auto_brightness" />
+						<input type="checkbox" class="form-control eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="auto_brightness" />
 					</div>
 				</div>
 				<div class="form-group">
@@ -498,7 +500,7 @@ $eqLogics = eqLogic::byType('motion');
 					<div class="form-group">
 						<label class="col-md-2 control-label">{{Toujours enregistrer des images même si il n'y avait pas de mouvement}}</label>
 						<div class="col-sm-3">
-							<input type="checkbox" class="eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="emulate_motion" />
+							<input type="checkbox" class="form-control eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="emulate_motion" />
 						</div>
 					</div>
 				</div>
@@ -527,7 +529,7 @@ $eqLogics = eqLogic::byType('motion');
 					<div class="form-group">
 						<label class="col-md-2 control-label">{{Images de sortie avec seulement les pixels objet en mouvement}}</label>
 						<div class="col-sm-3">
-							<input type="checkbox" class="eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="output_debug_pictures" />
+							<input type="checkbox" class="form-control eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="output_debug_pictures" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -544,13 +546,13 @@ $eqLogics = eqLogic::byType('motion');
 					<div class="form-group">
 						<label class="col-md-2  control-label">Utiliser ffmpeg pour encoder les vidéos mpeg en temps réel :</label>
 						<div class="col-sm-3 ">
-							<input type="checkbox" class="eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="ffmpeg_output_movies" />
+							<input type="checkbox" class="form-control eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="ffmpeg_output_movies" />
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-2  control-label">Creer un video avec juste les pixel en mouvement :</label>
 						<div class="col-sm-3 ">
-							<input type="checkbox" class="eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="ffmpeg_output_debug_movies" />
+							<input type="checkbox" class="form-control eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="ffmpeg_output_debug_movies" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -612,7 +614,7 @@ $eqLogics = eqLogic::byType('motion');
 					<div class="form-group">
 						<label class="col-md-2  control-label">Localiser et tracer un cadre autour de l'objet en mouvement.</label>
 						<div class="col-sm-3 ">
-							<input type="checkbox" class="eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="locate_motion_mode" />
+							<input type="checkbox" class="form-control eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="locate_motion_mode" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -635,7 +637,7 @@ $eqLogics = eqLogic::byType('motion');
 					<div class="form-group">
 						<label class="col-md-2  control-label">Dessinez le nombre de changements pixel sur les images :</label>
 						<div class="col-sm-3 ">
-							<input type="checkbox" class="eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="text_changes" />
+							<input type="checkbox" class="form-control eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="text_changes" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -647,7 +649,7 @@ $eqLogics = eqLogic::byType('motion');
 					<div class="form-group">
 						<label class="col-md-2  control-label">Utiliser ffmpeg pour encoder les vidéos mpeg en temps réel :</label>
 						<div class="col-sm-3 ">
-							<input type="checkbox" class="eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="text_double" />
+							<input type="checkbox" class="form-control eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="text_double" />
 						</div>
 					</div>
 				</div>
@@ -692,7 +694,7 @@ $eqLogics = eqLogic::byType('motion');
 					<div class="form-group" id="Capture_device_options">
 						<label class="col-md-2  control-label">Utiliser IPV6 :</label>
 						<div class="col-sm-3 ">
-							<input type="checkbox" class="eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="ipv6_enabled" />
+							<input type="checkbox" class="form-control eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="ipv6_enabled" />
 						</div>
 					</div>
 				</div>
@@ -702,7 +704,7 @@ $eqLogics = eqLogic::byType('motion');
 					<div class="form-group" >
 						<label class="col-md-2  control-label">The generic type enables the definition of motion center and motion size to be used with the conversion specifiers for options like on_motion_detected :</label>
 						<div class="col-sm-3 ">
-							<select class="eqLogicAttr" data-l1key="configuration" data-l2key="track_type" >
+							<select class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="track_type" >
 							<option value=0>none (default)</option>
 							<option value=1>stepper</option>
 							<option value=2>iomojo</option>
@@ -716,110 +718,110 @@ $eqLogics = eqLogic::byType('motion');
 					<div class="form-group" >
 						<label class="col-md-2  control-label">Enable auto tracking (default: off) :</label>
 						<div class="col-sm-3 ">
-							<input type="checkbox" class="eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="track_auto" />
+							<input type="checkbox" class="form-control eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="track_auto" />
 						</div>
 					</div>
 					<div class="form-group" >
 						<label class="col-md-2  control-label">Serial port of motor (default: none) :</label>
 						<div class="col-sm-3 ">
-							<input class="eqLogicAttr" data-l1key="configuration" data-l2key="track_port" />
+							<input class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="track_port" />
 						</div>
 					</div>
 
 					<div class="form-group" >
 						<label class="col-md-2  control-label">Motor number for x-axis (default: 0) :</label>
 						<div class="col-sm-3 ">
-							<input class="eqLogicAttr" data-l1key="configuration" data-l2key="track_motorx" />
+							<input class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="track_motorx" />
 						</div>
 					</div>
 					<div class="form-group" >
 						<label class="col-md-2  control-label">Set motorx reverse (default: 0) :</label>
 						<div class="col-sm-3 ">
-							<input type="checkbox" class="eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="track_motorx_reverse" />
+							<input type="checkbox" class="form-control eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="track_motorx_reverse" />
 						</div>
 					</div>
 					<div class="form-group" >
 						<label class="col-md-2  control-label"># Motor number for y-axis (default: 0) :</label>
 						<div class="col-sm-3 ">
-							<input class="eqLogicAttr"data-l1key="configuration" data-l2key="track_motory" />
+							<input class="form-control eqLogicAttr"data-l1key="configuration" data-l2key="track_motory" />
 						</div>
 					</div>
 					<div class="form-group" >
 						<label class="col-md-2  control-label">Set motory reverse (default: 0) :</label>
 						<div class="col-sm-3 ">
-							<input type="checkbox" class="eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="track_motory_reverse" />
+							<input type="checkbox" class="form-control eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="track_motory_reverse" />
 						</div>
 					</div>
 					<div class="form-group" >
 						<label class="col-md-2  control-label">Maximum value on x-axis (default: 0) :</label>
 						<div class="col-sm-3 ">
-							<input class="eqLogicAttr" data-l1key="configuration" data-l2key="track_maxx" />
+							<input class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="track_maxx" />
 						</div>
 					</div>
 					<div class="form-group" >
 						<label class="col-md-2  control-label">Minimum value on x-axis (default: 0) :</label>
 						<div class="col-sm-3 ">
-							<input class="eqLogicAttr" data-l1key="configuration" data-l2key="track_minx" />
+							<input class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="track_minx" />
 						</div>
 					</div>
 					<div class="form-group" >
 						<label class="col-md-2  control-label">Maximum value on y-axis (default: 0) :</label>
 						<div class="col-sm-3 ">
-							<input class="eqLogicAttr" data-l1key="configuration" data-l2key="track_maxy" />
+							<input class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="track_maxy" />
 						</div>
 					</div>
 					<div class="form-group" >
 						<label class="col-md-2  control-label">Minimum value on y-axis (default: 0) :</label>
 						<div class="col-sm-3 ">
-							<input class="eqLogicAttr" data-l1key="configuration" data-l2key="track_miny" />
+							<input class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="track_miny" />
 						</div>
 					</div>
 					<div class="form-group" >
 						<label class="col-md-2  control-label">Center value on x-axis (default: 0) :</label>
 						<div class="col-sm-3 ">
-							<input class="eqLogicAttr" data-l1key="configuration" data-l2key="track_homex" />
+							<input class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="track_homex" />
 						</div>
 					</div>
 					<div class="form-group" >
 						<label class="col-md-2  control-label">Center value on y-axis (default: 0) :</label>
 						<div class="col-sm-3 ">
-							<input class="eqLogicAttr" data-l1key="configuration" data-l2key="track_homey" />
+							<input class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="track_homey" />
 						</div>
 					</div>
 					<div class="form-group" >
 						<label class="col-md-2  control-label">ID of an iomojo camera if used (default: 0) :</label>
 						<div class="col-sm-3 ">
-							<input class="eqLogicAttr" data-l1key="configuration" data-l2key="track_iomojo_id" />
+							<input class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="track_iomojo_id" />
 						</div>
 					</div>
 					<div class="form-group" >
 						<label class="col-md-2  control-label">Angle in degrees the camera moves per step on the X-axis with auto-track (default: 10):</label>
 						<div class="col-sm-3 ">
-							<input class="eqLogicAttr" data-l1key="configuration" data-l2key="track_step_angle_x" />
+							<input class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="track_step_angle_x" />
 						</div>
 					</div>
 					<div class="form-group" >
 						<label class="col-md-2  control-label">Angle in degrees the camera moves per step on the Y-axis with auto-track (default: 10) :</label>
 						<div class="col-sm-3 ">
-							<input class="eqLogicAttr" data-l1key="configuration" data-l2key="track_step_angle_y" />
+							<input class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="track_step_angle_y" />
 						</div>
 					</div>
 					<div class="form-group" >
 						<label class="col-md-2  control-label"> Delay to wait for after tracking movement as numberof picture frames (default: 10) :</label>
 						<div class="col-sm-3 ">
-							<input class="eqLogicAttr" data-l1key="configuration" data-l2key="track_move_wait" />
+							<input class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="track_move_wait" />
 						</div>
 					</div>
 					<div class="form-group" >
 						<label class="col-md-2  control-label">Speed to set the motor to (stepper motor option) (default: 255) :</label>
 						<div class="col-sm-3 ">
-							<input class="eqLogicAttr" data-l1key="configuration" data-l2key="track_speed" />
+							<input class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="track_speed" />
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-2  control-label">Number of steps to make (stepper motor option) (default: 40) :</label>
 						<div class="col-sm-3 ">
-							<input class="eqLogicAttr"data-l1key="configuration" data-l2key="track_stepsize" />
+							<input class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="track_stepsize" />
 						</div>
 					</div>					
 				</div>
