@@ -169,7 +169,7 @@ $eqLogics = eqLogic::byType('motion');
 								<label class="col-md-2 control-label">{{Commande d'alerte (mail, slack...)}}</label>
 								<div class="col-md-8">
 									<div class="input-group">
-										<input class="form-control input-sm eqLogicAttr" data-l1key="configuration" data-type="alertMessageCommand" placeholder="{{Commande mail pour l'envoi d'une capture}}">
+										<input class="form-control input-sm eqLogicAttr" data-l1key="configuration" data-l2key="alertMessageCommand" placeholder="{{Commande mail pour l'envoi d'une capture}}">
 										<span class="input-group-btn">
 											<a class="btn btn-success btn-sm listCmdActionMessage" id="bt_selectActionMessage">
 												<i class="fa fa-list-alt"></i>
