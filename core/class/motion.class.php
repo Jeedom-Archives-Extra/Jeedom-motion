@@ -465,13 +465,29 @@ class motion extends eqLogic {
 			case "best":
 			case "center":
 				log::add('motion','debug','Envoie de la derniere photo prise par Motion');
-				foreach (array_diff(scandir($directory,SCANDIR_SORT_DESCENDING), array('..', '.')) as $file) {
+				/*foreach (array_diff(scandir($directory,SCANDIR_SORT_DESCENDING), array('..', '.')) as $file) {
 					$path_parts = pathinfo($file);
 					if($path_parts['extension'] == 'jpg'){
 						$files[]=$directory.$file;
 						break;
 					}
+				}*/
+				$pattern = '\.(jpg)$'; // check only file with these ext.          
+				$newstamp = 0;            
+				if ($handle = opendir($directory)) {               
+					while (false !== ($file = readdir($handle)))  {            
+						// Eliminate current directory, parent directory            
+						if (ereg('^\.{1,2}$',$file)) continue;            
+						// Eliminate other file not in pattern            
+						if (! ereg($pattern,$file)) continue;            
+						$timedat = filemtime("$dir/$file");            
+						if ($timedat > $newstamp) {
+							$newstamp = $timedat;
+							$files[0]=$directory.$file;
+						}
+					}
 				}
+					
 			break;
 		}
 		return $files;
