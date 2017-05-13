@@ -480,7 +480,7 @@ class motion extends eqLogic {
 						if (ereg('^\.{1,2}$',$file)) continue;            
 						// Eliminate other file not in pattern            
 						if (! ereg($pattern,$file)) continue;            
-						$timedat = filemtime("$dir/$file");            
+						$timedat = filemtime($directory.$file);            
 						if ($timedat > $newstamp) {
 							$newstamp = $timedat;
 							$files[0]=$directory.$file;
