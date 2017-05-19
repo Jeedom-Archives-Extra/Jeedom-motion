@@ -6,5 +6,8 @@
 	"author" : "Halbout Michael",
 	"require" : "3.0",
 	"category" : "security",
-	"mobile" : "event"
+	"display" : "panel",
+	"mobile" : "panel",
+	"hasOwnDeamon" : true,
+	"hasDependency" : true
 }
