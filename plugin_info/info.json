@@ -1,0 +1,10 @@
+{
+	"id" : "motion",
+	"name" : "Motion",
+	"description" : "Plugin permettant de configurer et d'utiliser le logiciel Motion. Celui-ci permet de streamer nos webcams et de faire de la détection de mouvement sur nos caméras",
+	"licence" : "AGPL",
+	"author" : "Halbout Michael",
+	"require" : "3.0",
+	"category" : "security",
+	"mobile" : "event"
+}
