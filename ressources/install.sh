@@ -29,9 +29,9 @@ if [ -d "/usr/local/src/ffmpeg/" ]; then
 fi
 sudo mkdir /usr/local/src/ffmpeg/
 cd /usr/local/src/ffmpeg/
-git clone https://github.com/FFmpeg/FFmpeg.git
+git clone https://github.com/FFmpeg/ffmpeg.git
 cd ffmpeg
-./configure --prefix=/etc/ffmpeg
+./configure
 make -j3
 sudo make install
 cd ../motion/
@@ -48,7 +48,7 @@ cd /usr/local/src/motion
 git clone https://github.com/Motion-Project/motion.git
 cd motion
 sudo autoreconf -fiv
-./configure --prefix=/etc/motion --with-ffmpeg=/etc/ffmpeg
+./configure
 make
 sudo make install
 echo 90 > /tmp/compilation_motion_in_progress
