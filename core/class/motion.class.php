@@ -240,10 +240,10 @@ class motion extends eqLogic {
 			fputs($fp, "\n");
 			fputs($fp,'logfile /etc/motion/motion.log');
 			fputs($fp, "\n");
-			fputs($fp,'log_level 9');
+			/*fputs($fp,'log_level 9');
 			fputs($fp, "\n");
 			fputs($fp,'log_type all');
-			fputs($fp, "\n");
+			fputs($fp, "\n");*/
 			fputs($fp,'webcontrol_port '.config::byKey('Port', 'motion'));
 			fputs($fp, "\n");
 			fputs($fp,'webcontrol_localhost off');
@@ -272,7 +272,8 @@ class motion extends eqLogic {
 		$string = iconv ('UTF-8', 'US-ASCII//TRANSLIT//IGNORE', $chaine);
 		$string = preg_replace ('#[^.0-9a-z]+#i', '', $string);
 		$string = strtolower ($string);
-		return $string;
+		//return $string;
+		return $chaine;
 	}
 	private static function WriteThread($Camera,$file){
 		log::add('motion','debug','Mise a jours du fichier: '.$file);	
