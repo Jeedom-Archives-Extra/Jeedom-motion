@@ -24,7 +24,8 @@ sudo apt-get install -y --force-yes libzip-dev
 echo "*****************************************************************************************************"
 echo "*                                          Installation de FFMPEG                                   *"
 echo "*****************************************************************************************************"
-git clone https://github.com/FFmpeg/FFmpeg.git ffmpeg
+cd /usr/local/src/ffmpeg
+git clone https://github.com/FFmpeg/FFmpeg.git
 cd ffmpeg
 ./configure --prefix=/etc/ffmpeg
 make -j3
@@ -35,7 +36,8 @@ make
 echo "*****************************************************************************************************"
 echo "*                                          Compilation de motion:                                   *"
 echo "*****************************************************************************************************"
-git clone https://github.com/Motion-Project/motion.git motion
+cd /usr/local/src/motion
+git clone https://github.com/Motion-Project/motion.git
 cd motion
 sudo autoreconf -fiv
 ./configure --prefix=/etc/motion --with-ffmpeg=/etc/ffmpeg
