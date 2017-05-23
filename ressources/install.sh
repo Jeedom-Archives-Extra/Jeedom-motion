@@ -41,6 +41,7 @@ sudo apt-get install -y --force-yes v4l-utils
 echo 60 > /tmp/compilation_motion_in_progress
 sudo apt-get install -y --force-yes x264
 echo 70 > /tmp/compilation_motion_in_progress
+sudo apt-get install -y --force-yes libavutil-dev libavformat-dev libavcodec-dev libswscale-dev libavdevice-dev
 echo "*****************************************************************************************************"
 echo "*                                          Compilation de motion:                                   *"
 echo "*****************************************************************************************************"
