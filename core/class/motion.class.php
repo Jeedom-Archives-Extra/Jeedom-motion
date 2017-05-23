@@ -232,7 +232,6 @@ class motion extends eqLogic {
 	//                                                                                                                                               //
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static function UpdateMotionConf() {
-		exec('sudo chmod -R /usr/local/etc/motion/');
 		$file='/usr/local/etc/motion/motion.conf';
 		if($fp = fopen($file,"w")){
 			fputs($fp,'daemon on');
@@ -600,6 +599,8 @@ class motion extends eqLogic {
 		if ($deamon_info['launchable'] != 'ok') 
 			throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
 		if ($deamon_info['state'] != 'ok') {
+			
+			exec('sudo chmod -R 777 /usr/local/etc/motion/');
 			exec('sudo rm /etc/motion/*');
 			foreach(eqLogic::byType('motion') as $Camera){		
 				$file='/etc/motion/thread'.$Camera->getId().'.conf';
