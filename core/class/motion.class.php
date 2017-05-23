@@ -568,7 +568,7 @@ class motion extends eqLogic {
 		$return = array();
 		$return['log'] = 'motion_update';
 		$return['progress_file'] = '/tmp/compilation_motion_in_progress';
-		if (exec('dpkg -s motion | grep -c "Status: install"') ==1 && file_exists('/etc/motion/motion.conf'))
+		if (file_exists('/usr/local/src/motion/'))
 			$return['state'] = 'ok';
 		else
 			$return['state'] = 'nok';
@@ -580,9 +580,6 @@ class motion extends eqLogic {
 		}
 		log::remove('motion_update');
 		$cmd = 'sudo /bin/bash ' . dirname(__FILE__) . '/../../ressources/install.sh';
-		$cmd .= ' no_compil';
-		$cmd .= ' ' . network::getNetworkAccess('internal', 'proto:127.0.0.1:port:comp');
-		$cmd .= ' ' . config::byKey('api');
 		$cmd .= ' >> ' . log::getPathToLog('motion_update') . ' 2>&1 &';
 		exec($cmd);
 	}
