@@ -232,6 +232,7 @@ class motion extends eqLogic {
 	//                                                                                                                                               //
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static function UpdateMotionConf() {
+		exec('sudo chmod -R /usr/local/etc/motion/');
 		$file='/usr/local/etc/motion/motion.conf';
 		if($fp = fopen($file,"w")){
 			fputs($fp,'daemon on');
