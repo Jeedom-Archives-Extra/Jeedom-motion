@@ -240,10 +240,10 @@ class motion extends eqLogic {
 			fputs($fp, "\n");
 			fputs($fp,'logfile /etc/motion/motion.log');
 			fputs($fp, "\n");
-			/*fputs($fp,'log_level 9');
+			fputs($fp,'log_level 6');
 			fputs($fp, "\n");
 			fputs($fp,'log_type all');
-			fputs($fp, "\n");*/
+			fputs($fp, "\n");
 			fputs($fp,'webcontrol_port '.config::byKey('Port', 'motion'));
 			fputs($fp, "\n");
 			fputs($fp,'webcontrol_localhost off');
