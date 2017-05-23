@@ -24,19 +24,23 @@ sudo apt-get install -y --force-yes libzip-dev
 echo "*****************************************************************************************************"
 echo "*                                          Installation de FFMPEG                                   *"
 echo "*****************************************************************************************************"
-if [ -d "/usr/local/src/ffmpeg/" ]; then 
-  sudo rm -R /usr/local/src/ffmpeg/
-fi
-sudo mkdir /usr/local/src/ffmpeg/
-cd /usr/local/src/ffmpeg/
-git clone https://github.com/FFmpeg/ffmpeg.git
-cd ffmpeg
-./configure
-make -j3
-sudo make install
-cd ../motion/
-PKG_CONFIG_PATH=/etc/ffmpeg/lib/pkgconfig cmake .
-make
+test=$(grep '#http://www.deb-multimedia.org' /etc/apt/sources.list)
+if [ -z "$test" ] || [ $test = " " ] || [ $test = "" ]
+then 
+	echo "#http://www.deb-multimedia.org" | sudo tee -a /etc/apt/sources.list
+	echo "deb http://www.deb-multimedia.org jessie main non-free" | sudo tee -a /etc/apt/sources.list
+	echo "deb-src http://www.deb-multimedia.org jessie main non-free" | sudo tee -a /etc/apt/sources.list
+fi 
+echo 30 > /tmp/compilation_motion_in_progress
+sudo apt-get install -y --force-yes  deb-multimedia-keyring
+echo 40 > /tmp/compilation_motion_in_progress
+sudo apt-get -y update
+echo 50 > /tmp/compilation_motion_in_progress
+sudo apt-get install -y --force-yes ffmpeg
+sudo apt-get install -y --force-yes v4l-utils
+echo 60 > /tmp/compilation_motion_in_progress
+sudo apt-get install -y --force-yes x264
+echo 70 > /tmp/compilation_motion_in_progress
 echo "*****************************************************************************************************"
 echo "*                                          Compilation de motion:                                   *"
 echo "*****************************************************************************************************"
