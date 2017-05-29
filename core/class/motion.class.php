@@ -232,7 +232,7 @@ class motion extends eqLogic {
 	//                                                                                                                                               //
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static function UpdateMotionConf() {
-		$file='/etc/motion/motion.conf';
+		$file='/usr/local/etc/motion/motion.conf';
 		if($fp = fopen($file,"w")){
 			fputs($fp,'daemon on');
 			fputs($fp, "\n");
@@ -240,7 +240,7 @@ class motion extends eqLogic {
 			fputs($fp, "\n");
 			fputs($fp,'logfile /etc/motion/motion.log');
 			fputs($fp, "\n");
-			fputs($fp,'log_level 9');
+			fputs($fp,'log_level 6');
 			fputs($fp, "\n");
 			fputs($fp,'log_type all');
 			fputs($fp, "\n");
@@ -272,7 +272,8 @@ class motion extends eqLogic {
 		$string = iconv ('UTF-8', 'US-ASCII//TRANSLIT//IGNORE', $chaine);
 		$string = preg_replace ('#[^.0-9a-z]+#i', '', $string);
 		$string = strtolower ($string);
-		return $string;
+		//return $string;
+		return $chaine;
 	}
 	private static function WriteThread($Camera,$file){
 		log::add('motion','debug','Mise a jours du fichier: '.$file);	
@@ -567,7 +568,7 @@ class motion extends eqLogic {
 		$return = array();
 		$return['log'] = 'motion_update';
 		$return['progress_file'] = '/tmp/compilation_motion_in_progress';
-		if (exec('dpkg -s motion | grep -c "Status: install"') ==1 && file_exists('/etc/motion/motion.conf'))
+		if (file_exists('/usr/local/src/motion/'))
 			$return['state'] = 'ok';
 		else
 			$return['state'] = 'nok';
@@ -579,9 +580,6 @@ class motion extends eqLogic {
 		}
 		log::remove('motion_update');
 		$cmd = 'sudo /bin/bash ' . dirname(__FILE__) . '/../../ressources/install.sh';
-		$cmd .= ' no_compil';
-		$cmd .= ' ' . network::getNetworkAccess('internal', 'proto:127.0.0.1:port:comp');
-		$cmd .= ' ' . config::byKey('api');
 		$cmd .= ' >> ' . log::getPathToLog('motion_update') . ' 2>&1 &';
 		exec($cmd);
 	}
@@ -601,6 +599,8 @@ class motion extends eqLogic {
 		if ($deamon_info['launchable'] != 'ok') 
 			throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
 		if ($deamon_info['state'] != 'ok') {
+			
+			exec('sudo chmod -R 777 /usr/local/etc/motion/');
 			exec('sudo rm /etc/motion/*');
 			foreach(eqLogic::byType('motion') as $Camera){		
 				$file='/etc/motion/thread'.$Camera->getId().'.conf';

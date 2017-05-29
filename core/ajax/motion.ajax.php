@@ -78,10 +78,12 @@
 			ajax::success($return);
 		}
 		if (init('action') == 'getLog') {
-			ajax::success("<pre>".file_get_contents('/etc/motion/motion.log')."</pre>");
+			$log=file_get_contents('/etc/motion/motion.log');
+			exec('sudo rm /etc/motion/motion.log');
+			ajax::success("<pre>".$log."</pre>");
 		}
 		if (init('action') == 'removeLog') {
-			exec('sudo rm /etc/motion/motion.log > /dev/null 2>/dev/null &');
+			exec('sudo rm /etc/motion/motion.log');
 			ajax::success("Suppression faite");
 		}
 		if (init('action') == 'getCoord') {

@@ -243,6 +243,7 @@ $eqLogics = eqLogic::byType('motion');
 							<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="cameraType">
 								<option value="ip">IP</option>
 								<option value="usb">USB</option>
+								<option value="raspi">RaspiCam</option>
 							</select>
 						</div>
 					</div>
@@ -324,6 +325,18 @@ $eqLogics = eqLogic::byType('motion');
 					</div>
 				</div>
 				<div class="form-group">
+					<label class="col-md-5 control-label">{{Remplacez la fréquence pour la webcam)}}</label>
+					<div class="col-md-7">
+						<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="power_line_frequency">
+							<option value="-1">Par default</option>
+							<option value="0">Désactivé</option>
+							<option value="1">50hz</option>
+							<option value="2">60hz</option>
+							<option value="3">Auto</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-md-5 control-label">{{Fréquence à régler le tuner (kHz) (uniquement pour les cartes tuner TV)}}</label>
 					<div class="col-md-7">
 						<input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="frequency" />
@@ -359,10 +372,28 @@ $eqLogics = eqLogic::byType('motion');
 						<input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="minimum_frame_time" />
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group netCam">
 					<label class="col-md-5 control-label">{{Réglez les contrôles jpeg moins strictes}}</label>
 					<div class="col-md-7">
 						<input type="checkbox" class="eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="netcam_tolerant_check" />
+					</div>
+				</div>
+				<div class="form-group netCam">
+					<label class="col-md-5 control-label">{{RTSP connection uses TCP to communicate to the camera. Can prevent image corruption.}}</label>
+					<div class="col-md-7">
+						<input type="checkbox" class="eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="rtsp_uses_tcp" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-5 control-label">{{Name of camera to use if you are using a camera accessed through OpenMax/MMAL}}</label>
+					<div class="col-md-7">
+						<input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="mmalcam_name" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-5 control-label">{{Camera control parameters (see raspivid/raspistill tool documentation)}}</label>
+					<div class="col-md-7">
+						<input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="mmalcam_control_params" />
 					</div>
 				</div>
 				<div class="form-group">
@@ -434,6 +465,12 @@ $eqLogics = eqLogic::byType('motion');
 						</div>
 					</div>
 					<div class="form-group">
+						<label class="col-md-5 control-label">{{Règle automatiquement le seuil de bruit}}</label>
+						<div class="col-md-7">
+							<input type="checkbox" class="eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="threshold_tune" />
+						</div>
+					</div>
+					<div class="form-group">
 						<label class="col-md-5 control-label">{{Seuil de bruit pour la détection de mouvement}}</label>
 						<div class="col-md-7">
 							<input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="noise_level"  />
@@ -448,7 +485,13 @@ $eqLogics = eqLogic::byType('motion');
 					<div class="form-group">
 						<label class="col-md-5 control-label">{{Fichier PGM à utiliser comme un masque de sensibilité.}}</label>
 						<div class="col-md-7">
-							<input class="eqLogicAttr form-control" type="file" data-l1key="configuration" data-l2key="mask_file" disabled />
+							<input class="eqLogicAttr form-control" type="file" data-l1key="configuration" data-l2key="mask_file" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-5 control-label">{{PGM file to completely mask out a area of image.# Full path name to. (Default: not defined).}}</label>
+						<div class="col-md-7">
+							<input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="mask_privacy"  />
 						</div>
 					</div>
 					<div class="form-group">
@@ -509,12 +552,6 @@ $eqLogics = eqLogic::byType('motion');
 			<br/>
 				<div class="form-horizontal">
 					<div class="form-group">
-						<label class="col-md-5  control-label">Prendre un snapshot tout les x seconde :</label>
-						<div class="col-md-7 ">
-							<input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="snapshot_interval"/>
-						</div>
-					</div>
-					<div class="form-group">
 						<label class="col-md-5 control-label">{{Prendre une image a la détection}}</label>
 						<div class="col-md-7">
 								<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="output_pictures" >
@@ -523,6 +560,16 @@ $eqLogics = eqLogic::byType('motion');
 									<option value="first">La première</option>
 									<option value="best">La meilleur</option>
 									<option value="center">Au millieu</option>
+								</select>
+						</div>
+					</div>					
+					<div class="form-group">
+						<label class="col-md-5 control-label">{{Type d'image}}</label>
+						<div class="col-md-7">
+								<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="picture_type" >
+									<option value="jpeg">jpeg</option>
+									<option value="webp">webp</option>
+									<option value="ppm">ppm</option>
 								</select>
 						</div>
 					</div>
@@ -581,6 +628,13 @@ $eqLogics = eqLogic::byType('motion');
 						</div>
 					</div>
 					<div class="form-group">
+						<label class="col-md-5 control-label">{{Enables and defines variable bitrate for the ffmpeg encoder.}}</label>
+						<div class="col-md-7">
+							<input class="eqLogicAttr form-control" type="range" data-l1key="configuration" data-l2key="ffmpeg_variable_bitrate" max="100" min="0" step="1" name="ffmpeg_variable_bitrate">
+							<output for="ffmpeg_variable_bitrate" onforminput="value = ffmpeg_variable_bitrate.valueAsNumber;"></output>
+						</div>
+					</div>
+					<div class="form-group">
 						<label class="col-md-5  control-label">Format des vidéos enregistrées. Le mpeg4 produira des fichiers .avi mais d\'autres formats sont disponibles. :</label>
 						<div class="col-md-7 ">
 							<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="ffmpeg_video_codec">
@@ -590,13 +644,17 @@ $eqLogics = eqLogic::byType('motion');
 								<option value = "flv"> flv - vous donne une vidéo flash avec l'extension .flv </option>
 								<option value = "ffv1"> ffv1 - FF codec vidéo 1 pour Lossless Encoding (expérimental) </option>
 								<option value = "mov"> mov - QuickTime (depuis 3.2.10). </option>
+								<option value = "mpg"> mpg - Creates mpg file with mpeg-2 encoding.</option>
+								<option value = "mp4"> mp4 - MPEG-4 Part 14 H264 encoding</option>
+								<option value = "mkv"> mkv - Matroska H264 encoding</option>
+								<option value = "hevc"> hevc - H.265 / HEVC (High Efficiency Video Coding)</option>
 							</select>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-5  control-label">Utilisez ffmpeg pour désentrelacer vidéo :</label>
 						<div class="col-md-7 ">
-							<input type="checkbox" class="eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="ffmpeg_deinterlace" />
+							<input type="checkbox" class="eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="ffmpeg_duplicate_frames" />
 						</div>
 					</div>
 				</div>
