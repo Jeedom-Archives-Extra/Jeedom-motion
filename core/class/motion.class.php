@@ -512,8 +512,10 @@ class motion extends eqLogic {
 		}
 	}
 	public function UpdateDetection($Parametres){
-		if(isset($Parametres['file']))
+		if(isset($Parametres['file'])){
 			$this->SendLastSnap($Parametres['file'].'.jpg');
+			$this->CleanFolder();
+		}
 		$Commande=$this->getCmd('info','detect');
 		if(is_object($Commande))
 		{	
@@ -556,7 +558,6 @@ class motion extends eqLogic {
 		}
 		else
 			log::add('motion','debug','Impossible de trouver la commande');
-		$this->CleanFolder();
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//                                                                                                                                               //
