@@ -534,19 +534,22 @@ class motion extends eqLogic {
 					$maphilightCmd->save();
 				}
 			}
-			if(isset($Parametres['X']) && isset($Parametres['Y']) && isset($Parametres['width']) && isset($Parametres['height']))
+			if(isset($Parametres['X']) && isset($Parametres['Y']) && isset($Parametres['width']) && isset($Parametres['height'])){
 				$coord=array($Parametres['X']+($Parametres['width']/2),
 					     $Parametres['Y']+($Parametres['height']/2),
 					     $Parametres['X']-($Parametres['width']/2),
 					     $Parametres['Y']-($Parametres['height']/2));
-			else
+				$state=true;
+			}else{
+				$state=false;
 				$coord=array();
+			}
 			
 			if(isset($Parametres['state'])){
-				$Commande->setCollectDate('');
-				$Commande->event($Parametres['state']);	
 				log::add('motion','debug','Détection sur la camera => '.$this->getName().' => '.$Parametres['state']);
+				$state=$Parametres['state'];
 			}
+			$Commande->event($state);	
 			$Commande->setConfiguration('DetectArea',json_encode($coord));
 			$Commande->save();
 		}
