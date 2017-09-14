@@ -534,6 +534,7 @@ class motion extends eqLogic {
 					$maphilightCmd->save();
 				}
 			}
+			log::add('motion','debug','Les coordonées de la détection x='.$Parametres['X'].' y='.$Parametres['Y'].' dans =>'.$Parametres['width'].'x'.$Parametres['height']);
 			if(isset($Parametres['X']) && isset($Parametres['Y']) && isset($Parametres['width']) && isset($Parametres['height'])){
 				$coord=array($Parametres['X']+($Parametres['width']/2),
 					     $Parametres['Y']+($Parametres['height']/2),
