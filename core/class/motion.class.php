@@ -5,7 +5,7 @@ include_file('core', 'MotionService', 'class', 'motion');
 include_file('core', 'pointLocation', 'class', 'motion');
 class motion extends eqLogic {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//                                                                                                                                               //
+	//                                                                                                   fa                                            //
 	//                                                                 Fonction jeedom                                                               // 
 	//                                                                                                                                               //
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -115,7 +115,9 @@ class motion extends eqLogic {
 		$file='/etc/motion/thread'.$this->getId().'.conf';
 		self::NewThread($this);
 		self::AddCommande($this,__('Parcourir les video', __FILE__),'browseRecord',"info", 'binary');
-		self::AddCommande($this,'Détection','detect',"info", 'binary','','MotionDetectZone');
+		$detect=self::AddCommande($this,'Détection','detect',"info", 'binary','','MotionDetectZone');
+		$detect->setConfiguration('repeatEventManagement','always');
+		$detect->save();
 		self::AddCommande($this,'Prendre une photo','snapshot',"action", 'other','<i class="fa fa-camera"></i>');
 		self::AddCommande($this,'Enregistrer une video','makemovie',"action", 'other','<i class="fa fa-circle"></i>');
 		$StatusDetection= self::AddCommande($this,'Status la détection','detectionstatus',"info", 'binary');
