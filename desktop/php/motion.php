@@ -294,6 +294,10 @@ $eqLogics = eqLogic::byType('motion');
 							<option value="15">V4L2_PIX_FMT_YUYV    : 'YUYV'</option>
 							<option value="16">V4L2_PIX_FMT_YUV422P : '422P'</option>
 							<option value="17">V4L2_PIX_FMT_YUV420  : 'YU12'</option>
+							<option value="18">V4L2_PIX_FMT_Y10	: 'YU10'</option>
+							<option value="19">V4L2_PIX_FMT_Y12	: 'YU12'</option>
+							<option value="20">V4L2_PIX_FMT_GREY	: 'GREY'</option>
+							<option value="21">V4L2_PIX_FMT_H264	: 'H264'</option>
 						</select>
 					</div>
 				</div>
