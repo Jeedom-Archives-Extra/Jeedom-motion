@@ -631,6 +631,18 @@ class motion extends eqLogic {
 		if(file_exists('/etc/motion/motion.log'))
 			exec('sudo rm /etc/motion/motion.log');
 	}
+	public function getStreamPort(){
+		while(true){
+			$Port=8081;
+			$connection = @fsockopen('127.0.0.1', $numport,$errno, $errstr, 5);
+			if (is_resource($connection)){
+				fclose($connection);
+				return $Port
+			}
+			else
+				$Port++;
+		}
+	}
 }
 
 class motionCmd extends cmd {
