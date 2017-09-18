@@ -637,7 +637,7 @@ class motion extends eqLogic {
 			$connection = @fsockopen('127.0.0.1', $numport,$errno, $errstr, 5);
 			if (is_resource($connection)){
 				fclose($connection);
-				return $Port
+				return $Port;
 			}
 			else
 				$Port++;
