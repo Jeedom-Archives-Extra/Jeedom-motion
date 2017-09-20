@@ -135,28 +135,16 @@ class motion extends eqLogic {
 		self::RemoveThread($this);
     	}
 	public function toHtml($_version = 'dashboard') {
-		if ($this->getIsEnable() != 1) {
-			return '';
-		}
+		$replace = $this->preToHtml($_version);
+		if (!is_array($replace)) 
+			return $replace;
 		$version = jeedom::versionAlias($_version);
-		if ($this->getDisplay('hideOn' . $version) == 1) {
+		if ($this->getDisplay('hideOn' . $version) == 1)
 			return '';
-		}
-		$vcolor = 'cmdColor';
-		if ($version == 'mobile') {
-			$vcolor = 'mcmdColor';
-		}
+		$Cmds = '';
+		$replace['#url#']= urlencode($this->getUrl());
 		$cmdColor = ($this->getPrimaryCategory() == '') ? '' : jeedom::getConfiguration('eqLogic:category:' . $this->getPrimaryCategory() . ':' . $vcolor);
-		$replace_eqLogic = array(
-			'#id#' => $this->getId(),
-			'#background_color#' => $this->getBackgroundColor(jeedom::versionAlias($_version)),
-			'#humanname#' => $this->getHumanName(),
-			'#name#' => $this->getName(),
-			'#height#' => $this->getDisplay('height', 'auto'),
-			'#width#' => $this->getDisplay('width', 'auto'),
-			'#cmdColor#' => $cmdColor,
-			'#url#' => urlencode($this->getUrl())
-		);
+		$replace['#cmdColor#'] = $cmdColor;
 		$action = '';
 		$maphilightArea = '';
 		$detect="";
@@ -164,8 +152,8 @@ class motion extends eqLogic {
 			if ($cmd->getIsVisible() == 1) {
 				switch($cmd->getLogicalId()){
 					case 'detect':	
-						$replace['#MotionArea#'] = ($cmd->getConfiguration('DetectArea') == '') ? '[]' : $cmd->getConfiguration('DetectArea');
-						$detect = template_replace($replace, $cmd->toHtml($_version, $cmdColor));
+						$replaceCmd['#MotionArea#'] = ($cmd->getConfiguration('DetectArea') == '') ? '[]' : $cmd->getConfiguration('DetectArea');
+						$detect = template_replace($replaceCmd, $cmd->toHtml($_version, $cmdColor));
 					break;
 					case 'lastImg':
 					case 'detectionactif':
@@ -174,8 +162,8 @@ class motion extends eqLogic {
 					case 'browseRecord':
 					break;
 					case 'maphilight':
-						$replace['#areas#'] = $cmd->getConfiguration('maphilightArea');
-						$maphilightArea .= template_replace($replace, $cmd->toHtml($_version, $cmdColor));
+						$replaceCmd['#areas#'] = $cmd->getConfiguration('maphilightArea');
+						$maphilightArea .= template_replace($replaceCmd, $cmd->toHtml($_version, $cmdColor));
 					break;
 					default: 
 						if ($cmd->getDisplay('hideOn' . $version) == 1) 
@@ -189,21 +177,25 @@ class motion extends eqLogic {
 				}
 			}
 		}
-		$replace_eqLogic['#detect#']= $detect;
-		$replace_eqLogic['#maphilightArea#'] = $maphilightArea;
-		$replace_eqLogic['#action#'] = $action;
+		$replace['#detect#']= $detect;
+		$replace['#maphilightArea#'] = $maphilightArea;
+		$replace['#action#'] = $action;
 		if ($_version == 'dview' || $_version == 'mview') {
 			$object = $this->getObject();
-			$replace_eqLogic['#name#'] = (is_object($object)) ? $object->getName() . ' - ' . $replace_eqLogic['#name#'] : $replace['#name#'];
+			$replace['#name#'] = (is_object($object)) ? $object->getName() . ' - ' . $replace['#name#'] : $replace['#name#'];
 		}
 		$parameters = $this->getDisplay('parameters');
 		if (is_array($parameters)) {
 			foreach ($parameters as $key => $value) {
-				$replace_eqLogic['#' . $key . '#'] = $value;
+				$replace['#' . $key . '#'] = $value;
 			}
 		}
-		return template_replace($replace_eqLogic, getTemplate('core', jeedom::versionAlias($version), 'eqLogic', 'motion'));
-	}
+		if ($_version == 'dview' || $_version == 'mview') {
+			$object = $this->getObject();
+			$replace['#name#'] = (is_object($object)) ? $object->getName() . ' - ' . $replace['#name#'] : $replace['#name#'];
+		}
+      		return $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'eqLogic', 'motion')));
+  	}
 	public static $_widgetPossibility = array('custom' => array(
 	        'visibility' => true,
 	        'displayName' => false,
