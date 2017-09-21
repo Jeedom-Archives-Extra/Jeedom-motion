@@ -111,10 +111,10 @@ class motion extends eqLogic {
 		$this->setConfiguration('timelapse_filename','%Y%m%d-timelapse');
 		$this->setConfiguration('ipv6_enabled',0);       
     	}
-	public function preSave(){
+/*	public function preSave(){
 		$this->setConfiguration('stream_motion',1);
 		$this->setConfiguration('stream_port',$this->getStreamPort());
-	}
+	}*/
 	public function postSave() {
 		$file='/etc/motion/thread'.$this->getId().'.conf';
 		$this->NewThread();
@@ -623,16 +623,16 @@ class motion extends eqLogic {
 			exec('sudo rm /etc/motion/motion.log');
 	}
 	public function getStreamPort(){
-		/*$Port=8081;
+		$Port=8081;
 		while(true){
-			$connection = @fsockopen('127.0.0.1', $numport,$errno, $errstr, 5);
+			$connection = @fsockopen('127.0.0.1', $Port,$errno, $errstr, 5);
 			if (is_resource($connection)){
 				fclose($connection);
 				return $Port;
 			}
 			else
 				$Port++;
-		}*/
+		}
 	}
 }
 
