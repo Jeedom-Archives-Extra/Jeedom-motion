@@ -113,7 +113,7 @@ class motion extends eqLogic {
     	}
 	public function postSave() {
 		$file='/etc/motion/thread'.$this->getId().'.conf';
-		self::NewThread($this);
+		$this->NewThread();
 		self::AddCommande($this,__('Parcourir les video', __FILE__),'browseRecord',"info", 'binary');
 		$detect=self::AddCommande($this,'Détection','detect',"info", 'binary','','MotionDetectZone');
 		$detect->setConfiguration('repeatEventManagement','always');
@@ -132,7 +132,7 @@ class motion extends eqLogic {
 		$CommandeDetection->save();
     	}
 	public function preRemove() {
-		self::RemoveThread($this);
+		$this->RemoveThread();
     	}
 	public function toHtml($_version = 'dashboard') {
 		$replace = $this->preToHtml($_version);
@@ -269,52 +269,52 @@ class motion extends eqLogic {
 		//return $string;
 		return $chaine;
 	}
-	private static function WriteThread($Camera,$file){
+	private function WriteThread($file){
 		log::add('motion','debug','Mise a jours du fichier: '.$file);	
 		exec('sudo chmod 777 -R /etc/motion/');
 		if($fp = fopen($file,"w+")){
-			fputs($fp, 'text_left '.$Camera->simpleName($Camera->getName()));
+			fputs($fp, 'text_left '.$this->simpleName($this->getName()));
 			fputs($fp, "\n");
-			fputs($fp, 'target_dir '.$Camera->getSnapshotDiretory(true));
+			fputs($fp, 'target_dir '.$this->getSnapshotDiretory(true));
 			fputs($fp, "\n");
 			$adress=network::getNetworkAccess('internal').'/plugins/motion/core/php/detect.php';
-			fputs($fp, 'on_event_start curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$Camera->getId().'&state=1"');
+			fputs($fp, 'on_event_start curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$this->getId().'&state=1"');
 			fputs($fp, "\n");
-			fputs($fp, 'on_picture_save curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$Camera->getId().'&file='.$Camera->getConfiguration('picture_filename').'"');
+			fputs($fp, 'on_picture_save curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$this->getId().'&file='.$this->getConfiguration('picture_filename').'"');
 			fputs($fp, "\n");
-			fputs($fp, 'on_motion_detected curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$Camera->getId().'&width=%i&height=%J&X=%K&Y=%L"');
+			fputs($fp, 'on_motion_detected curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$this->getId().'&width=%i&height=%J&X=%K&Y=%L"');
 			fputs($fp, "\n");
-			fputs($fp, 'on_event_end curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$Camera->getId().'&state=0"');
+			fputs($fp, 'on_event_end curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$this->getId().'&state=0"');
 			fputs($fp, "\n");
 			//Definition du parametre area_detect
 			$AreaDetect='';
-			foreach ($Camera->getCmd() as $Commande){
+			foreach ($this->getCmd() as $Commande){
 				if ($Commande->getLogicalId() =='detect')
 					$AreaDetect.=$Commande->getConfiguration('area') ;
 			}
 			if ($AreaDetect!=''){
 				fputs($fp, 'area_detect '.$AreaDetect);					
 				fputs($fp, "\n");
-				fputs($fp, 'on_area_detected curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$Camera->getId().'&width=%i&height=%J&X=%K&Y=%L"');
+				fputs($fp, 'on_area_detected curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$this->getId().'&width=%i&height=%J&X=%K&Y=%L"');
 				fputs($fp, "\n");
 			}
 			fputs($fp, 'netcam_keepalive force');
 			fputs($fp, "\n");
-			switch ($Camera->getConfiguration('cameraType')){
+			switch ($this->getConfiguration('cameraType')){
 				case 'ip':
-					fputs($fp, 'netcam_url '.trim($Camera->getConfiguration('cameraUrl')));
+					fputs($fp, 'netcam_url '.trim($this->getConfiguration('cameraUrl')));
 					fputs($fp, "\n");
-					if($Camera->getConfiguration('cameraLogin')!='' || $Camera->getConfiguration('cameraPass')!=''){
-						fputs($fp, 'netcam_userpass '.trim($Camera->getConfiguration('cameraLogin').':'.$Camera->getConfiguration('cameraPass')));
+					if($this->getConfiguration('cameraLogin')!='' || $this->getConfiguration('cameraPass')!=''){
+						fputs($fp, 'netcam_userpass '.trim($this->getConfiguration('cameraLogin').':'.$this->getConfiguration('cameraPass')));
 						fputs($fp, "\n");
 					}
 				break;
 				case 'usb':
-					fputs($fp, 'videodevice '.trim($Camera->getConfiguration('cameraUSB')));
+					fputs($fp, 'videodevice '.trim($this->getConfiguration('cameraUSB')));
 					fputs($fp, "\n");
 				break;
 			}
-			foreach($Camera->getConfiguration() as $key => $value)	{
+			foreach($this->getConfiguration() as $key => $value)	{
 				switch($key){
 					case 'stream_motion':
 					case 'stream_port':
@@ -370,10 +370,10 @@ class motion extends eqLogic {
 			fclose($fp);
 		}
 	}
-	public static function NewThread($Camera) {
+	public function NewThread() {
 		self::deamon_start();
 	}
-	public static function RemoveThread($Camera) {
+	public  function RemoveThread() {
 		self::deamon_start();
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -607,7 +607,7 @@ class motion extends eqLogic {
 			exec('sudo rm /etc/motion/*');
 			foreach(eqLogic::byType('motion') as $Camera){		
 				$file='/etc/motion/thread'.$Camera->getId().'.conf';
-				self::WriteThread($Camera,$file);
+				$Camera->WriteThread($file);
 				self::UpdateMotionConf();
 			}
 			//exec('sudo chmod 777 /dev/video*');
