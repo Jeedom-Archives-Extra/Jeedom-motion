@@ -184,7 +184,7 @@ $eqLogics = eqLogic::byType('motion');
 				<br/>
 				<legend>Option de streaming</legend>
 				<div class="form-horizontal">
-					<div class="form-group">
+					<!--div class="form-group">
 						<label class="col-md-5 control-label">{{Streaming}}</label>
 						<div class="col-md-7">
 							<input type="checkbox" class="eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="stream_motion" />
@@ -201,7 +201,7 @@ $eqLogics = eqLogic::byType('motion');
 						<div class="col-md-7">
 							<input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="stream_port" />
 						</div>
-					</div>
+					</div-->
 					<div class="form-group">
 						<label class="col-md-5 control-label">{{Qualité de l'image (%)}}</label>
 						<div class="col-md-7">
