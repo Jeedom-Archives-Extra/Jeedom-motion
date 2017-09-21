@@ -272,6 +272,9 @@ class motion extends eqLogic {
 	private function WriteThread($file){
 		log::add('motion','debug','Mise a jours du fichier: '.$file);	
 		exec('sudo chmod 777 -R /etc/motion/');
+		$this->setConfiguration('stream_motion',1);
+		$this->setConfiguration('stream_port',$this->getStreamPort());
+		$this->save();
 		if($fp = fopen($file,"w+")){
 			fputs($fp, 'text_left '.$this->simpleName($this->getName()));
 			fputs($fp, "\n");
@@ -316,9 +319,6 @@ class motion extends eqLogic {
 			}
 			foreach($this->getConfiguration() as $key => $value)	{
 				switch($key){
-					case 'stream_motion':
-					case 'stream_port':
-						
 					case 'alertMessageCommand':
 					case 'createtime':
 					case 'updatetime':
@@ -362,12 +362,6 @@ class motion extends eqLogic {
 					break;
 				}
 			}
-			
-			fputs($fp,'stream_motion on');
-			fputs($fp, "\n");
-			fputs($fp,'stream_port '.trim($this->getStreamPort));
-			fputs($fp, "\n");
-			fclose($fp);
 		}
 	}
 	public function NewThread() {
