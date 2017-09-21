@@ -111,6 +111,10 @@ class motion extends eqLogic {
 		$this->setConfiguration('timelapse_filename','%Y%m%d-timelapse');
 		$this->setConfiguration('ipv6_enabled',0);       
     	}
+	public function preSave(){
+		$this->setConfiguration('stream_motion',1);
+		$this->setConfiguration('stream_port',$this->getStreamPort());
+	}
 	public function postSave() {
 		$file='/etc/motion/thread'.$this->getId().'.conf';
 		$this->NewThread();
@@ -272,9 +276,6 @@ class motion extends eqLogic {
 	private function WriteThread($file){
 		log::add('motion','debug','Mise a jours du fichier: '.$file);	
 		exec('sudo chmod 777 -R /etc/motion/');
-		$this->setConfiguration('stream_motion',1);
-		$this->setConfiguration('stream_port',$this->getStreamPort());
-		$this->save();
 		if($fp = fopen($file,"w+")){
 			fputs($fp, 'text_left '.$this->simpleName($this->getName()));
 			fputs($fp, "\n");
