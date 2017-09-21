@@ -316,6 +316,9 @@ class motion extends eqLogic {
 			}
 			foreach($Camera->getConfiguration() as $key => $value)	{
 				switch($key){
+					case 'stream_motion':
+					case 'stream_port':
+						
 					case 'alertMessageCommand':
 					case 'createtime':
 					case 'updatetime':
@@ -359,6 +362,11 @@ class motion extends eqLogic {
 					break;
 				}
 			}
+			
+			fputs($fp,'stream_motion on');
+			fputs($fp, "\n");
+			fputs($fp,'stream_port '.trim($this->getStreamPort));
+			fputs($fp, "\n");
 			fclose($fp);
 		}
 	}
@@ -374,14 +382,14 @@ class motion extends eqLogic {
 	//                                                                                                                                               //
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public function getUrl(){
-		if($this->getConfiguration('stream_motion')){
-			if($this->getConfiguration('stream_port')!=''){
+		//if($this->getConfiguration('stream_motion')){
+			//if($this->getConfiguration('stream_port')!=''){
 				$urlStream='http://';
 				if($this->getConfiguration('stream_auth_method')!=0 && $this->getConfiguration('stream_authentication')!='')
 					$urlStream.=$this->getConfiguration('stream_authentication').'@';
 				$urlStream.=config::byKey('Host', 'motion').':'.$this->getConfiguration('stream_port');
 				$urlStream.='/stream.mjpg';
-			}
+			/*}
 		}	
 		else {
 			$url=explode('://',$this->getConfiguration('cameraUrl'));
@@ -394,7 +402,7 @@ class motion extends eqLogic {
 						$urlStream=$this->getConfiguration('cameraUrl');
 				break;
 			}
-		}
+		}*/
 		return $urlStream;
 	}
 	public function url_exists($url) {
