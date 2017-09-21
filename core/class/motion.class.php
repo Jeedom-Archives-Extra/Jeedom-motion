@@ -529,24 +529,20 @@ class motion extends eqLogic {
 				}
 			}
 			log::add('motion','debug','Les coordonées de la détection x='.$Parametres['X'].' y='.$Parametres['Y'].' dans =>'.$Parametres['width'].'x'.$Parametres['height']);
-			if(isset($Parametres['X']) && isset($Parametres['Y']) && isset($Parametres['width']) && isset($Parametres['height'])){
+			if(isset($Parametres['X']) && isset($Parametres['Y']) && isset($Parametres['width']) && isset($Parametres['height']))
 				$coord=array($Parametres['X']+($Parametres['width']/2),
 					     $Parametres['Y']+($Parametres['height']/2),
 					     $Parametres['X']-($Parametres['width']/2),
 					     $Parametres['Y']-($Parametres['height']/2));
-				$state=true;
-			}else{
-				$state=false;
+			else
 				$coord=array();
-			}
-			
-			if(isset($Parametres['state'])){
-				log::add('motion','debug','Détection sur la camera => '.$this->getName().' => '.$Parametres['state']);
-				$state=$Parametres['state'];
-			}
-			$Commande->event($state);	
 			$Commande->setConfiguration('DetectArea',json_encode($coord));
 			$Commande->save();
+			$this->refreshWidget();
+			if(isset($Parametres['state'])){
+				log::add('motion','debug','Détection sur la camera => '.$this->getName().' => '.$Parametres['state']);
+				$Commande->event($Parametres['state']);
+			}	
 		}
 		else
 			log::add('motion','debug','Impossible de trouver la commande');
