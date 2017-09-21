@@ -623,8 +623,8 @@ class motion extends eqLogic {
 			exec('sudo rm /etc/motion/motion.log');
 	}
 	public function getStreamPort(){
+		$Port=8081;
 		while(true){
-			$Port=8081;
 			$connection = @fsockopen('127.0.0.1', $numport,$errno, $errstr, 5);
 			if (is_resource($connection)){
 				fclose($connection);
