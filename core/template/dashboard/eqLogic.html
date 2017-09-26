@@ -1,21 +1,30 @@
-<div class="eqLogic eqLogic-widget allowResize" data-eqLogic_id="#id#" data-version="dashboard" style="background-color: #background_color#;height: #height#;width: #width#;#style#;min-height: 80px;min-weight:80px;">
+<div class="eqLogic eqLogic-widget allowResize" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="#version#" style="min-width : 50px;min-height : 80px ;border:#border#;border-radius:#border-radius#;background-color: #background-color#;color: #color#;width: #width#;height: #height#;#style#" >
 	<script type="text/javascript" src="plugins/motion/desktop/js/jquery.maphilight.min.js"></script>	
 	<span class="statusCmd" style="position : absolute;left : 5px;bottom:0px; width : 30px;z-index: 1030;"></span>
-	<center class="widget-name">
-        	<span style="font-weight:bold;"><a href="#eqLink#">#name#</a></span>
+	<center>
+		<span style="font-size: 1.2em;#hideEqLogicName#"><a href="#eqLink#">#name_display# <span style="font-size: 0.85em;">#object_name#</span></a></span>
 	</center>
-	<center>	
-        	<span>
-			<span class="Detection" style="position:absolute;right:0;">#detect#</span>
-			<img class="img-responsive fluxVideo" usemap="#map#id#" src="plugins/motion/core/php/stream.php?url=#url#" alt="" data-eqLogic_id="#id#" style="z-index:1"/>
-  			<map class="MapHiLight" name="map#id#" id="map#id#"></map>
-			#maphilightArea#
-	    	</span>
-        	#action#
-        	<span class="cmd cmd-widget" data-type="action" data-subtype="other">
-        	    <a class="camera_history btn btn-default btn-sm folder" data-eqLogic_id="#id#" style="background-color:#cmdColor# !important;border-color : transparent !important;"><i class="fa fa-folder-open"></i></a>
-        	</span>
-    	</center>
+	<center>
+		<span class="directDisplay zoom cursor">
+			<img src="plugins/camera/core/img/no-image-blanc.png" style="display:block;" data-eqLogic_id="#id#"/>
+		</span>
+		<span style="position:relative;top:4px;width:100%;">
+			<center>
+				<span>
+					<span class="Detection" style="position:absolute;right:0;">#detect#</span>
+					<img class="img-responsive fluxVideo" usemap="#map#id#" src="plugins/motion/core/php/stream.php?url=#url#" alt="" data-eqLogic_id="#id#" style="z-index:1"/>
+					<map class="MapHiLight" name="map#id#" id="map#id#"></map>
+					#maphilightArea#
+				</span>
+			</center>
+			<center>
+				<span>#action#</span>
+				<span class="cmd cmd-widget" data-type="action" data-subtype="other">
+					<a class="camera_history btn btn-default btn-sm folder" data-eqLogic_id="#id#" style="background-color:#cmd-background-color# !important;border-color : transparent !important;"><i class="fa fa-folder-open"></i></a>
+				</span>
+			</center>
+		</span>
+	</center>
 	<script>
   		var responsive#id#;
 		$('.camera_history[data-eqLogic_id=#id#]').off().on('click', function () {
