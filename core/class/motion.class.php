@@ -5,7 +5,7 @@ include_file('core', 'MotionService', 'class', 'motion');
 include_file('core', 'pointLocation', 'class', 'motion');
 class motion extends eqLogic {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//                                                                                                                                               //
+	//                                                                                                   fa                                            //
 	//                                                                 Fonction jeedom                                                               // 
 	//                                                                                                                                               //
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -111,11 +111,17 @@ class motion extends eqLogic {
 		$this->setConfiguration('timelapse_filename','%Y%m%d-timelapse');
 		$this->setConfiguration('ipv6_enabled',0);       
     	}
+/*	public function preSave(){
+		$this->setConfiguration('stream_motion',1);
+		$this->setConfiguration('stream_port',$this->getStreamPort());
+	}*/
 	public function postSave() {
 		$file='/etc/motion/thread'.$this->getId().'.conf';
-		self::NewThread($this);
+		$this->NewThread();
 		self::AddCommande($this,__('Parcourir les video', __FILE__),'browseRecord',"info", 'binary');
-		self::AddCommande($this,'Détection','detect',"info", 'binary','','MotionDetectZone');
+		$detect=self::AddCommande($this,'Détection','detect',"info", 'binary','','MotionDetectZone');
+		$detect->setConfiguration('repeatEventManagement','always');
+		$detect->save();
 		self::AddCommande($this,'Prendre une photo','snapshot',"action", 'other','<i class="fa fa-camera"></i>');
 		self::AddCommande($this,'Enregistrer une video','makemovie',"action", 'other','<i class="fa fa-circle"></i>');
 		$StatusDetection= self::AddCommande($this,'Status la détection','detectionstatus',"info", 'binary');
@@ -130,31 +136,19 @@ class motion extends eqLogic {
 		$CommandeDetection->save();
     	}
 	public function preRemove() {
-		self::RemoveThread($this);
+		$this->RemoveThread();
     	}
 	public function toHtml($_version = 'dashboard') {
-		if ($this->getIsEnable() != 1) {
-			return '';
-		}
+		$replace = $this->preToHtml($_version);
+		if (!is_array($replace)) 
+			return $replace;
 		$version = jeedom::versionAlias($_version);
-		if ($this->getDisplay('hideOn' . $version) == 1) {
+		if ($this->getDisplay('hideOn' . $version) == 1)
 			return '';
-		}
-		$vcolor = 'cmdColor';
-		if ($version == 'mobile') {
-			$vcolor = 'mcmdColor';
-		}
+		$Cmds = '';
+		$replace['#url#']= urlencode($this->getUrl());
 		$cmdColor = ($this->getPrimaryCategory() == '') ? '' : jeedom::getConfiguration('eqLogic:category:' . $this->getPrimaryCategory() . ':' . $vcolor);
-		$replace_eqLogic = array(
-			'#id#' => $this->getId(),
-			'#background_color#' => $this->getBackgroundColor(jeedom::versionAlias($_version)),
-			'#humanname#' => $this->getHumanName(),
-			'#name#' => $this->getName(),
-			'#height#' => $this->getDisplay('height', 'auto'),
-			'#width#' => $this->getDisplay('width', 'auto'),
-			'#cmdColor#' => $cmdColor,
-			'#url#' => urlencode($this->getUrl())
-		);
+		$replace['#cmdColor#'] = $cmdColor;
 		$action = '';
 		$maphilightArea = '';
 		$detect="";
@@ -162,8 +156,8 @@ class motion extends eqLogic {
 			if ($cmd->getIsVisible() == 1) {
 				switch($cmd->getLogicalId()){
 					case 'detect':	
-						$replace['#MotionArea#'] = ($cmd->getConfiguration('DetectArea') == '') ? '[]' : $cmd->getConfiguration('DetectArea');
-						$detect = template_replace($replace, $cmd->toHtml($_version, $cmdColor));
+						$replaceCmd['#MotionArea#'] = ($cmd->getConfiguration('DetectArea') == '') ? '[]' : $cmd->getConfiguration('DetectArea');
+						$detect = template_replace($replaceCmd, $cmd->toHtml($_version, $cmdColor));
 					break;
 					case 'lastImg':
 					case 'detectionactif':
@@ -172,8 +166,8 @@ class motion extends eqLogic {
 					case 'browseRecord':
 					break;
 					case 'maphilight':
-						$replace['#areas#'] = $cmd->getConfiguration('maphilightArea');
-						$maphilightArea .= template_replace($replace, $cmd->toHtml($_version, $cmdColor));
+						$replaceCmd['#areas#'] = $cmd->getConfiguration('maphilightArea');
+						$maphilightArea .= template_replace($replaceCmd, $cmd->toHtml($_version, $cmdColor));
 					break;
 					default: 
 						if ($cmd->getDisplay('hideOn' . $version) == 1) 
@@ -187,21 +181,25 @@ class motion extends eqLogic {
 				}
 			}
 		}
-		$replace_eqLogic['#detect#']= $detect;
-		$replace_eqLogic['#maphilightArea#'] = $maphilightArea;
-		$replace_eqLogic['#action#'] = $action;
+		$replace['#detect#']= $detect;
+		$replace['#maphilightArea#'] = $maphilightArea;
+		$replace['#action#'] = $action;
 		if ($_version == 'dview' || $_version == 'mview') {
 			$object = $this->getObject();
-			$replace_eqLogic['#name#'] = (is_object($object)) ? $object->getName() . ' - ' . $replace_eqLogic['#name#'] : $replace['#name#'];
+			$replace['#name#'] = (is_object($object)) ? $object->getName() . ' - ' . $replace['#name#'] : $replace['#name#'];
 		}
 		$parameters = $this->getDisplay('parameters');
 		if (is_array($parameters)) {
 			foreach ($parameters as $key => $value) {
-				$replace_eqLogic['#' . $key . '#'] = $value;
+				$replace['#' . $key . '#'] = $value;
 			}
 		}
-		return template_replace($replace_eqLogic, getTemplate('core', jeedom::versionAlias($version), 'eqLogic', 'motion'));
-	}
+		if ($_version == 'dview' || $_version == 'mview') {
+			$object = $this->getObject();
+			$replace['#name#'] = (is_object($object)) ? $object->getName() . ' - ' . $replace['#name#'] : $replace['#name#'];
+		}
+      		return $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'eqLogic', 'motion')));
+  	}
 	public static $_widgetPossibility = array('custom' => array(
 	        'visibility' => true,
 	        'displayName' => false,
@@ -275,52 +273,52 @@ class motion extends eqLogic {
 		//return $string;
 		return $chaine;
 	}
-	private static function WriteThread($Camera,$file){
+	private function WriteThread($file){
 		log::add('motion','debug','Mise a jours du fichier: '.$file);	
 		exec('sudo chmod 777 -R /etc/motion/');
 		if($fp = fopen($file,"w+")){
-			fputs($fp, 'text_left '.$Camera->simpleName($Camera->getName()));
+			fputs($fp, 'text_left '.$this->simpleName($this->getName()));
 			fputs($fp, "\n");
-			fputs($fp, 'target_dir '.$Camera->getSnapshotDiretory(true));
+			fputs($fp, 'target_dir '.$this->getSnapshotDiretory(true));
 			fputs($fp, "\n");
 			$adress=network::getNetworkAccess('internal').'/plugins/motion/core/php/detect.php';
-			fputs($fp, 'on_event_start curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$Camera->getId().'&state=1"');
+			fputs($fp, 'on_event_start curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$this->getId().'&state=1"');
 			fputs($fp, "\n");
-			fputs($fp, 'on_picture_save curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$Camera->getId().'&file='.$Camera->getConfiguration('picture_filename').'"');
+			fputs($fp, 'on_picture_save curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$this->getId().'&file='.$this->getConfiguration('picture_filename').'"');
 			fputs($fp, "\n");
-			fputs($fp, 'on_motion_detected curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$Camera->getId().'&width=%i&height=%J&X=%K&Y=%L"');
+			fputs($fp, 'on_motion_detected curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$this->getId().'&width=%i&height=%J&X=%K&Y=%L"');
 			fputs($fp, "\n");
-			fputs($fp, 'on_event_end curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$Camera->getId().'&state=0"');
+			fputs($fp, 'on_event_end curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$this->getId().'&state=0"');
 			fputs($fp, "\n");
 			//Definition du parametre area_detect
 			$AreaDetect='';
-			foreach ($Camera->getCmd() as $Commande){
+			foreach ($this->getCmd() as $Commande){
 				if ($Commande->getLogicalId() =='detect')
 					$AreaDetect.=$Commande->getConfiguration('area') ;
 			}
 			if ($AreaDetect!=''){
 				fputs($fp, 'area_detect '.$AreaDetect);					
 				fputs($fp, "\n");
-				fputs($fp, 'on_area_detected curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$Camera->getId().'&width=%i&height=%J&X=%K&Y=%L"');
+				fputs($fp, 'on_area_detected curl -v --header "Connection: keep-alive" "' . $adress.'?id='.$this->getId().'&width=%i&height=%J&X=%K&Y=%L"');
 				fputs($fp, "\n");
 			}
 			fputs($fp, 'netcam_keepalive force');
 			fputs($fp, "\n");
-			switch ($Camera->getConfiguration('cameraType')){
+			switch ($this->getConfiguration('cameraType')){
 				case 'ip':
-					fputs($fp, 'netcam_url '.trim($Camera->getConfiguration('cameraUrl')));
+					fputs($fp, 'netcam_url '.trim($this->getConfiguration('cameraUrl')));
 					fputs($fp, "\n");
-					if($Camera->getConfiguration('cameraLogin')!='' || $Camera->getConfiguration('cameraPass')!=''){
-						fputs($fp, 'netcam_userpass '.trim($Camera->getConfiguration('cameraLogin').':'.$Camera->getConfiguration('cameraPass')));
+					if($this->getConfiguration('cameraLogin')!='' || $this->getConfiguration('cameraPass')!=''){
+						fputs($fp, 'netcam_userpass '.trim($this->getConfiguration('cameraLogin').':'.$this->getConfiguration('cameraPass')));
 						fputs($fp, "\n");
 					}
 				break;
 				case 'usb':
-					fputs($fp, 'videodevice '.trim($Camera->getConfiguration('cameraUSB')));
+					fputs($fp, 'videodevice '.trim($this->getConfiguration('cameraUSB')));
 					fputs($fp, "\n");
 				break;
 			}
-			foreach($Camera->getConfiguration() as $key => $value)	{
+			foreach($this->getConfiguration() as $key => $value)	{
 				switch($key){
 					case 'alertMessageCommand':
 					case 'createtime':
@@ -365,13 +363,12 @@ class motion extends eqLogic {
 					break;
 				}
 			}
-			fclose($fp);
 		}
 	}
-	public static function NewThread($Camera) {
+	public function NewThread() {
 		self::deamon_start();
 	}
-	public static function RemoveThread($Camera) {
+	public  function RemoveThread() {
 		self::deamon_start();
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -380,14 +377,14 @@ class motion extends eqLogic {
 	//                                                                                                                                               //
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public function getUrl(){
-		if($this->getConfiguration('stream_motion')){
-			if($this->getConfiguration('stream_port')!=''){
+		//if($this->getConfiguration('stream_motion')){
+			//if($this->getConfiguration('stream_port')!=''){
 				$urlStream='http://';
 				if($this->getConfiguration('stream_auth_method')!=0 && $this->getConfiguration('stream_authentication')!='')
 					$urlStream.=$this->getConfiguration('stream_authentication').'@';
 				$urlStream.=config::byKey('Host', 'motion').':'.$this->getConfiguration('stream_port');
 				$urlStream.='/stream.mjpg';
-			}
+			/*}
 		}	
 		else {
 			$url=explode('://',$this->getConfiguration('cameraUrl'));
@@ -400,7 +397,7 @@ class motion extends eqLogic {
 						$urlStream=$this->getConfiguration('cameraUrl');
 				break;
 			}
-		}
+		}*/
 		return $urlStream;
 	}
 	public function url_exists($url) {
@@ -510,8 +507,10 @@ class motion extends eqLogic {
 		}
 	}
 	public function UpdateDetection($Parametres){
-		if(isset($Parametres['file']))
+		if(isset($Parametres['file'])){
 			$this->SendLastSnap($Parametres['file'].'.jpg');
+			$this->CleanFolder();
+		}
 		$Commande=$this->getCmd('info','detect');
 		if(is_object($Commande))
 		{	
@@ -532,6 +531,7 @@ class motion extends eqLogic {
 					$maphilightCmd->save();
 				}
 			}
+			log::add('motion','debug','Les coordonées de la détection x='.$Parametres['X'].' y='.$Parametres['Y'].' dans =>'.$Parametres['width'].'x'.$Parametres['height']);
 			if(isset($Parametres['X']) && isset($Parametres['Y']) && isset($Parametres['width']) && isset($Parametres['height']))
 				$coord=array($Parametres['X']+($Parametres['width']/2),
 					     $Parametres['Y']+($Parametres['height']/2),
@@ -539,18 +539,16 @@ class motion extends eqLogic {
 					     $Parametres['Y']-($Parametres['height']/2));
 			else
 				$coord=array();
-			
-			if(isset($Parametres['state'])){
-				$Commande->setCollectDate('');
-				$Commande->event($Parametres['state']);	
-				log::add('motion','debug','Détection sur la camera => '.$this->getName().' => '.$Parametres['state']);
-			}
 			$Commande->setConfiguration('DetectArea',json_encode($coord));
 			$Commande->save();
+			$this->refreshWidget();
+			if(isset($Parametres['state'])){
+				log::add('motion','debug','Détection sur la camera => '.$this->getName().' => '.$Parametres['state']);
+				$Commande->event($Parametres['state']);
+			}	
 		}
 		else
 			log::add('motion','debug','Impossible de trouver la commande');
-		$this->CleanFolder();
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//                                                                                                                                               //
@@ -604,7 +602,7 @@ class motion extends eqLogic {
 			exec('sudo rm /etc/motion/*');
 			foreach(eqLogic::byType('motion') as $Camera){		
 				$file='/etc/motion/thread'.$Camera->getId().'.conf';
-				self::WriteThread($Camera,$file);
+				$Camera->WriteThread($file);
 				self::UpdateMotionConf();
 			}
 			//exec('sudo chmod 777 /dev/video*');
@@ -623,6 +621,18 @@ class motion extends eqLogic {
 		exec('sudo pkill motion');
 		if(file_exists('/etc/motion/motion.log'))
 			exec('sudo rm /etc/motion/motion.log');
+	}
+	public function getStreamPort(){
+		$Port=8081;
+		while(true){
+			$connection = @fsockopen('127.0.0.1', $Port,$errno, $errstr, 5);
+			if (is_resource($connection)){
+				fclose($connection);
+				return $Port;
+			}
+			else
+				$Port++;
+		}
 	}
 }
 
