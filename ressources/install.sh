@@ -41,6 +41,7 @@ then
 	echo "deb http://www.deb-multimedia.org jessie main non-free" | sudo tee -a /etc/apt/sources.list
 	echo "deb-src http://www.deb-multimedia.org jessie main non-free" | sudo tee -a /etc/apt/sources.list
 fi 
+sudo apt-get update -y
 echo 30 > /tmp/compilation_motion_in_progress
 sudo apt-get install -y --force-yes  deb-multimedia-keyring
 echo 40 > /tmp/compilation_motion_in_progress
