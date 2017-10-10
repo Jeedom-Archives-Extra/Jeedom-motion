@@ -16,10 +16,7 @@ echo "*                                   Installation des dépendance          
 echo "*****************************************************************************************************"
 sudo apt-get install -y --force-yes autoconf automake libtool
 sudo apt-get install -y --force-yes pkg-config
-sudo apt-get install -y --force-yes libjpeg8-dev
-sudo apt-get install -y --force-yes libpng12-dev
 sudo apt-get install -y --force-yes libjpeg62-turbo-dev
-sudo apt-get install -y --force-yes libtiff4-dev
 sudo apt-get install -y --force-yes zlib1g-dev
 sudo apt-get install -y --force-yes git
 sudo apt-get install -y --force-yes git-core
@@ -27,10 +24,14 @@ sudo apt-get install -y --force-yes cmake
 sudo apt-get install -y --force-yes liblog4cplus-dev 
 sudo apt-get install -y --force-yes libcurl3-dev 
 sudo apt-get install -y --force-yes build-essential
-sudo apt-get install -y --force-yes libjpeg8-dev libjasper-dev
+sudo apt-get install -y --force-yes libjasper-dev
 sudo apt-get install -y --force-yes libgtk2.0-dev
 sudo apt-get install -y --force-yes libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
 sudo apt-get install -y --force-yes libzip-dev
+sudo apt-get install -y --force-yes libavcodec56 
+sudo apt-get install -y --force-yes libavdevice56
+sudo apt-get install -y --force-yes libavfilter5
+sudo apt-get install -y --force-yes libavformat56
 echo "*****************************************************************************************************"
 echo "*                                          Installation de FFMPEG                                   *"
 echo "*****************************************************************************************************"
