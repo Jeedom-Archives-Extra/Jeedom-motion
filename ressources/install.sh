@@ -15,10 +15,15 @@ echo "**************************************************************************
 echo "*                                          Installation de FFMPEG                                   *"
 echo "*****************************************************************************************************"
 sudo apt-get install -y libavformat-dev
+sudo apt-get install -f
 sudo apt-get install -y libavcodec-dev
+sudo apt-get install -f
 sudo apt-get install -y libavutil-dev
+sudo apt-get install -f
 sudo apt-get install -y libswscale-dev
+sudo apt-get install -f
 sudo apt-get install -y libavdevice-dev
+sudo apt-get install -f
 if [ -d "/usr/local/src/" ]; then 
   sudo rm -R /usr/local/src/
 fi
