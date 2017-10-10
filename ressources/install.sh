@@ -50,8 +50,6 @@ sudo autoreconf -fiv
 ./configure
 make
 sudo make install
-echo 90 > /tmp/compilation_motion_in_progress
-sudo chmod -R 777 /etc/motion/
 echo 95 > /tmp/compilation_motion_in_progress
 sudo usermod -a -G motion www-data
 echo 100 > /tmp/compilation_motion_in_progress
