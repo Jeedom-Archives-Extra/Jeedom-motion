@@ -2,12 +2,6 @@
 touch /tmp/compilation_motion_in_progress
 echo 0 > /tmp/compilation_motion_in_progress
 echo "*****************************************************************************************************"
-echo "*                                Desinstallation des dépendance                                    *"
-echo "*****************************************************************************************************"
-sudo apt-get purge --auto-remove  -y motion
-sudo apt-get purge --auto-remove  -y ffmpeg
-sudo apt-get purge --auto-remove  -y x264
-echo "*****************************************************************************************************"
 echo "*                                   Installation des dépendance                                     *"
 echo "*****************************************************************************************************"
 sudo apt-get install -y autoconf
