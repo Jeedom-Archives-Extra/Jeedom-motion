@@ -1,16 +1,12 @@
 #!/bin/bash
 touch /tmp/compilation_motion_in_progress
 echo 0 > /tmp/compilation_motion_in_progress
-if [ -d "/etc/motion/" ]
-then
-	echo "*****************************************************************************************************"
-	echo "*                                Desinstallation des dépendance                                    *"
-	echo "*****************************************************************************************************"
-	sudo apt-get autoremove -y motion
-	sudo apt-get autoremove -y ffmpeg
-	sudo apt-get autoremove -y x264
-	#rm -R /etc/motion/
-fi
+echo "*****************************************************************************************************"
+echo "*                                Desinstallation des dépendance                                    *"
+echo "*****************************************************************************************************"
+sudo apt-get purge --auto-remove  -y motion
+sudo apt-get purge --auto-remove  -y ffmpeg
+sudo apt-get purge --auto-remove  -y x264
 echo "*****************************************************************************************************"
 echo "*                                   Installation des dépendance                                     *"
 echo "*****************************************************************************************************"
@@ -31,28 +27,9 @@ sudo apt-get install -y libzip-dev
 echo "*****************************************************************************************************"
 echo "*                                          Installation de FFMPEG                                   *"
 echo "*****************************************************************************************************"
-test=$(grep '#http://www.deb-multimedia.org' /etc/apt/sources.list)
-if [ -z "$test" ] || [ $test = " " ] || [ $test = "" ]
-then 
-	echo "#http://www.deb-multimedia.org" | sudo tee -a /etc/apt/sources.list
-	echo "deb http://www.deb-multimedia.org jessie main non-free" | sudo tee -a /etc/apt/sources.list
-	echo "deb-src http://www.deb-multimedia.org jessie main non-free" | sudo tee -a /etc/apt/sources.list
-fi 
-echo 30 > /tmp/compilation_motion_in_progress
-sudo apt-get build-dep -y deb-multimedia-keyring
-sudo apt-get install -y deb-multimedia-keyring
-echo 40 > /tmp/compilation_motion_in_progress
-sudo apt-get -y update
-echo 50 > /tmp/compilation_motion_in_progress
-sudo apt-get build-dep -y ffmpeg
-sudo apt-get build-dep -y v4l-utils
+sudo apt-get install -y motion
 sudo apt-get install -y ffmpeg
-sudo apt-get install -y v4l-utils
-echo 60 > /tmp/compilation_motion_in_progress
-sudo apt-get build-dep -y x264
 sudo apt-get install -y x264
-echo 70 > /tmp/compilation_motion_in_progress
-sudo apt-get install -y libavutil-dev libavformat-dev libavcodec-dev libswscale-dev libavdevice-dev
 echo "*****************************************************************************************************"
 echo "*                                          Compilation de motion:                                   *"
 echo "*****************************************************************************************************"
