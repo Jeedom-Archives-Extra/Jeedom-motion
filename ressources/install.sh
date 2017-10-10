@@ -10,38 +10,43 @@ sudo apt-get purge --auto-remove  -y x264
 echo "*****************************************************************************************************"
 echo "*                                   Installation des dépendance                                     *"
 echo "*****************************************************************************************************"
-sudo apt-get install -y autoconf automake libtool
-sudo apt-get install -y pkg-config
-sudo apt-get install -y libjpeg62-turbo-dev
-sudo apt-get install -y zlib1g-dev
-sudo apt-get install -y git
-sudo apt-get install -y git-core
-sudo apt-get install -y cmake
-sudo apt-get install -y liblog4cplus-dev 
-sudo apt-get install -y libcurl3-dev 
+sudo apt-get install -y autoconf
+sudo apt-get install -y automake
+sudo apt-get install -y pkgconf
+sudo apt-get install -y libtool
+sudo apt-get install -y libjpeg8-dev
 sudo apt-get install -y build-essential
-sudo apt-get install -y libjasper-dev
-sudo apt-get install -y libgtk2.0-dev
-sudo apt-get install -y libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
 sudo apt-get install -y libzip-dev
-sudo apt-get install -y libavutil-dev 
-sudo apt-get install -y libavformat-dev 
-sudo apt-get install -y libavcodec-dev 
-sudo apt-get install -y libswscale-dev l
-sudo apt-get install -y ibavdevice-dev
 echo "*****************************************************************************************************"
 echo "*                                          Installation de FFMPEG                                   *"
 echo "*****************************************************************************************************"
-sudo apt-get install -y ffmpeg
-sudo apt-get install -y x264
+sudo apt-get install -y libavformat-dev
+sudo apt-get install -y libavcodec-dev
+sudo apt-get install -y libavutil-dev
+sudo apt-get install -y libswscale-dev
+sudo apt-get install -y libavdevice-dev
+if [ -d "/usr/local/src/" ]; then 
+  sudo rm -R /usr/local/src/
+fi
+sudo mkdir /usr/local/src/
+cd /usr/local/src/
+git clone https://github.com/FFmpeg/FFmpeg.git ffmpeg
+cd ffmpeg
+./configure --prefix=/home/odroid/git/ffmpeg/out
+make -j3
+sudo make install
+cd ../motion/
+PKG_CONFIG_PATH=/home/odroid/git/ffmpeg/out/lib/pkgconfig cmake .
+make
+echo 50 > /tmp/compilation_motion_in_progress
 echo "*****************************************************************************************************"
 echo "*                                          Compilation de motion:                                   *"
 echo "*****************************************************************************************************"
-if [ -d "/usr/local/src/motion/" ]; then 
-  sudo rm -R /usr/local/src/motion/
+if [ -d "/usr/local/src/" ]; then 
+  sudo rm -R /usr/local/src/
 fi
-sudo mkdir /usr/local/src/motion/
-cd /usr/local/src/motion
+sudo mkdir /usr/local/src/
+cd /usr/local/src/
 git clone https://github.com/Motion-Project/motion.git
 cd motion
 sudo autoreconf -fiv
