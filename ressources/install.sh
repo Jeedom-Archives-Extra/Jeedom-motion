@@ -24,10 +24,9 @@ sudo apt-get install -y libswscale-dev
 sudo apt-get install -f
 sudo apt-get install -y libavdevice-dev
 sudo apt-get install -f
-if [ -d "/usr/local/src/" ]; then 
-  sudo rm -R /usr/local/src/
+if [ -d "/usr/local/src/ffmpeg" ]; then 
+  sudo rm -R /usr/local/src/ffmpeg
 fi
-sudo mkdir /usr/local/src/
 cd /usr/local/src/
 git clone https://github.com/FFmpeg/FFmpeg.git ffmpeg
 cd ffmpeg
@@ -41,10 +40,9 @@ echo 50 > /tmp/compilation_motion_in_progress
 echo "*****************************************************************************************************"
 echo "*                                          Compilation de motion:                                   *"
 echo "*****************************************************************************************************"
-if [ -d "/usr/local/src/" ]; then 
-  sudo rm -R /usr/local/src/
+if [ -d "/usr/local/src/motion" ]; then 
+  sudo rm -R /usr/local/src/motion
 fi
-sudo mkdir /usr/local/src/
 cd /usr/local/src/
 git clone https://github.com/Motion-Project/motion.git
 cd motion
