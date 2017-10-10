@@ -6,32 +6,28 @@ then
 	echo "*****************************************************************************************************"
 	echo "*                                Desinstallation des dépendance                                    *"
 	echo "*****************************************************************************************************"
-	sudo apt-get autoremove -y --force-yes  motion
-	sudo apt-get autoremove -y --force-yes  ffmpeg
-	sudo apt-get autoremove -y --force-yes  x264
+	sudo apt-get autoremove -y motion
+	sudo apt-get autoremove -y ffmpeg
+	sudo apt-get autoremove -y x264
 	#rm -R /etc/motion/
 fi
 echo "*****************************************************************************************************"
 echo "*                                   Installation des dépendance                                     *"
 echo "*****************************************************************************************************"
-sudo apt-get install -y --force-yes autoconf automake libtool
-sudo apt-get install -y --force-yes pkg-config
-sudo apt-get install -y --force-yes libjpeg62-turbo-dev
-sudo apt-get install -y --force-yes zlib1g-dev
-sudo apt-get install -y --force-yes git
-sudo apt-get install -y --force-yes git-core
-sudo apt-get install -y --force-yes cmake
-sudo apt-get install -y --force-yes liblog4cplus-dev 
-sudo apt-get install -y --force-yes libcurl3-dev 
-sudo apt-get install -y --force-yes build-essential
-sudo apt-get install -y --force-yes libjasper-dev
-sudo apt-get install -y --force-yes libgtk2.0-dev
-sudo apt-get install -y --force-yes libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
-sudo apt-get install -y --force-yes libzip-dev
-sudo apt-get install -y --force-yes libavcodec56 
-sudo apt-get install -y --force-yes libavdevice56
-sudo apt-get install -y --force-yes libavfilter5
-sudo apt-get install -y --force-yes libavformat56
+sudo apt-get install -y -f autoconf automake libtool
+sudo apt-get install -y -f pkg-config
+sudo apt-get install -y -f libjpeg62-turbo-dev
+sudo apt-get install -y -f zlib1g-dev
+sudo apt-get install -y -f git
+sudo apt-get install -y -f git-core
+sudo apt-get install -y -f cmake
+sudo apt-get install -y -f liblog4cplus-dev 
+sudo apt-get install -y -f libcurl3-dev 
+sudo apt-get install -y -f build-essential
+sudo apt-get install -y -f libjasper-dev
+sudo apt-get install -y -f libgtk2.0-dev
+sudo apt-get install -y -f libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
+sudo apt-get install -y -f libzip-dev
 echo "*****************************************************************************************************"
 echo "*                                          Installation de FFMPEG                                   *"
 echo "*****************************************************************************************************"
@@ -44,16 +40,16 @@ then
 fi 
 sudo apt-get update -y
 echo 30 > /tmp/compilation_motion_in_progress
-sudo apt-get install -y --force-yes  deb-multimedia-keyring
+sudo apt-get install -y -f  deb-multimedia-keyring
 echo 40 > /tmp/compilation_motion_in_progress
 sudo apt-get -y update
 echo 50 > /tmp/compilation_motion_in_progress
-sudo apt-get install -y --force-yes ffmpeg
-sudo apt-get install -y --force-yes v4l-utils
+sudo apt-get install -y -f ffmpeg
+sudo apt-get install -y -f v4l-utils
 echo 60 > /tmp/compilation_motion_in_progress
-sudo apt-get install -y --force-yes x264
+sudo apt-get install -y -f x264
 echo 70 > /tmp/compilation_motion_in_progress
-sudo apt-get install -y --force-yes libavutil-dev libavformat-dev libavcodec-dev libswscale-dev libavdevice-dev
+sudo apt-get install -y -f libavutil-dev libavformat-dev libavcodec-dev libswscale-dev libavdevice-dev
 echo "*****************************************************************************************************"
 echo "*                                          Compilation de motion:                                   *"
 echo "*****************************************************************************************************"
