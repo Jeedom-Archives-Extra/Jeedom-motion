@@ -27,9 +27,11 @@ sudo apt-get install -y libzip-dev
 echo "*****************************************************************************************************"
 echo "*                                          Installation de FFMPEG                                   *"
 echo "*****************************************************************************************************"
-sudo apt-get install -y motion
+sudo apt-get install -f
 sudo apt-get install -y ffmpeg
+sudo apt-get install -f
 sudo apt-get install -y x264
+sudo apt-get install -f
 echo "*****************************************************************************************************"
 echo "*                                          Compilation de motion:                                   *"
 echo "*****************************************************************************************************"
