@@ -14,20 +14,20 @@ fi
 echo "*****************************************************************************************************"
 echo "*                                   Installation des dépendance                                     *"
 echo "*****************************************************************************************************"
-sudo apt-get install -y -f autoconf automake libtool
-sudo apt-get install -y -f pkg-config
-sudo apt-get install -y -f libjpeg62-turbo-dev
-sudo apt-get install -y -f zlib1g-dev
-sudo apt-get install -y -f git
-sudo apt-get install -y -f git-core
-sudo apt-get install -y -f cmake
-sudo apt-get install -y -f liblog4cplus-dev 
-sudo apt-get install -y -f libcurl3-dev 
-sudo apt-get install -y -f build-essential
-sudo apt-get install -y -f libjasper-dev
-sudo apt-get install -y -f libgtk2.0-dev
-sudo apt-get install -y -f libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
-sudo apt-get install -y -f libzip-dev
+sudo apt-get install -y autoconf automake libtool
+sudo apt-get install -y pkg-config
+sudo apt-get install -y libjpeg62-turbo-dev
+sudo apt-get install -y zlib1g-dev
+sudo apt-get install -y git
+sudo apt-get install -y git-core
+sudo apt-get install -y cmake
+sudo apt-get install -y liblog4cplus-dev 
+sudo apt-get install -y libcurl3-dev 
+sudo apt-get install -y build-essential
+sudo apt-get install -y libjasper-dev
+sudo apt-get install -y libgtk2.0-dev
+sudo apt-get install -y libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
+sudo apt-get install -y libzip-dev
 echo "*****************************************************************************************************"
 echo "*                                          Installation de FFMPEG                                   *"
 echo "*****************************************************************************************************"
@@ -38,18 +38,21 @@ then
 	echo "deb http://www.deb-multimedia.org jessie main non-free" | sudo tee -a /etc/apt/sources.list
 	echo "deb-src http://www.deb-multimedia.org jessie main non-free" | sudo tee -a /etc/apt/sources.list
 fi 
-sudo apt-get update -y
 echo 30 > /tmp/compilation_motion_in_progress
-sudo apt-get install -y -f  deb-multimedia-keyring
+sudo apt-get build-dep -y deb-multimedia-keyring
+sudo apt-get install -y deb-multimedia-keyring
 echo 40 > /tmp/compilation_motion_in_progress
 sudo apt-get -y update
 echo 50 > /tmp/compilation_motion_in_progress
-sudo apt-get install -y -f ffmpeg
-sudo apt-get install -y -f v4l-utils
+sudo apt-get build-dep -y ffmpeg
+sudo apt-get build-dep -y v4l-utils
+sudo apt-get install -y ffmpeg
+sudo apt-get install -y v4l-utils
 echo 60 > /tmp/compilation_motion_in_progress
-sudo apt-get install -y -f x264
+sudo apt-get build-dep -y x264
+sudo apt-get install -y x264
 echo 70 > /tmp/compilation_motion_in_progress
-sudo apt-get install -y -f libavutil-dev libavformat-dev libavcodec-dev libswscale-dev libavdevice-dev
+sudo apt-get install -y libavutil-dev libavformat-dev libavcodec-dev libswscale-dev libavdevice-dev
 echo "*****************************************************************************************************"
 echo "*                                          Compilation de motion:                                   *"
 echo "*****************************************************************************************************"
