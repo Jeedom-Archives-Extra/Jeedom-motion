@@ -91,7 +91,7 @@ $eqLogics = eqLogic::byType('motion');
 			<?php } ?>
 		</div>
     </div>
-	<div class="col-lg-10 col-md-7 col-sm-8 eqLogic" style="border-left: solid 1px #EEE; padding-left: 25px;display: none;">
+	<div class="eqLogic" style="border-left: solid 1px #EEE; padding-left: 25px;display: none;">
 		<ul class="nav nav-tabs" role="tablist">
 			<li role="presentation">
 				<a href="#" class="eqLogicAction" aria-controls="home" role="tab" data-toggle="tab" data-action="returnToThumbnailDisplay">
