@@ -24,14 +24,16 @@ sudo apt-get install -y libjasper-dev
 sudo apt-get install -y libgtk2.0-dev
 sudo apt-get install -y libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
 sudo apt-get install -y libzip-dev
+sudo apt-get install -y libavutil-dev 
+sudo apt-get install -y libavformat-dev 
+sudo apt-get install -y libavcodec-dev 
+sudo apt-get install -y libswscale-dev l
+sudo apt-get install -y ibavdevice-dev
 echo "*****************************************************************************************************"
 echo "*                                          Installation de FFMPEG                                   *"
 echo "*****************************************************************************************************"
-sudo apt-get install -f
 sudo apt-get install -y ffmpeg
-sudo apt-get install -f
 sudo apt-get install -y x264
-sudo apt-get install -f
 echo "*****************************************************************************************************"
 echo "*                                          Compilation de motion:                                   *"
 echo "*****************************************************************************************************"
