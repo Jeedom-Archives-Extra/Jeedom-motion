@@ -116,7 +116,7 @@ class motion extends eqLogic {
 		$this->setConfiguration('stream_port',$this->getStreamPort());
 	}*/
 	public function postSave() {
-		$file='/etc/motion/thread'.$this->getId().'.conf';
+		$file='/etc/motion/camera'.$this->getId().'.conf';
 		$this->NewThread();
 		self::AddCommande($this,__('Parcourir les video', __FILE__),'browseRecord',"info", 'binary');
 		$detect=self::AddCommande($this,'Détection','detect',"info", 'binary','','MotionDetectZone');
@@ -250,8 +250,8 @@ class motion extends eqLogic {
 			fputs($fp, "\n");
 			foreach(eqLogic::byType('motion') as $Camera){		
 				if($Camera->getIsEnable()){
-					if(file_exists('/etc/motion/thread'.$Camera->getId().'.conf')){
-						fputs($fp,'thread /etc/motion/thread'.$Camera->getId().'.conf');
+					if(file_exists('/etc/motion/camera'.$Camera->getId().'.conf')){
+						fputs($fp,'camera /etc/motion/camera'.$Camera->getId().'.conf');
 						fputs($fp, "\n");
 					}
 				}
