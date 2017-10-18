@@ -601,7 +601,7 @@ class motion extends eqLogic {
 			exec('sudo chmod -R 777 /usr/local/etc/motion/');
 			exec('sudo rm /etc/motion/*');
 			foreach(eqLogic::byType('motion') as $Camera){		
-				$file='/etc/motion/thread'.$Camera->getId().'.conf';
+				$file='/etc/motion/camera'.$Camera->getId().'.conf';
 				$Camera->WriteThread($file);
 				self::UpdateMotionConf();
 			}
