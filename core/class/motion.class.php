@@ -98,7 +98,6 @@ class motion extends eqLogic {
 		$this->setConfiguration('ffmpeg_timelapse_mode','manual');
 		$this->setConfiguration('ffmpeg_bps','500000');
 		$this->setConfiguration('ffmpeg_video_codec','mpeg4');
-		$this->setConfiguration('ffmpeg_deinterlace',1);
 		$this->setConfiguration('locate_motion_mode',0);
 		$this->setConfiguration('locate_motion_style','box');
 		$this->setConfiguration('text_right','%Y-%m-%d\n%T-%q');
