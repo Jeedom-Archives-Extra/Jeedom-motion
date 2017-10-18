@@ -344,7 +344,6 @@ class motion extends eqLogic {
 					case 'output_debug_pictures':
 					case 'ffmpeg_output_movies':
 					case 'ffmpeg_output_debug_movies':
-					case 'ffmpeg_deinterlace':
 					case 'locate_motion_mode':
 					case 'text_changes':
 					case 'text_double':
