@@ -98,7 +98,6 @@ class motion extends eqLogic {
 		$this->setConfiguration('ffmpeg_timelapse_mode','manual');
 		$this->setConfiguration('ffmpeg_bps','500000');
 		$this->setConfiguration('ffmpeg_video_codec','mpeg4');
-		$this->setConfiguration('ffmpeg_deinterlace',1);
 		$this->setConfiguration('locate_motion_mode',0);
 		$this->setConfiguration('locate_motion_style','box');
 		$this->setConfiguration('text_right','%Y-%m-%d\n%T-%q');
@@ -116,7 +115,7 @@ class motion extends eqLogic {
 		$this->setConfiguration('stream_port',$this->getStreamPort());
 	}*/
 	public function postSave() {
-		$file='/etc/motion/thread'.$this->getId().'.conf';
+		$file='/etc/motion/camera'.$this->getId().'.conf';
 		$this->NewThread();
 		self::AddCommande($this,__('Parcourir les video', __FILE__),'browseRecord',"info", 'binary');
 		$detect=self::AddCommande($this,'Détection','detect',"info", 'binary','','MotionDetectZone');
@@ -250,8 +249,8 @@ class motion extends eqLogic {
 			fputs($fp, "\n");
 			foreach(eqLogic::byType('motion') as $Camera){		
 				if($Camera->getIsEnable()){
-					if(file_exists('/etc/motion/thread'.$Camera->getId().'.conf')){
-						fputs($fp,'thread /etc/motion/thread'.$Camera->getId().'.conf');
+					if(file_exists('/etc/motion/camera'.$Camera->getId().'.conf')){
+						fputs($fp,'camera /etc/motion/camera'.$Camera->getId().'.conf');
 						fputs($fp, "\n");
 					}
 				}
@@ -345,7 +344,6 @@ class motion extends eqLogic {
 					case 'output_debug_pictures':
 					case 'ffmpeg_output_movies':
 					case 'ffmpeg_output_debug_movies':
-					case 'ffmpeg_deinterlace':
 					case 'locate_motion_mode':
 					case 'text_changes':
 					case 'text_double':
@@ -601,7 +599,7 @@ class motion extends eqLogic {
 			exec('sudo chmod -R 777 /usr/local/etc/motion/');
 			exec('sudo rm /etc/motion/*');
 			foreach(eqLogic::byType('motion') as $Camera){		
-				$file='/etc/motion/thread'.$Camera->getId().'.conf';
+				$file='/etc/motion/camera'.$Camera->getId().'.conf';
 				$Camera->WriteThread($file);
 				self::UpdateMotionConf();
 			}
