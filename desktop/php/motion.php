@@ -203,6 +203,12 @@ $eqLogics = eqLogic::byType('motion');
 						</div>
 					</div>
 					<div class="form-group">
+						<label class="col-md-5 control-label">{{substream_port (%)}}</label>
+						<div class="col-md-7">
+							<input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="substream_port" />
+						</div>
+					</div>
+					<div class="form-group">
 						<label class="col-md-5 control-label">{{Qualité de l'image (%)}}</label>
 						<div class="col-md-7">
 							<input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="stream_quality" />
