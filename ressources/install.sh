@@ -9,6 +9,7 @@ sudo apt-get install -y automake
 sudo apt-get install -y pkgconf
 sudo apt-get install -y libtool
 sudo apt-get install -y libjpeg8-dev
+sudo apt-get install -y libjpeg62-turbo-dev
 sudo apt-get install -y build-essential
 sudo apt-get install -y libzip-dev
 echo "*****************************************************************************************************"
