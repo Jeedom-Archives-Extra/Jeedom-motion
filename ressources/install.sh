@@ -35,7 +35,7 @@ cd ffmpeg
 make -j3
 sudo make install
 cd ../motion/
-PKG_CONFIG_PATH=/home/odroid/git/ffmpeg/out/lib/pkgconfig cmake .
+PKG_CONFIG_PATH=/usr/local/src/ffmpeg/out/lib/pkgconfig cmake .
 make
 echo 50 > /tmp/compilation_motion_in_progress
 echo "*****************************************************************************************************"
