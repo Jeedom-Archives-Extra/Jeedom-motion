@@ -9,6 +9,7 @@ sudo apt-get install -y automake
 sudo apt-get install -y pkgconf
 sudo apt-get install -y libtool
 sudo apt-get install -y libjpeg8-dev
+sudo apt-get install -y libjpeg62-turbo-dev
 sudo apt-get install -y build-essential
 sudo apt-get install -y libzip-dev
 echo "*****************************************************************************************************"
@@ -34,7 +35,7 @@ cd ffmpeg
 make -j3
 sudo make install
 cd ../motion/
-PKG_CONFIG_PATH=/home/odroid/git/ffmpeg/out/lib/pkgconfig cmake .
+PKG_CONFIG_PATH=/usr/local/src/ffmpeg/out/lib/pkgconfig cmake .
 make
 echo 50 > /tmp/compilation_motion_in_progress
 echo "*****************************************************************************************************"
