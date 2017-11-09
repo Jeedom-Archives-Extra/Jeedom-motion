@@ -495,7 +495,8 @@ $eqLogics = eqLogic::byType('motion');
 					<div class="form-group">
 						<label class="col-md-5 control-label">{{Fichier PGM à utiliser comme un masque de sensibilité.}}</label>
 						<div class="col-md-7">
-							<input type="file" name="FileMask" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="mask_file"  data-url="plugins/motion/core/ajax/motion.ajax.php?action=addFileMask" />
+							<input type="file" id="FileMask" name="FileMask" class="form-control" data-url="plugins/motion/core/ajax/motion.ajax.php?action=addFileMask" />
+							<input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="mask_file" />
 						</div>
 					</div>
 					<div class="form-group">
