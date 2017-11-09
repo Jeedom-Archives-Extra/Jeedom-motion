@@ -149,6 +149,17 @@ $('body').on('click','.editArea', function() {
 		}
 	});
 });   
+$('.eqLogicAttr[data-l1key=configuration][data-l2key=mask_file]').fileupload({
+	dataType: 'json',
+	replaceFileInput: false,
+	success: function(data) {
+		if (data.state != 'ok') {
+			$('#div_alert').showAlert({message: data.result, level: 'danger'});
+			return;
+		}
+		$('.eqLogicAttr[data-l1key=configuration][data-l2key=mask_file]').val(data.result);
+	}
+});
 function addCmdToTable(_cmd) {
   if (!isset(_cmd)) {
         var _cmd = {};
