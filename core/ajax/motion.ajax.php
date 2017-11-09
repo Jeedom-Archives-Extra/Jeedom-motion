@@ -101,6 +101,20 @@
 			}
 			ajax::success($return);
 		}
+		
+		if (init('action') == 'addFileMask') {
+			if (isset($_FILES['FileMask'])){
+				$directory = dirname(__FILE__) . '/../../mask/';
+				if(!file_exists($directory)){
+					exec('sudo mkdir -p '.$directory);
+					exec('sudo chmod 777 -R '.$directory);
+				}
+				$target_file = $directory . basename($_FILES["FileMask"]["name"]);
+				move_uploaded_file($_FILES["FileMask"]["tmp_name"], $target_file)
+				ajax::success($target_file);
+			}
+			ajax::error("Le fichier n'a pas été recu");
+		}
 		throw new Exception(__('Aucune methode correspondante à : ', __FILE__) . init('action'));
 		/*     * *********Catch exeption*************** */
 	} catch (Exception $e) {
