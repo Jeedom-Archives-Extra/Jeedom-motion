@@ -114,8 +114,6 @@ class motion extends eqLogic {
 		/*$this->setConfiguration('stream_motion',1);
 		$this->setConfiguration('stream_port',$this->getStreamPort());*/
 		$directory = dirname(__FILE__) . '/../../mask/';
-		if($this->getConfiguration('mask_file')!='')
-			$this->setConfiguration('mask_file',$directory .$this->getConfiguration('mask_file'));
 	}
 	public function postSave() {
 		$file='/etc/motion/camera'.$this->getId().'.conf';
