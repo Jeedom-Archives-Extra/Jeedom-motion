@@ -157,7 +157,8 @@ $('.eqLogicAttr[data-l1key=configuration][data-l2key=mask_file]').fileupload({
 			$('#div_alert').showAlert({message: data.result, level: 'danger'});
 			return;
 		}
-		$('.eqLogicAttr[data-l1key=configuration][data-l2key=mask_file]').val(data.result);
+		$('#div_alert').showAlert({message: data.result, level: 'success'});
+		//$('.eqLogicAttr[data-l1key=configuration][data-l2key=mask_file]').val(data.result);
 	}
 });
 function addCmdToTable(_cmd) {
