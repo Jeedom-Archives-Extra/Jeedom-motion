@@ -1,4 +1,4 @@
-Il est maintenant temps de passer à la configuration des caméras
+Jetzt ist es an der Zeit, mit dem Kamera Konfiguration fortzufahren
 
 image::../images/motion_screenshot_Equipement.jpg[]
 
@@ -14,7 +14,7 @@ image::../images/Configuration_Eqlogic.jpg[]
 Les paramètres de configuration de cette page sont standard à ce que l'on retrouve sur jeedom.
 Seul le champs "Execution de l'analyse" est particulier, il permet de choisir sur quel jeedom de notre réseaux on va demander l'execution de l'analyse du flux de la caméra configurée.
 
-=== Configuration des paramètres de l’appareil de capture
+=== Konfigurieren der Einstellungen für das Aufnahmegerät
 
 image::../images/Configuration_Capture.jpg[]
 
@@ -55,7 +55,7 @@ image::../images/Configuration_RundRobin.jpg[]
 
 *   Essayez de filtrer le bruit généré par roundrobin
 
-=== Configuration Paramètres de détection de mouvement:
+=== Konfigurationseinstellungen des Bewegungsmeldes
 
 image::../images/Configuration_Detection.jpg[]
 
@@ -149,7 +149,7 @@ image::../images/Configuration_Text.jpg[]
 
 *   Texte à inclure dans un commentaire JPEG EXIF Peut être tout texte, y compris les indicateurs de conversion. L’horodatage EXIF ​​est inclus indépendante de ce texte.
 
-=== Configuration Nom de fichier de detection
+=== Konfiguration Dateiname der Erkennung
 
 image::../images/Configuration_DetectionFile.jpg[]
 

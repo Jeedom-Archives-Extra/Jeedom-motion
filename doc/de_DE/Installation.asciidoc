@@ -9,7 +9,7 @@ image::../images/Installation_dependance.jpg[]
 === Konfiguration des Plugins und seine Abhängigkeiten
 image::../images/motion_screenshot_configuration.jpg[]
 
-Les paramètres de configuration générale sont
+Die Parameter der allgemeinen Konfiguration sind
 
 * Adresse ou motion est installé : Ce champs est complété automatiquement
 * Port où motion est installé : C'est le port sur lequel on va se connecter pour mettre a jour la configuration de motion
