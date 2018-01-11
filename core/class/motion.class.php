@@ -602,6 +602,7 @@ class motion extends eqLogic {
 			foreach(eqLogic::byType('motion') as $Camera){		
 				$file='/etc/motion/camera'.$Camera->getId().'.conf';
 				$Camera->WriteThread($file);
+				$Camera->checkAndUpdateCmd('detectionstatus',true);
 				self::UpdateMotionConf();
 			}
 			//exec('sudo chmod 777 /dev/video*');
@@ -614,16 +615,6 @@ class motion extends eqLogic {
 			$cmd = 'sudo motion';
 			$cmd .= ' >> ' . log::getPathToLog('motion') . ' 2>&1 &';
 			exec($cmd);
-			sleep(2);
-			$Host=config::byKey('Host', 'motion');
-			$Port=config::byKey('Port', 'motion');	
-			log::add('motion','debug','Connexion au motion '.$Host.':'.$Port);
-			$MotionService = new MotionService($Host,$Port);
-			foreach(eqLogic::byType('motion') as $Camera){	
-				$directory=$Camera->getSnapshotDiretory(true);
-				$IdMotionCamera=$MotionService->getCameraId($directory);
-				$Camera->checkAndUpdateCmd('detectionstatus',$MotionService->getCameraStatut($IdMotionCamera));
-			}
 		}
 	}
 	public static function deamon_stop() {
