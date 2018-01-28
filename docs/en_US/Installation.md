@@ -1,5 +1,5 @@
-=== Dependencies install
-To facilitate the implementation of the dependencies, jeedom is going to handle the installation of the motion software .
+=== Installation des dépendances
+Pour faciliter la mise en place des dépendances, jeedom va gérer seul l'installation de motion.
 
 Dans la cadre réservé aux dépendances, vous allez avoir le statut de l'installation.
 Nous avons aussi la possibilité de consulter le log d'installation en temps réel.
