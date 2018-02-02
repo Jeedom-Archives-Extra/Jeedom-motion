@@ -1,4 +1,4 @@
-It is now time to move on to the configuration of the cameras
+Il est maintenant temps de passer à la configuration des caméras
 
 image::../images/motion_screenshot_Equipement.jpg[]
 

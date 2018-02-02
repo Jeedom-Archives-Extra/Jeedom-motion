@@ -1,5 +1,5 @@
 [panel,primary]
-. How to set up a USB camera ?  
+.Comment configurer une camera USB ?  
 --
 Lorsque l'on veux configurer une camera USB il faut:
 
