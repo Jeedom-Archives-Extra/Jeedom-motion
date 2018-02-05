@@ -202,8 +202,13 @@ class motion extends eqLogic {
   	}
 	public static $_widgetPossibility = array('custom' => array(
 	        'visibility' => true,
-	        'displayName' => false,
-	        'optionalParameters' => false,
+	        'displayName' => true,
+	        'displayObjectName' => true,
+	        'optionalParameters' => true,
+	        'background-color' => true,
+	        'text-color' => true,
+	        'border' => true,
+	        'border-radius' => true
 	));
 	public static function AddCommande($eqLogic,$Name,$_logicalId,$Type="info", $SubType='binary',$icone='',$Template='') {
 		$Commande = $eqLogic->getCmd(null,$_logicalId);
