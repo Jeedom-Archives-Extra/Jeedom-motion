@@ -22,12 +22,13 @@
   $('.div_displayEquipement').each(function(){
     var container = $(this).packery({
       itemSelector: ".eqLogic-widget",
-      columnWidth:40,
-      rowHeight: 80,
       gutter : 2,
     });
+    var itemElems =  container.find('.eqLogic-widget');
+    itemElems.draggable();
+    container.packery( 'bindUIDraggableEvents', itemElems );
   });
-
+  $('.div_displayEquipement .eqLogic-widget').draggable('disable');
   $('#bt_editDashboardWidgetOrder').on('click',function(){
     if($(this).attr('data-mode') == 1){
       $.hideAlert();
@@ -35,7 +36,7 @@
       editWidgetMode(0);
       $(this).css('color','black');
     }else{
-      $('#div_alert').showAlert({message: "{{Vous êtes en mode édition vous pouvez redimensionner les widgets}}", level: 'info'});
+      $('#div_alert').showAlert({message: "{{Vous Ãªtes en mode Ã©dition vous pouvez redimensionner les widgets}}", level: 'info'});
       $(this).attr('data-mode',1);
       editWidgetMode(1);
       $(this).css('color','rgb(46, 176, 75)');
@@ -62,35 +63,44 @@
 
  function editWidgetMode(_mode){
   if(!isset(_mode)){
-    _mode = $('#bt_editDashboardWidgetOrder').attr('data-mode');
-    if(_mode == undefined){
-      return;
+    if($('#bt_editDashboardWidgetOrder').attr('data-mode') != undefined && $('#bt_editDashboardWidgetOrder').attr('data-mode') == 1){
+      editWidgetMode(0);
+      editWidgetMode(1);
     }
+    return;
   }
   if(_mode == 0){
-   $('.div_displayEquipement .eqLogic-widget.allowResize').resizable('destroy');
- }else{
-   $( ".div_displayEquipement .eqLogic-widget.allowResize").resizable({
-    grid: [ 40, 80 ],
-    resize: function( event, ui ) {
-     var el = ui.element;
-     el.closest('.div_displayEquipement').packery();
-   },
-   stop: function( event, ui ) {
-    var el = ui.element;
-    positionEqLogic(el.attr('data-eqlogic_id'));
-    el.closest('.div_displayEquipement').packery();
-    var eqLogic = {id : el.attr('data-eqlogic_id')}
-    eqLogic.display = {};
-    eqLogic.display.width =  Math.floor(el.width() / 40) * 40 + 'px';
-    eqLogic.display.height = Math.floor(el.height() / 80) * 80+ 'px';
-    jeedom.eqLogic.simpleSave({
-      eqLogic : eqLogic,
-      error: function (error) {
-        $('#div_alert').showAlert({message: error.message, level: 'danger'});
-      }
-    });
+   if( $('.div_displayEquipement .eqLogic-widget.ui-resizable').length > 0){
+    $('.div_displayEquipement .eqLogic-widget.allowResize').resizable('destroy');
   }
-});
+  if( $('.div_displayEquipement .eqLogic-widget.ui-draggable').length > 0){
+   $('.div_displayEquipement .eqLogic-widget').draggable('disable');
  }
+}else{
+ $('.div_displayEquipement .eqLogic-widget').draggable('enable');
+
+ $( ".div_displayEquipement .eqLogic-widget.allowResize").resizable({
+  grid: [ 2, 2 ],
+  resize: function( event, ui ) {
+   var el = ui.element;
+   el.closest('.div_displayEquipement').packery();
+ },
+ stop: function( event, ui ) {
+  var el = ui.element;
+  positionEqLogic(el.attr('data-eqlogic_id'));
+  el.closest('.div_displayEquipement').packery();
+  var eqLogic = {id : el.attr('data-eqlogic_id')}
+  eqLogic.display = {};
+  eqLogic.display.width =  Math.floor(el.width() / 2) * 2 + 'px';
+  eqLogic.display.height = Math.floor(el.height() / 2) * 2+ 'px';
+  jeedom.eqLogic.simpleSave({
+    eqLogic : eqLogic,
+    error: function (error) {
+      $('#div_alert').showAlert({message: error.message, level: 'danger'});
+    }
+  });
+}
+});
+}
+editWidgetCmdMode(_mode);
 }
