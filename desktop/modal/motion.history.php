@@ -20,6 +20,7 @@ foreach(explode('/',$url) as $section)
 	$url.='../';	
 if(substr($directory,0,1)=='/')
 	$url=substr($url,0,-1);
+$directory=$url.$directory;
 $files = array();
 $offset=strpos($camera->getConfiguration('snapshot_filename'),'-')+1;
 $StartAnnee=strpos($camera->getConfiguration('snapshot_filename'),'%Y')-$offset;
@@ -49,48 +50,57 @@ foreach (ls($directory, '*') as $file) {
 krsort($files);
 ?>
 <div id='div_cameraRecordAlert' style="display: none;"></div>
-<div class="div_allContainer">
-	<legend>
-		<a class="btn btn-danger bt_removeCameraFile pull-right"><i class="fa fa-trash-o"></i> {{Tout supprimer}}</a>
-	</legend>
-	<?php
-	foreach ($files as $date => &$file) {
-		echo '<div class="div_dayContainer">';
-		echo '<legend>';
-		echo '<a class="btn btn-xs btn-danger bt_removeCameraFile"><i class="fa fa-trash-o"></i> {{Supprimer}}</a> ';
-		echo $date;
-		echo '</legend>';
-		echo '<div class="cameraThumbnailContainer">';
-		krsort($file);
-		foreach ($file as $time => $filename) {
-			if (isset($filename['photo'])){
-				echo '<div class="cameraDisplayCard" style="background-color: #e7e7e7;padding:5px;height:167px;">';
-				echo '<center>' . $time . '</center>';
-				echo '<center><img class="img-responsive cursor displayImage" src="core/php/downloadFile.php?pathfile=' . urlencode($url.$directory.$filename['photo']) . '" width="150"/></center>';
-				echo '<center style="margin-top:5px;"><a href="core/php/downloadFile.php?pathfile=' . urlencode($url.$directory.$filename['photo']) . '" class="btn btn-success btn-xs" style="color : white"><i class="fa fa-download"></i></a>';
-				echo ' <a class="btn btn-danger bt_removeCameraFile btn-xs" style="color : white" data-filename="' . $directory . $filename['photo'] . '"><i class="fa fa-trash-o"></i></a></center>';
-				echo '</div>';
-			}
-			if (isset($filename['video'])){
-				echo '<div class="cameraDisplayCard" style="background-color: #e7e7e7;padding:5px;height:167px;">';
-				echo '<center>' . $time . '</center>';
-				echo '<center><i class="img-responsive cursor displayImage fa fa-file-video-o fa-5x" src="' . urlencode($url.$directory . $filename['video']) . '" width="150"></i></center>';
-				echo '<center style="margin-top:5px;"><a href="core/php/downloadFile.php?pathfile=' . urlencode($url.$directory . $filename['video']) . '" class="btn btn-success btn-xs" style="color : white"><i class="fa fa-download"></i></a>';
-				echo ' <a class="btn btn-danger bt_removeCameraFile btn-xs" style="color : white" data-filename="' . $directory . $filename['video'] . '"><i class="fa fa-trash-o"></i></a></center>';
-				echo '</div>';
-			}
+<?php
+echo '<a class="btn btn-danger bt_removeCameraFile pull-right" data-all="1"><i class="fa fa-trash-o"></i> {{Tout supprimer}}</a>';
+echo '<a class="btn btn-success  pull-right" target="_blank" href="core/php/downloadFile.php?pathfile=' . urlencode($directory . '*') . '" ><i class="fa fa-download"></i> {{Tout télécharger}}</a>';
+?>
+<?php
+$i = 0;
+foreach ($files as $date => &$file) {
+	$cameraName = str_replace(' ', '-', $camera->getName());
+	echo '<div class="div_dayContainer">';
+	echo '<legend>';
+	echo '<a class="btn btn-xs btn-danger bt_removeCameraFile" data-day="1" data-filename="' . $camera->getId() . '/' . $cameraName . '_' . $date . '*"><i class="fa fa-trash-o"></i> {{Supprimer}}</a> ';
+	echo '<a class="btn btn-xs btn-success" target="_blank"  href="core/php/downloadFile.php?pathfile=' . urlencode($directory . $cameraName . '_' . $date . '*') . '" ><i class="fa fa-download"></i> {{Télécharger}}</a> ';
+	echo $date;
+	echo ' <a class="btn btn-xs btn-default toggleList"><i class="fa fa-chevron-down"></i></a> ';
+	echo '</legend>';
+	echo '<div class="cameraThumbnailContainer">';
+	krsort($file);
+	foreach ($file as $time => $filename) {
+		$fontType = 'fa-camera';
+		if (isset($filename['video'])){
+			$fontType = 'fa-video-camera';
+			$i++;
 		}
-		echo '</div>';
+		echo '<div class="cameraDisplayCard" style="background-color: #e7e7e7;padding:5px;height:167px;">';
+		echo '<center><i class="fa ' . $fontType . ' pull-right"></i>  ' . str_replace('-', ':', $time) . '</center>';
+		if (isset($filename['video'])){
+			$type='video';
+			echo '<video class="displayVideo" width="150" height="100" controls loop data-src="core/php/downloadFile.php?pathfile=' . urlencode($directory . $filename[$type]) . '" style="cursor:pointer"><source src="core/php/downloadFile.php?pathfile=' . urlencode($directory . $filename[$type]) . '">Your browser does not support the video tag.</video>';
+		} else {				
+			$type='photo';
+			echo '<center><img class="img-responsive cursor displayImage lazy" src="plugins/motion/core/img/no-image.png" data-original="core/php/downloadFile.php?pathfile=' . urlencode($directory . $filename[$type]) . '" width="150"/></center>';
+		}
+		echo '<center style="margin-top:5px;"><a target="_blank" href="core/php/downloadFile.php?pathfile=' . urlencode($directory . $filename[$type]) . '" class="btn btn-success btn-xs" style="color : white"><i class="fa fa-download"></i></a>';
+		echo ' <a class="btn btn-danger bt_removeCameraFile btn-xs" style="color : white" data-filename="' . $directory . $filename[$type] . '"><i class="fa fa-trash-o"></i></a></center>';
+			
 		echo '</div>';
 	}
-	?>
-</div>
+	echo '</div>';
+	echo '</div>';
+}
+?>
 <script>
-	$('.cameraThumbnailContainer').packery({gutter : 5});
-	$('.displayImage').on('click', function() {
-		$('#md_modal2').dialog({title: "Visualisation des prises de vue"});
-		$('#md_modal2').load('index.php?v=d&plugin=motion&modal=motion.displayImage&src='+ $(this).attr('src')).dialog('open');
-	});
+    $('.cameraThumbnailContainer').packery({gutter : 5});
+    $('.displayImage').on('click', function() {
+        $('#md_modal2').dialog({title: "Image"});
+        $('#md_modal2').load('index.php?v=d&plugin=motion&modal=motion.displayImage&src='+ $(this).attr('src')).dialog('open');
+    });
+	$('.displayVideo').on('click', function() {
+        $('#md_modal2').dialog({title: "Vidéo"});
+        $('#md_modal2').load('index.php?v=d&plugin=motion&modal=motion.displayVideo&src='+ $(this).attr('data-src')).dialog('open');
+    });
 	$('.bt_removeCameraFile').on('click', function() {
 		if(typeof $(this).attr('data-filename') != 'undefined'){
 			RemoveFile($(this).attr('data-filename'));
@@ -120,8 +130,19 @@ krsort($files);
 					$('#div_cameraRecordAlert').showAlert({message: data.result, level: 'danger'});
 					return;
 				}
+				$(".cameraThumbnailContainer").slideToggle(1);
 				$('.cameraThumbnailContainer').packery({gutter : 5});
+				$(".cameraThumbnailContainer").slideToggle(1);
 			}
 		});
 	}
- </script>
+    $(".cameraThumbnailContainer").slideToggle(1);
+    $(".cameraThumbnailContainer").eq(0).slideToggle(1);
+    $('.toggleList').on('click', function() {
+        $(this).closest('.div_dayContainer').find(".cameraThumbnailContainer").slideToggle("slow");
+    });
+
+    $("img.lazy").lazyload({
+      container: $("#md_modal")
+  });
+</script>
