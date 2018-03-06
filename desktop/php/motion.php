@@ -191,12 +191,6 @@ $eqLogics = eqLogic::byType('motion');
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-md-5 control-label">{{Streaming uniquement en local}}</label>
-						<div class="col-md-7">
-							<input type="checkbox" class="eqLogicAttr" data-size="mini" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="stream_localhost" />
-						</div>
-					</div>
-					<div class="form-group">
 						<label class="col-md-5 control-label">{{Port de streaming de la camera}}</label>
 						<div class="col-md-7">
 							<input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="stream_port" />
