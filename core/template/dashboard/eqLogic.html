@@ -25,7 +25,11 @@
 	<script>
   		var responsive#id#;
 		$('.camera_history[data-eqLogic_id=#id#]').off().on('click', function () {
-			$('#md_modal').dialog({title: "Historique #name#"});
+			$('#md_modal').dialog({
+				title: "Historique #name#",
+				height: 400,
+				width: 800
+			});
 			$('#md_modal').load('index.php?v=d&plugin=motion&modal=motion.history&id=#id#').dialog('open');
 		});	
 		$('.eqLogic[data-eqLogic_id=#id#] .fluxVideo').on('load', function(){
