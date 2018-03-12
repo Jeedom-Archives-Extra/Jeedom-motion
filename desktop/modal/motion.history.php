@@ -73,19 +73,22 @@ foreach ($files as $date => &$file) {
 			$fontType = 'fa-video-camera';
 			$i++;
 		}
-		echo '<div class="cameraDisplayCard" style="background-color: #e7e7e7;padding:5px;height:167px;">';
-		echo '<center><i class="fa ' . $fontType . ' pull-right"></i>  ' . str_replace('-', ':', $time) . '</center>';
 		if (isset($filename['video'])){
+			echo '<div class="cameraDisplayCard" style="background-color: #e7e7e7;padding:5px;height:167px;">';
+			echo '<center><i class="fa ' . $fontType . ' pull-right"></i>  ' . str_replace('-', ':', $time) . '</center>';
 			echo '<video class="displayVideo" width="150" height="100" controls loop data-src="core/php/downloadFile.php?pathfile=' . urlencode($directory . $filename['video']) . '" style="cursor:pointer"><source src="core/php/downloadFile.php?pathfile=' . urlencode($directory . $filename['video']) . '">Your browser does not support the video tag.</video>';
 			echo '<center style="margin-top:5px;"><a target="_blank" href="core/php/downloadFile.php?pathfile=' . urlencode($directory . $filename['video']) . '" class="btn btn-success btn-xs" style="color : white"><i class="fa fa-download"></i></a>';
 			echo ' <a class="btn btn-danger bt_removeCameraFile btn-xs" style="color : white" data-filename="' . $directory . $filename['video'] . '"><i class="fa fa-trash-o"></i></a></center>';
+			echo '</div>';
 		}
 		if (isset($filename['photo'])){	
+			echo '<div class="cameraDisplayCard" style="background-color: #e7e7e7;padding:5px;height:167px;">';
+			echo '<center><i class="fa ' . $fontType . ' pull-right"></i>  ' . str_replace('-', ':', $time) . '</center>';
 			echo '<center><img class="img-responsive cursor displayImage lazy" src="plugins/motion/core/img/no-image.png" data-original="core/php/downloadFile.php?pathfile=' . urlencode($directory . $filename['photo']) . '" width="150"/></center>';
 			echo '<center style="margin-top:5px;"><a target="_blank" href="core/php/downloadFile.php?pathfile=' . urlencode($directory . $filename['photo']) . '" class="btn btn-success btn-xs" style="color : white"><i class="fa fa-download"></i></a>';
 			echo ' <a class="btn btn-danger bt_removeCameraFile btn-xs" style="color : white" data-filename="' . $directory . $filename['photo'] . '"><i class="fa fa-trash-o"></i></a></center>';
+			echo '</div>';
 		}
-		echo '</div>';
 	}
 	echo '</div>';
 	echo '</div>';
